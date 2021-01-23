@@ -23,16 +23,38 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@RestController
-public class TestHelloController {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="author")
+public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "author_id")
+    private long id;
 
-    @GetMapping("/")
-    public String method(){
-        return "test app running";
-    }
+    @NotBlank
+    @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
+
+/*    @ManyToMany(mappedBy = "book")
+    private List<Book> books;*/
 }
