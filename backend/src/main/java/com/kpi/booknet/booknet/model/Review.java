@@ -25,11 +25,14 @@
 
 package com.kpi.booknet.booknet.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,10 +64,21 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    private long userId;
-    private long bookId;
-    private long ownerId;
-    private long adminId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User userId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private Book bookId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
+    private User ownerId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
+    private User adminId;
 
     @Size(max = 10)
     @Column(name = "grade")

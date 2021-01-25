@@ -28,21 +28,12 @@ package com.kpi.booknet.booknet.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,42 +42,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="book")
-public class Book {
+@Table(name="usr_book")
+public class UserBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
+    @Column(name = "usr_book_id")
     private long id;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "title", nullable = false)
-    private String title;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User userId;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "header", nullable = false)
-    private String header;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private Book bookId;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "text", nullable = false)
-    private String introText;
+    @Column(name = "is_read")
+    private boolean isRead;
 
-    @JoinColumn(name = "photo_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private BookPhoto photoId;
-
-    @JoinColumn(name = "file_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private BookFile fileId;
-
-    @Column(name = "is_out")
-    private boolean isOut;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_genre",
-        joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "genre_id"))
-    private Set<Genre> genres;
+    @Column(name = "is_favourite")
+    private boolean isFavourite;
 }

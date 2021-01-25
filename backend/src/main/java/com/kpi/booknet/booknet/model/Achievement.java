@@ -25,11 +25,14 @@
 
 package com.kpi.booknet.booknet.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -53,7 +56,11 @@ public class Achievement {
     @Column(name = "description", nullable = false)
     private String description;
 
-    private long genreId;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "genre_id")
+    private Genre genreId;
+
+    @Column(name = "count")
     private int count;
 
     @NotBlank

@@ -43,10 +43,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="usr")
-public final class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "user_id", updatable = false)
     private long id;
 
     @NotBlank
@@ -62,7 +62,7 @@ public final class User {
     @NotBlank
     @NotNull
     @Email
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @NotBlank

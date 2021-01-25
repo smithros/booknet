@@ -25,24 +25,18 @@
 
 package com.kpi.booknet.booknet.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Set;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,42 +45,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="book")
-public class Book {
+@Table(name="recover_code")
+public class RecoverCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
-    private long id;
+    @Column(name = "recover_code_id")
+    private int id;
 
     @NotBlank
     @NotNull
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "name", nullable = false)
+    private String code;
 
     @NotBlank
     @NotNull
-    @Column(name = "header", nullable = false)
-    private String header;
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "text", nullable = false)
-    private String introText;
+    @Column(name = "date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
-    @JoinColumn(name = "photo_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private BookPhoto photoId;
-
-    @JoinColumn(name = "file_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private BookFile fileId;
-
-    @Column(name = "is_out")
-    private boolean isOut;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_genre",
-        joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "genre_id"))
-    private Set<Genre> genres;
 }
