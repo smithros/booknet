@@ -25,16 +25,15 @@
 
 package com.kpi.booknet.booknet.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,19 +42,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "genre")
-public class Genre {
+@Table(name = "friends")
+public class Friends {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "genre_id")
+    @Column(name = "friends_id")
     private long id;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String desc;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sender_id", referencedColumnName = "user_id")
+    private User sender;
 
-    @ManyToMany(mappedBy = "genres")
-    private Set<Book> books;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "receiver_id", referencedColumnName = "user_id")
+    private User receiver;
 
+    @Column(name = "status")
+    private boolean reqStatus;
 }

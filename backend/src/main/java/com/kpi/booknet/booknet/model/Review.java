@@ -48,7 +48,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="review")
+@Table(name = "review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,10 +71,6 @@ public class Review {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book bookId;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
-    private User ownerId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")

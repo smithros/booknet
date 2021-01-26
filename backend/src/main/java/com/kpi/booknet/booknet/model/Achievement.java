@@ -32,10 +32,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,7 +47,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="achievement")
+@Table(name = "achievement")
 public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,4 +70,10 @@ public class Achievement {
     @NotNull
     @Column(name = "entity", nullable = false)
     private String entity;
+
+    @ManyToMany
+    @JoinTable(name = "user_achievement",
+        joinColumns = @JoinColumn(name = "achievement_id", referencedColumnName = "achievement_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+    private Set<User> books;
 }

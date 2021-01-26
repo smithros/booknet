@@ -35,13 +35,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,19 +62,14 @@ public class Book {
 
     @NotBlank
     @NotNull
-    @Column(name = "header", nullable = false)
-    private String header;
-
-    @NotBlank
-    @NotNull
     @Column(name = "text", nullable = false)
     private String introText;
 
-    @JoinColumn(name = "photo_id")
+    @JoinColumn(name = "photo_id", referencedColumnName = "book_photo_id")
     @OneToOne(fetch = FetchType.LAZY)
     private BookPhoto photoId;
 
-    @JoinColumn(name = "file_id")
+    @JoinColumn(name = "file_id", referencedColumnName = "book_file_id")
     @OneToOne(fetch = FetchType.LAZY)
     private BookFile fileId;
 
@@ -89,4 +81,7 @@ public class Book {
         joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "genre_id"))
     private Set<Genre> genres;
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Author> authors;
 }
