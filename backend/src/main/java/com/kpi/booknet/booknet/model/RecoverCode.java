@@ -25,6 +25,7 @@
 
 package com.kpi.booknet.booknet.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,7 +70,7 @@ public class RecoverCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 }

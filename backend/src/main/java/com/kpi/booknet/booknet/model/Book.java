@@ -28,7 +28,6 @@ package com.kpi.booknet.booknet.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,11 +65,11 @@ public class Book {
     private String introText;
 
     @JoinColumn(name = "photo_id", referencedColumnName = "book_photo_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private BookPhoto photoId;
 
     @JoinColumn(name = "file_id", referencedColumnName = "book_file_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private BookFile fileId;
 
     @Column(name = "is_out")
@@ -82,6 +81,9 @@ public class Book {
         inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "genre_id"))
     private Set<Genre> genres;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "author_book",
+        joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "author_id"))
     private Set<Author> authors;
 }

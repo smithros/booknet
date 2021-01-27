@@ -23,33 +23,12 @@
  *
  */
 
-package com.kpi.booknet.booknet.model;
+package com.kpi.booknet.booknet.repos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.kpi.booknet.booknet.model.Book;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "author")
-public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")
-    private long id;
-
-    @NotBlank
-    @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+@Repository
+public interface BookRepository extends CrudRepository<Book, Long> {
 }
