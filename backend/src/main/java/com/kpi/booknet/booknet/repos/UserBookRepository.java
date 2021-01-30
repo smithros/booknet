@@ -25,10 +25,64 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.List;
+import com.kpi.booknet.booknet.model.Book;
+import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.model.UserBook;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserBookRepository extends CrudRepository<UserBook, Long> {
+
+    @Query(value = "select book_id from usr_book where user_id = ?", nativeQuery = true)
+    List<Long> findAllBookIdsByUserId(long id);
+
+    List<UserBook> findAll();
+
+    List<UserBook> findAllByUserId(User user);
+
+    UserBook findByUserIdAndBookId(User user, Book book);
+
+    @Query(
+        value = "select book_id from usr_book where is_favourite = true and user_id = ?",
+        nativeQuery = true
+    )
+    List<Long> findAllByFavouriteIsTrueAndUserId(long id);
+
+    @Query(
+        value = "select book_id from usr_book where is_read = true and user_id = ?",
+        nativeQuery = true
+    )
+    List<Long> findAllByReadIsTrueAndUserId(long id);
+
+    @Transactional
+    @Modifying
+    @Query("update UserBook ub set ub.isRead = true where ub.userId = :userId " +
+        "and ub.bookId = :bookId")
+    void markBookAsRead(@Param("userId") long userId, @Param("bookId") long bookId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserBook ub set ub.isFavourite = true where ub.userId = :userId " +
+        "and ub.bookId = :bookId")
+    void markBookAsFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserBook ub set ub.isRead = false where ub.userId = :userId " +
+        "and ub.bookId = :bookId")
+    void removeFromRead(@Param("userId") long userId, @Param("bookId") long bookId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserBook ub set ub.isFavourite = false where ub.userId = :userId " +
+        "and ub.bookId = :bookId")
+    void removeFromFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
+
+    void deleteByUserIdAndBookId(User userId, Book bookId);
 }

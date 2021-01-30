@@ -25,10 +25,13 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.List;
 import com.kpi.booknet.booknet.model.Author;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorRepository extends CrudRepository<Author, Long> {
+
+    List<Author> getAuthorsByName(String name);
 }
