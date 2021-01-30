@@ -26,6 +26,7 @@
 package com.kpi.booknet.booknet.controllers;
 
 import java.util.Set;
+import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.Achievement;
 import com.kpi.booknet.booknet.model.Author;
 import com.kpi.booknet.booknet.model.Book;
@@ -89,8 +90,7 @@ public class TestHelloController {
         user.setEmail("example@com.ua");
         user.setActivated(true);
         user.setVerified(true);
-        user.setRole("User");
-        user.setRecoverCode("111");
+        user.setRole(UserRole.USER);
 
 
         Genre genre = new Genre();

@@ -28,21 +28,27 @@ package com.kpi.booknet.booknet.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
+import com.kpi.booknet.booknet.UserRole;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -70,15 +76,14 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role;
+    private UserRole role;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "recover_code", nullable = false)
-    private String recoverCode;
+    @JoinColumn(name = "email", referencedColumnName = "email")
+    @OneToOne(cascade = CascadeType.ALL)
+    private RecoverCode recoverCode;
 
     @Column(name = "verified")
     private boolean verified;
@@ -89,6 +94,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_achievement",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "achievement_id", referencedColumnName = "achievement_id"))
+        inverseJoinColumns = @JoinColumn(name = "achievement_id",
+            referencedColumnName = "achievement_id")
+    )
     private Set<Achievement> achievements;
 }

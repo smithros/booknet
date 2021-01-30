@@ -23,28 +23,11 @@
  *
  */
 
-package com.kpi.booknet.booknet.repos;
+package com.kpi.booknet.booknet;
 
-import java.util.List;
-import com.kpi.booknet.booknet.model.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-
-    List<User> findAll();
-
-    User findById(long id);
-
-    User findByName(String name);
-
-    User findByEmail(String email);
-
-    @Modifying
-    @Query("update User u set u = :usr where u.name = :name")
-    void updateByName(@Param("name") String name, @Param("usr") User user);
+public enum UserRole {
+    USER,
+    ADMIN,
+    MODERATOR,
+    SUPER_ADMIN
 }

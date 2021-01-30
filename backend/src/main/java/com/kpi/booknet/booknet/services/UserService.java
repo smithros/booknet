@@ -23,28 +23,36 @@
  *
  */
 
-package com.kpi.booknet.booknet.repos;
+package com.kpi.booknet.booknet.services;
 
 import java.util.List;
 import com.kpi.booknet.booknet.model.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import com.kpi.booknet.booknet.repos.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@Service
+public class UserService {
 
-    List<User> findAll();
+    public static final String EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 
-    User findById(long id);
+    private final UserRepository userRepository;
 
-    User findByName(String name);
+    @Autowired
+    public UserService(final UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    User findByEmail(String email);
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
 
-    @Modifying
-    @Query("update User u set u = :usr where u.name = :name")
-    void updateByName(@Param("name") String name, @Param("usr") User user);
+    public User getUserById(final long id) {
+        final User user = this.userRepository.findById(id);
+        if (user.isActivated()) {
+            return user;
+        }
+        return null;
+    }
 }

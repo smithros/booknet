@@ -23,28 +23,15 @@
  *
  */
 
-package com.kpi.booknet.booknet.repos;
+package com.kpi.booknet.booknet.configuration;
 
-import java.util.List;
-import com.kpi.booknet.booknet.model.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-
-    List<User> findAll();
-
-    User findById(long id);
-
-    User findByName(String name);
-
-    User findByEmail(String email);
-
-    @Modifying
-    @Query("update User u set u = :usr where u.name = :name")
-    void updateByName(@Param("name") String name, @Param("usr") User user);
+@Configuration
+public class AppConfig {
+ /*   @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }*/
 }
