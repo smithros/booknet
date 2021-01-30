@@ -80,6 +80,6 @@ public class Review {
     @Column(name = "grade")
     private int grade;
 
-    @Column(name = "is_published")
-    private boolean isPublished;
+    @Column(name = "status")
+    private boolean status;
 }
