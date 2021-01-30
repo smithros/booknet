@@ -26,12 +26,14 @@
 package com.kpi.booknet.booknet.repos;
 
 import java.util.List;
+import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -44,7 +46,24 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByEmail(String email);
 
+    List<User> findAllByName(String name);
+
+    List<User> findAllByRoleEquals(UserRole role);
+
+    @Transactional
     @Modifying
-    @Query("update User u set u = :usr where u.name = :name")
-    void updateByName(@Param("name") String name, @Param("usr") User user);
+    @Query("update User u set u.name = :name, u.password = :pwd, u.email =:email where u.name = :name")
+    void updateByName(@Param("name") String name,
+                      @Param("pwd") String password,
+                      @Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query("update User u set u.activated = false where u.id = :id")
+    void deactivateAccount(@Param("id") long id);
+
+    @Transactional
+    @Modifying
+    @Query("update User u set u.activated = false where u.email = :email")
+    void activateAccount(@Param("email") String email);
 }
