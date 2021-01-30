@@ -25,43 +25,33 @@
 
 package com.kpi.booknet.booknet.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import com.kpi.booknet.booknet.model.User;
-import com.kpi.booknet.booknet.services.AuthorizationService;
+import com.kpi.booknet.booknet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class AuthorizationController {
-
-    private final AuthorizationService authService;
+@RequestMapping("/user")
+public class UserController {
+    private final UserService userService;
 
     @Autowired
-    public AuthorizationController(final AuthorizationService authService) {
-        this.authService = authService;
+    public UserController(final UserService userService) {
+        this.userService = userService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestParam(name = "login") final String login,
-                                      @RequestParam(name = "password") final String password) {
-        return Optional.ofNullable(this.authService.authorize(login, password))
-            .map(ResponseEntity::ok)
-            .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<User> registration(@RequestParam(name = "login") final String login,
-                                             @RequestParam(name = "password") final String password,
-                                             @RequestParam(name = "email") final String email) {
-        return Optional.ofNullable(this.authService.register(login, password, email))
-            .map(ResponseEntity::ok)
-            .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    @RequestMapping(method = RequestMethod.GET, value = "/get/all")
+    public ResponseEntity<?> getAllUsers() {
+        List<User> response = userService.getAllUsers();
+        System.out.println(response);
+        return response.isEmpty() ?
+            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 }

@@ -81,7 +81,7 @@ public class User {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
-    @JoinColumn(name = "email", referencedColumnName = "email")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @OneToOne(cascade = CascadeType.ALL)
     private RecoverCode recoverCode;
 

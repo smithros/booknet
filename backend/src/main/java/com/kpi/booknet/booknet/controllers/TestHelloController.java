@@ -33,6 +33,7 @@ import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.BookFile;
 import com.kpi.booknet.booknet.model.BookPhoto;
 import com.kpi.booknet.booknet.model.Genre;
+import com.kpi.booknet.booknet.model.RecoverCode;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
@@ -82,7 +83,7 @@ public class TestHelloController {
         return "passed";
     }
 
-    @GetMapping("/user/save")
+    @GetMapping("/test/save")
     public String testUserSave() {
         User user = new User();
         user.setName("user1");
@@ -91,6 +92,10 @@ public class TestHelloController {
         user.setActivated(true);
         user.setVerified(true);
         user.setRole(UserRole.USER);
+        RecoverCode recoverCode = new RecoverCode();
+        recoverCode.setCode("111");
+        recoverCode.setEmail(user.getEmail());
+        user.setRecoverCode(recoverCode);
 
 
         Genre genre = new Genre();
@@ -114,7 +119,7 @@ public class TestHelloController {
         return bookRepository.findById(id).get();
     }
 
-    @GetMapping("/user/get/{id}")
+    @GetMapping("/test/get/{id}")
     public User testUserGet(@PathVariable(name = "id") Long id) {
         return userRepository.findById(id).get();
     }

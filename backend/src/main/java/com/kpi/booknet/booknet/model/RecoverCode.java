@@ -25,14 +25,11 @@
 
 package com.kpi.booknet.booknet.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,11 +50,11 @@ public class RecoverCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recover_code_id")
-    private int id;
+    private long id;
 
     @NotBlank
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "code", nullable = false)
     private String code;
 
     @NotBlank
@@ -66,11 +63,7 @@ public class RecoverCode {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
 }
