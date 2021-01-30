@@ -23,14 +23,15 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.configuration;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootApplication
-public class BookNetApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(BookNetApplication.class, args);
-	}
+@Configuration
+public class AppConfig {
+ /*   @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }*/
 }

@@ -23,14 +23,10 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.repos;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.kpi.booknet.booknet.model.BookFile;
+import org.springframework.data.repository.CrudRepository;
 
-@SpringBootApplication
-public class BookNetApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(BookNetApplication.class, args);
-	}
+public interface BookFileRepository extends CrudRepository<BookFile, Long> {
 }

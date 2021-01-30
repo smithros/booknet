@@ -23,14 +23,43 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.model;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@SpringBootApplication
-public class BookNetApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(BookNetApplication.class, args);
-	}
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "usr_book")
+public class UserBook {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usr_book_id")
+    private long id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User userId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private Book bookId;
+
+    @Column(name = "is_read")
+    private boolean isRead;
+
+    @Column(name = "is_favourite")
+    private boolean isFavourite;
 }

@@ -23,14 +23,36 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.services;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.List;
+import com.kpi.booknet.booknet.model.User;
+import com.kpi.booknet.booknet.repos.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@SpringBootApplication
-public class BookNetApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(BookNetApplication.class, args);
-	}
+@Service
+public class UserService {
+
+    public static final String EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(final UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+    public User getUserById(final long id) {
+        final User user = this.userRepository.findById(id);
+        if (user.isActivated()) {
+            return user;
+        }
+        return null;
+    }
 }

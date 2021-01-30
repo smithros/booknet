@@ -23,16 +23,47 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@RestController
-public class TestHelloController {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "recover_code")
+public class RecoverCode {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recover_code_id")
+    private long id;
 
-    @GetMapping("/")
-    public String method(){
-        return "test app running";
-    }
+    @NotBlank
+    @NotNull
+    @Column(name = "code", nullable = false)
+    private String code;
+
+    @NotBlank
+    @NotNull
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 }

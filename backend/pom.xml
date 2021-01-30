@@ -94,36 +94,48 @@
       <artifactId>spring-context</artifactId>
       <version>5.2.1.RELEASE</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.10</version>
+      <scope>provided</scope>
+    </dependency>
+
+     <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-data-jpa</artifactId>
+     </dependency>
     <!--
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>5.2.1.RELEASE</version>
+    </dependency>
 
-        <dependency>
-          <groupId>org.springframework.security</groupId>
-          <artifactId>spring-security-jwt</artifactId>
-          <version>1.0.11.RELEASE</version>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
 
-        <dependency>
-          <groupId>org.springframework.security</groupId>
-          <artifactId>spring-security-test</artifactId>
-          <scope>test</scope>
-        </dependency>
+    <dependency>
+       <groupId>org.springframework.security</groupId>
+       <artifactId>spring-security-test</artifactId>
+       <scope>test</scope>
+     </dependency>
 
-        <dependency>
-          <groupId>com.thetransactioncompany</groupId>
-          <artifactId>cors-filter</artifactId>
-          <version>2.5</version>
-        </dependency>
+     <dependency>
+       <groupId>com.thetransactioncompany</groupId>
+       <artifactId>cors-filter</artifactId>
+       <version>2.5</version>
+     </dependency>
 
-        <dependency>
-          <groupId>org.springframework.security.oauth</groupId>
-          <artifactId>spring-security-oauth2</artifactId>
-          <version>${oauth.version}</version>
-        </dependency>
-    -->
+     <dependency>
+       <groupId>org.springframework.security.oauth</groupId>
+       <artifactId>spring-security-oauth2</artifactId>
+       <version>${oauth.version}</version>
+     </dependency>
+            -->
   </dependencies>
 
   <repositories>
@@ -162,6 +174,14 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>9</source>
+          <target>9</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>
