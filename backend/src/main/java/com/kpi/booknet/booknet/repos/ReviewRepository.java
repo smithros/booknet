@@ -25,10 +25,31 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.List;
+import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.Review;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
+
+    List<Review> findReviewsByBookId(Book book);
+
+    List<Review> findReviewsByStatusIsTrueAndBookId(Book book);
+
+    List<Review> findReviewsByStatusIsFalseAndBookId(Book book);
+
+    List<Review> findAll();
+
+    Review findById(long id);
+
+    @Transactional
+    @Modifying
+    @Query("update Review r set r.status = true, r.adminId = :adminId where r.id = :reviewId")
+    void acceptReview(@Param("adminId") long adminId, @Param("reviewId") long reviewId);
 }

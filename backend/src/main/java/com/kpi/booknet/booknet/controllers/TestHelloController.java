@@ -38,11 +38,13 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class TestHelloController {
 
     private final BookRepository bookRepository;

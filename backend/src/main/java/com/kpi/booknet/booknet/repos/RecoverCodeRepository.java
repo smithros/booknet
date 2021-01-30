@@ -31,4 +31,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RecoverCodeRepository extends CrudRepository<RecoverCode, Long> {
+
+    RecoverCode findByCode(String code);
 }

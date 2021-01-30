@@ -23,15 +23,16 @@
  *
  */
 
-package com.kpi.booknet.booknet.repos;
+package com.kpi.booknet.booknet.controllers;
 
-import com.kpi.booknet.booknet.model.Book;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Repository
-public interface BookRepository extends CrudRepository<Book, Long> {
+@Controller
+public class ConnectivityController {
 
-    Book findById(long id);
-
+    @RequestMapping("")
+    public String showAngular() {
+        return "forward:/index.html";
+    }
 }
