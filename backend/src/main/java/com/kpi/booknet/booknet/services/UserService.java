@@ -26,18 +26,26 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
-import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.RecoverCodeRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
+import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-
+    /**
+     * Email regex.
+     */
     public static final String EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+
+    /**
+     * Password regex to check if it contains at least: one letter, one number, one special symbol
+     * and total length is not less than 8.
+     */
+    public static final String PASSWORD_REGEX
+        = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$_!%*#?&])[A-Za-z\\d@$!%*_#?&]{8,}$";
 
     private final UserRepository userRepo;
     private final RecoverCodeRepository recoverCodeRepo;

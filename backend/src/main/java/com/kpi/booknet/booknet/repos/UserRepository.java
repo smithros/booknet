@@ -26,8 +26,8 @@
 package com.kpi.booknet.booknet.repos;
 
 import java.util.List;
-import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.User;
+import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
