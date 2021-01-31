@@ -69,7 +69,7 @@ public class BookService {
     public Book updateBook(final Book book) {
         if (this.bookRepo.findById(book.getId()) != null) {
             this.bookRepo.updateBookById(
-                book.getTitle(), book.getIntroText(), book.getPhotoId().getId(),
+                book.getTitle(), book.getText(), book.getPhotoId().getId(),
                 book.getFileId().getId(), book.isStatus(), book.getId());
             return book;
         } else {

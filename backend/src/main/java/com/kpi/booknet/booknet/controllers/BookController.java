@@ -33,11 +33,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -52,23 +51,26 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        Book response = bookService.createBook(book);
+    public ResponseEntity<Book> addBook(@RequestBody final Book book) {
+        final Book response = bookService.createBook(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<Book> updateBook(@RequestBody Book book) {
-        Book response = bookService.updateBook(book);
+    public ResponseEntity<Book> updateBook(@RequestBody final Book book) {
+        final Book response = bookService.updateBook(book);
+        System.out.println(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/id", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<?> getBookById(@RequestParam(name = "id") String bookId) {
-        return ResponseEntity.ok(bookService.getBookById(Integer.parseInt(bookId)));
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Book> getBookById(@PathVariable(name = "id") final long bookId) {
+        final Book response = bookService.getBookById(bookId);
+        return Optional.ofNullable(response)
+            .map(ResponseEntity::ok)
+            .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -91,13 +93,13 @@ public class BookController {
         return ResponseEntity.ok(bookService.getAllGenresName());
     }
 
-    @RequestMapping(value = "/authors/book", method = RequestMethod.GET)
-    public ResponseEntity<?> getAuthorsByBookId(@RequestParam(name = "book") int bookId) {
+    @RequestMapping(value = "/authors/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAuthorsByBookId(@PathVariable(name = "id") final long bookId) {
         return ResponseEntity.ok(bookService.getAuthorsByBookId(bookId));
     }
 
-    @RequestMapping(value = "/genre/book", method = RequestMethod.GET)
-    public ResponseEntity<?> getGenreByBookId(@RequestParam(name = "book") int bookId) {
+    @RequestMapping(value = "/genre/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getGenreByBookId(@PathVariable(name = "id") final long bookId) {
         return ResponseEntity.ok(bookService.getGenreByBookId(bookId));
     }
 }

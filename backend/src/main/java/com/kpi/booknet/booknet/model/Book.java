@@ -40,9 +40,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -62,7 +64,7 @@ public class Book {
     @NotBlank
     @NotNull
     @Column(name = "text", nullable = false)
-    private String introText;
+    private String text;
 
     @JoinColumn(name = "photo_id", referencedColumnName = "book_photo_id")
     @OneToOne(cascade = CascadeType.ALL)
