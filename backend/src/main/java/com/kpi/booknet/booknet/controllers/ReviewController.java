@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,8 +58,8 @@ public class ReviewController {
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/detail")
-    public ResponseEntity<?> getReviewById(@RequestParam(name = "review") final long reviewId) {
+    @RequestMapping(value = "/{id}")
+    public ResponseEntity<?> getReviewById(@PathVariable(name = "id") final long reviewId) {
         Review response = reviewService.getReviewById(reviewId);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
@@ -80,13 +81,13 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.getNotAcceptedReview(bookId));
     }
 
-    @RequestMapping(value = "/accept")
-    public void acceptReview(@RequestBody Review review) {
-        reviewService.acceptReview(review);
+    @RequestMapping(value = "/accept/{id}")
+    public void acceptReview(@PathVariable(name = "id") final long reviewId) {
+        reviewService.acceptReview(reviewId);
     }
 
-    @RequestMapping(value = "/delete")
-    public void deleteReviewById(@RequestParam(name = "review") final long reviewId) {
+    @RequestMapping(value = "/delete/{id}")
+    public void deleteReviewById(@PathVariable(name = "id") final long reviewId) {
         reviewService.deleteReviewById(reviewId);
     }
 }

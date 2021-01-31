@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserBookRepository extends CrudRepository<UserBook, Long> {
 
-    @Query(value = "select book_id from usr_book where user_id = ?", nativeQuery = true)
+    @Query(value = "select book_id from usr_book where user_id = ?1", nativeQuery = true)
     List<Long> findAllBookIdsByUserId(long id);
 
     List<UserBook> findAll();
@@ -49,38 +49,38 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
     UserBook findByUserIdAndBookId(User user, Book book);
 
     @Query(
-        value = "select book_id from usr_book where is_favourite = true and user_id = ?",
+        value = "select book_id from usr_book where is_favourite = true and user_id = ?1",
         nativeQuery = true
     )
     List<Long> findAllByFavouriteIsTrueAndUserId(long id);
 
     @Query(
-        value = "select book_id from usr_book where is_read = true and user_id = ?",
+        value = "select book_id from usr_book where is_read = true and user_id = ?1",
         nativeQuery = true
     )
     List<Long> findAllByReadIsTrueAndUserId(long id);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isRead = true where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.read = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void markBookAsRead(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isFavourite = true where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.favourite = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void markBookAsFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isRead = false where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.read = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void removeFromRead(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isFavourite = false where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.favourite = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void removeFromFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
 

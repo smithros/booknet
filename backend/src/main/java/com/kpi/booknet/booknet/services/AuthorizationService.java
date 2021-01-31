@@ -25,9 +25,9 @@
 
 package com.kpi.booknet.booknet.services;
 
-import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
+import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,10 +50,14 @@ public class AuthorizationService {
             final User user = userRepository.findByName(login);
             if (user != null && user.isActivated()) {
                 //if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
-                if (password.matches(user.getPassword()))
+                if (password.matches(user.getPassword())) {
                     return user;
+                } else {
+                    throw new IllegalStateException("Password is not correct");
+                }
                 // }
             }
+            throw new IllegalStateException("User is absent or not activated");
         }
         throw new IllegalStateException("Login or password is empty");
     }

@@ -36,9 +36,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -64,21 +64,21 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book bookId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
     private User adminId;
 
-    @Size(max = 10)
+    @Max(value = 10)
     @Column(name = "grade")
-    private int grade;
+    private Integer grade;
 
     @Column(name = "status")
     private boolean status;

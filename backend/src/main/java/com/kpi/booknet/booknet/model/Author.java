@@ -52,4 +52,7 @@ public class Author {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+/*    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;*/
 }

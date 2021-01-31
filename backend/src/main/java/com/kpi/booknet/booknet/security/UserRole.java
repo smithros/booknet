@@ -23,7 +23,7 @@
  *
  */
 
-package com.kpi.booknet.booknet;
+package com.kpi.booknet.booknet.security;
 
 public enum UserRole {
     USER,

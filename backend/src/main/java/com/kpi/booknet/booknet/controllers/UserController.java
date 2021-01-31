@@ -52,15 +52,14 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ResponseEntity<User> update(@RequestParam(name = "login") String login,
-                                       @RequestParam(name = "newPassword") String newPassword,
-                                       @RequestParam(name = "newEmail") String newEmail) {
+    public ResponseEntity<User> update(@RequestParam(name = "login") final String login,
+                                       @RequestParam(name = "newPassword") final String newPassword,
+                                       @RequestParam(name = "newEmail") final String newEmail) {
         final User updatedUser = User.builder()
             .name(login)
             .password(newPassword)
             .email(newEmail)
             .build();
-        System.out.println(updatedUser);
         final User response = userService.updateByName(updatedUser);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
@@ -68,41 +67,41 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ResponseEntity<User> get(@PathVariable(value = "id") int id) {
-        User response = userService.getById(id);
+    public ResponseEntity<User> get(@PathVariable(value = "id") final long id) {
+        final User response = userService.getById(id);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/admin")
-    public ResponseEntity<User> createAdmin(@RequestBody User admin) {
-        User response = userService.createAdmin(admin);
+    public ResponseEntity<User> createAdmin(@RequestBody final User admin) {
+        final User response = userService.createAdmin(admin);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/activate")
-    public ResponseEntity<User> activate(@RequestParam(name = "email") String email,
-                                         @RequestParam(name = "code") String code) {
-        User response = userService.activateAccount(email, code);
+    public ResponseEntity<User> activate(@RequestParam(name = "email") final String email,
+                                         @RequestParam(name = "code") final String code) {
+        final User response = userService.activateAccount(email, code);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/deactivate")
-    public ResponseEntity<?> deactivateAccount(@PathVariable(value = "id") int id) {
+    public ResponseEntity<?> deactivateAccount(@PathVariable(value = "id") final long id) {
         return userService.deactivateAccount(id) ?
             new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{searchName}")
     public ResponseEntity<List<User>> searchUsers(
-        @PathVariable(value = "searchName") String searchName
+        @PathVariable(value = "searchName") final String searchName
     ) {
-        List<User> response = userService.searchUsersByUsername(searchName);
+        final List<User> response = userService.searchUsersByUsername(searchName);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }

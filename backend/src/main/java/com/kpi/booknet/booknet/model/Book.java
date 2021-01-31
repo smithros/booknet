@@ -40,14 +40,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="book")
+@Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +64,7 @@ public class Book {
     @NotBlank
     @NotNull
     @Column(name = "text", nullable = false)
-    private String introText;
+    private String text;
 
     @JoinColumn(name = "photo_id", referencedColumnName = "book_photo_id")
     @OneToOne(cascade = CascadeType.ALL)
@@ -72,8 +74,8 @@ public class Book {
     @OneToOne(cascade = CascadeType.ALL)
     private BookFile fileId;
 
-    @Column(name = "is_out")
-    private boolean isOut;
+    @Column(name = "status")
+    private boolean status;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_genre",

@@ -49,17 +49,17 @@ public class UserBook {
     @Column(name = "usr_book_id")
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book bookId;
 
     @Column(name = "is_read")
-    private boolean isRead;
+    private boolean read;
 
     @Column(name = "is_favourite")
-    private boolean isFavourite;
+    private boolean favourite;
 }
