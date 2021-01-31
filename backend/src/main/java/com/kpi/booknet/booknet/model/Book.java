@@ -72,8 +72,8 @@ public class Book {
     @OneToOne(cascade = CascadeType.ALL)
     private BookFile fileId;
 
-    @Column(name = "is_out")
-    private boolean isOut;
+    @Column(name = "status")
+    private boolean status;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_genre",

@@ -25,13 +25,33 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.List;
 import com.kpi.booknet.booknet.model.Book;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findById(long id);
+
+    @Query(
+        value = "select b.* from author_book ab, book b where ab.book_id = b.book_id and ab.author_id = ?1",
+        nativeQuery = true
+    )
+    List<Book> findBooksByAuthorId(long authorId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into author_book (book_id, author_id) values (?1, ?2)", nativeQuery = true)
+    void connectAuthorAndBook(long bookId, long authorId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update book set title = :title, text = :text, photo_id = :photoId, file_id = :fileId, status = :status where book_id = :bookId", nativeQuery = true)
+    void updateBookById(String title, String text, long photoId, long fileId, boolean status, long bookId);
 
 }

@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserBookRepository extends CrudRepository<UserBook, Long> {
 
-    @Query(value = "select book_id from usr_book where user_id = ?", nativeQuery = true)
+    @Query(value = "select book_id from usr_book where user_id = ?1", nativeQuery = true)
     List<Long> findAllBookIdsByUserId(long id);
 
     List<UserBook> findAll();
@@ -49,13 +49,13 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
     UserBook findByUserIdAndBookId(User user, Book book);
 
     @Query(
-        value = "select book_id from usr_book where is_favourite = true and user_id = ?",
+        value = "select book_id from usr_book where is_favourite = true and user_id = ?1",
         nativeQuery = true
     )
     List<Long> findAllByFavouriteIsTrueAndUserId(long id);
 
     @Query(
-        value = "select book_id from usr_book where is_read = true and user_id = ?",
+        value = "select book_id from usr_book where is_read = true and user_id = ?1",
         nativeQuery = true
     )
     List<Long> findAllByReadIsTrueAndUserId(long id);

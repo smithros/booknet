@@ -75,7 +75,7 @@ public class TestHelloController {
         Book book = new Book();
         book.setTitle("test_book");
         book.setIntroText("someText");
-        book.setOut(true);
+        book.setStatus(true);
         book.setPhotoId(bookPhoto);
         book.setFileId(bookFile);
         book.setAuthors(Set.of(author, author2));

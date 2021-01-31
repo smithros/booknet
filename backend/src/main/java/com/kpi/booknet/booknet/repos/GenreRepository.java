@@ -25,11 +25,28 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.List;
 import com.kpi.booknet.booknet.model.Genre;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GenreRepository extends CrudRepository<Genre, Long> {
 
+    List<Genre> findAll();
+
+    Genre findById(long id);
+
+    @Query(
+        value = "select g.* from book_genre bg, genre g where bg.genre_id = g.genre_id and bg.book_id = ?1",
+        nativeQuery = true
+    )
+    List<Genre> findByBookId(long bookId);
+
+    @Query(
+        value = "select description from genre",
+        nativeQuery = true
+    )
+    List<String> findAllGenresNames();
 }
