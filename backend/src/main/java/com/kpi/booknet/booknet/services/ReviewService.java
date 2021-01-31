@@ -25,11 +25,13 @@
 
 package com.kpi.booknet.booknet.services;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.ReviewRepository;
+import com.kpi.booknet.booknet.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +39,16 @@ import org.springframework.stereotype.Service;
 public class ReviewService {
     private final ReviewRepository reviewRepo;
     private final BookRepository bookRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public ReviewService(final ReviewRepository reviewRepo, final BookRepository bookRepo) {
+    public ReviewService(final ReviewRepository reviewRepo,
+                         final BookRepository bookRepo,
+                         final UserRepository userRepo
+    ) {
         this.reviewRepo = reviewRepo;
         this.bookRepo = bookRepo;
+        this.userRepo = userRepo;
     }
 
     public Review getReviewById(final long id) {
@@ -50,6 +57,9 @@ public class ReviewService {
 
     public Review createReview(final Review review) {
         review.setDate(new Date());
+        review.setBookId(this.bookRepo.findById(review.getBookId().getId()));
+        review.setUserId(this.userRepo.findById(review.getUserId().getId()));
+        review.setAdminId(this.userRepo.findById(review.getAdminId().getId()));
         return this.reviewRepo.save(review);
     }
 
@@ -57,8 +67,8 @@ public class ReviewService {
         return this.reviewRepo.findReviewsByBookId(this.bookRepo.findById(bookId));
     }
 
-    public void acceptReview(final Review review) {
-        this.reviewRepo.acceptReview(review.getAdminId().getId(), review.getId());
+    public void acceptReview(final long reviewId) {
+        this.reviewRepo.acceptReview(reviewId);
     }
 
     public List<Review> getAcceptedReview(final long bookId) {
@@ -69,6 +79,7 @@ public class ReviewService {
         return this.reviewRepo.findReviewsByStatusIsFalseAndBookId(this.bookRepo.findById(bookId));
     }
 
+    @Transactional
     public void deleteReviewById(final long reviewId) {
         if (this.reviewRepo.findById(reviewId) != null) {
             this.reviewRepo.deleteById(reviewId);
