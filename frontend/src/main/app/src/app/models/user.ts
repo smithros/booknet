@@ -1,13 +1,4 @@
 export class User {
-  private _userId: number;
-  private _userName: string;
-  private _userPassword: string;
-  private _email: string;
-  private _userRole: string;
-  private _recoverCode: string;
-  private _verified: boolean;
-  private _activated: boolean;
-
   constructor(userId: number, userName: string, userPassword: string,
               email: string, userRole: string, recoverCode: string,
               verified: boolean, activated: boolean
@@ -22,6 +13,8 @@ export class User {
     this._activated = activated;
   }
 
+  private _userId: number;
+
   get userId(): number {
     return this._userId;
   }
@@ -29,6 +22,8 @@ export class User {
   set userId(value: number) {
     this._userId = value;
   }
+
+  private _userName: string;
 
   get userName(): string {
     return this._userName;
@@ -38,6 +33,8 @@ export class User {
     this._userName = value;
   }
 
+  private _userPassword: string;
+
   get userPassword(): string {
     return this._userPassword;
   }
@@ -45,6 +42,8 @@ export class User {
   set userPassword(value: string) {
     this._userPassword = value;
   }
+
+  private _email: string;
 
   get email(): string {
     return this._email;
@@ -54,6 +53,8 @@ export class User {
     this._email = value;
   }
 
+  private _userRole: string;
+
   get userRole(): string {
     return this._userRole;
   }
@@ -61,6 +62,8 @@ export class User {
   set userRole(value: string) {
     this._userRole = value;
   }
+
+  private _recoverCode: string;
 
   get recoverCode(): string {
     return this._recoverCode;
@@ -70,6 +73,8 @@ export class User {
     this._recoverCode = value;
   }
 
+  private _verified: boolean;
+
   get verified(): boolean {
     return this._verified;
   }
@@ -77,6 +82,8 @@ export class User {
   set verified(value: boolean) {
     this._verified = value;
   }
+
+  private _activated: boolean;
 
   get activated(): boolean {
     return this._activated;

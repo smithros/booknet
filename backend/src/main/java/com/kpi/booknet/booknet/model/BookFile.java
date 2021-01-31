@@ -39,7 +39,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="book_file")
+@Table(name = "book_file")
 public class BookFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

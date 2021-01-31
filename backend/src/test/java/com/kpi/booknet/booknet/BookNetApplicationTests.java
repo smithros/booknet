@@ -31,8 +31,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BookNetApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
