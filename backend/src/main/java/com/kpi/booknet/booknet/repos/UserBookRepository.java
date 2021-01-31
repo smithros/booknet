@@ -62,25 +62,25 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isRead = true where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.read = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void markBookAsRead(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isFavourite = true where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.favourite = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void markBookAsFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isRead = false where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.read = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void removeFromRead(@Param("userId") long userId, @Param("bookId") long bookId);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.isFavourite = false where ub.userId = :userId " +
+    @Query("update UserBook ub set ub.favourite = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
     void removeFromFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
 
