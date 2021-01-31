@@ -26,7 +26,6 @@
 package com.kpi.booknet.booknet.controllers;
 
 import java.util.Set;
-import com.kpi.booknet.booknet.UserRole;
 import com.kpi.booknet.booknet.model.Achievement;
 import com.kpi.booknet.booknet.model.Author;
 import com.kpi.booknet.booknet.model.Book;
@@ -37,6 +36,7 @@ import com.kpi.booknet.booknet.model.RecoverCode;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
+import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,7 +74,7 @@ public class TestHelloController {
 
         Book book = new Book();
         book.setTitle("test_book");
-        book.setIntroText("someText");
+        book.setText("someText");
         book.setStatus(true);
         book.setPhotoId(bookPhoto);
         book.setFileId(bookFile);
