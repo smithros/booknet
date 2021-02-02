@@ -28,7 +28,6 @@ package com.kpi.booknet.booknet.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,14 +60,14 @@ public class Announcement {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @Column(name = "is_out")
-    private boolean isOut;
+    @Column(name = "status")
+    private boolean status;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book bookId;
 
@@ -79,5 +78,4 @@ public class Announcement {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "admin_id", referencedColumnName = "user_id")
     private User adminId;
-
 }
