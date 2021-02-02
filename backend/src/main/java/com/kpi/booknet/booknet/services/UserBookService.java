@@ -90,22 +90,22 @@ public class UserBookService {
     }
 
     public UserBook markBookAsRead(final UserBook ub) {
-        this.userBookRepo.markBookAsRead(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.markBookAsRead(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook markBookAsFavourite(final UserBook ub) {
-        this.userBookRepo.markBookAsFavourite(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.markBookAsFavourite(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook removeFromRead(final UserBook ub) {
-        this.userBookRepo.removeFromRead(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.removeFromRead(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook removeFromFavourite(final UserBook ub) {
-        this.userBookRepo.removeFromFavourite(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.removeFromFavourite(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
