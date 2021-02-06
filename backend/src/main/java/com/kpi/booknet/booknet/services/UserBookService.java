@@ -57,27 +57,16 @@ public class UserBookService {
     }
 
     public List<Book> getAllUsersBooks(final long userId) {
-        return this.userBookRepo.findAllBookIdsByUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(this.userBookRepo.findAllBookIdsByUserId(userId));
     }
 
     public List<Book> getAllFavouriteBooks(final long userId) {
-        return this.userBookRepo.findAllByFavouriteIsTrueAndUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(
+            this.userBookRepo.findAllByFavouriteIsTrueAndUserId(userId));
     }
 
     public List<Book> getAllReadBooks(long userId) {
-        return this.userBookRepo.findAllByReadIsTrueAndUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(this.userBookRepo.findAllByReadIsTrueAndUserId(userId));
     }
 
     public List<UserBook> getAllUserBooksByUserId(final long userId) {
@@ -90,22 +79,22 @@ public class UserBookService {
     }
 
     public UserBook markBookAsRead(final UserBook ub) {
-        this.userBookRepo.markBookAsRead(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.markBookAsRead(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook markBookAsFavourite(final UserBook ub) {
-        this.userBookRepo.markBookAsFavourite(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.markBookAsFavourite(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook removeFromRead(final UserBook ub) {
-        this.userBookRepo.removeFromRead(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.removeFromRead(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
     public UserBook removeFromFavourite(final UserBook ub) {
-        this.userBookRepo.removeFromFavourite(ub.getUserId().getId(), ub.getBookId().getId());
+        this.userBookRepo.removeFromFavourite(ub.getUserId(), ub.getBookId());
         return ub;
     }
 
@@ -113,4 +102,10 @@ public class UserBookService {
         return this.userBookRepo.findByUserIdAndBookId(userBook.getUserId(), userBook.getBookId());
     }
 
+    private List<Book> constructListOfBooks(final List<Long> ids) {
+        return ids.stream()
+            .map(this.bookRepo::findById)
+            .map(Optional::get)
+            .collect(Collectors.toList());
+    }
 }

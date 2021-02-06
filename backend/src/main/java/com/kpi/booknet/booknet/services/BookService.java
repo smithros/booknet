@@ -26,13 +26,14 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
+import com.kpi.booknet.booknet.exceptions.BookNetException;
+import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Author;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.Genre;
 import com.kpi.booknet.booknet.repos.AuthorRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
-import com.kpi.booknet.booknet.repos.UserBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,18 +42,15 @@ public class BookService {
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
-    private final UserBookRepository userBookRepo;
 
     @Autowired
     public BookService(final BookRepository bookRepo,
                        final GenreRepository genreRepo,
-                       final AuthorRepository authorRepo,
-                       final UserBookRepository userBookRepo
+                       final AuthorRepository authorRepo
     ) {
         this.bookRepo = bookRepo;
         this.genreRepo = genreRepo;
         this.authorRepo = authorRepo;
-        this.userBookRepo = userBookRepo;
     }
 
     public Book createBook(final Book book) {
@@ -73,7 +71,7 @@ public class BookService {
                 book.getFileId().getId(), book.isStatus(), book.getId());
             return book;
         } else {
-            throw new IllegalStateException("There is no book with such a id");
+            throw new BookNetException(ErrorType.NO_BOOK_WITH_SUCH_ID.getMessage());
         }
     }
 

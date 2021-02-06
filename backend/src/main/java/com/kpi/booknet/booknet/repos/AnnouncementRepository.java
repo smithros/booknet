@@ -25,10 +25,38 @@
 
 package com.kpi.booknet.booknet.repos;
 
+import java.util.Date;
+import java.util.List;
 import com.kpi.booknet.booknet.model.Announcement;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface AnnouncementRepository extends CrudRepository<Announcement, Long> {
+
+    Announcement findById(long id);
+
+    Announcement deleteById(long id);
+
+    List<Announcement> findAnnouncementsByStatusTrue();
+
+    List<Announcement> findAnnouncementsByStatusFalse();
+
+    @Transactional
+    @Modifying
+    @Query(value = "update announcement set status = true where announcement_id = :id",
+        nativeQuery = true)
+    void publish(long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update announcement set description = :desc, date = :date, status = :status, " +
+        "book_id = :bookId, admin_id = :adminId, owner_id =:ownerId " +
+        "where announcement_id = :announcementId", nativeQuery = true)
+    void updateById(String desc, Date date, boolean status, long bookId,
+                    long adminId, long ownerId, long announcementId);
+
 }

@@ -64,25 +64,25 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
     @Modifying
     @Query("update UserBook ub set ub.read = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
-    void markBookAsRead(@Param("userId") long userId, @Param("bookId") long bookId);
+    void markBookAsRead(@Param("userId") User userId, @Param("bookId") Book bookId);
 
     @Transactional
     @Modifying
     @Query("update UserBook ub set ub.favourite = true where ub.userId = :userId " +
         "and ub.bookId = :bookId")
-    void markBookAsFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
+    void markBookAsFavourite(@Param("userId") User userId, @Param("bookId") Book bookId);
 
     @Transactional
     @Modifying
     @Query("update UserBook ub set ub.read = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
-    void removeFromRead(@Param("userId") long userId, @Param("bookId") long bookId);
+    void removeFromRead(@Param("userId") User userId, @Param("bookId") Book bookId);
 
     @Transactional
     @Modifying
     @Query("update UserBook ub set ub.favourite = false where ub.userId = :userId " +
         "and ub.bookId = :bookId")
-    void removeFromFavourite(@Param("userId") long userId, @Param("bookId") long bookId);
+    void removeFromFavourite(@Param("userId") User userId, @Param("bookId") Book bookId);
 
     void deleteByUserIdAndBookId(User userId, Book bookId);
 }

@@ -26,6 +26,8 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
+import com.kpi.booknet.booknet.exceptions.BookNetException;
+import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.RecoverCodeRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
@@ -64,10 +66,10 @@ public class UserService {
 
     public User getById(final long id) {
         final User user = this.userRepo.findById(id);
-        if (user.isActivated()) {
-            return user;
+        if (!user.isActivated()) {
+            throw new BookNetException(ErrorType.USR_NOT_ACTIVATED.getMessage());
         }
-        throw new IllegalStateException("This user is not activated");
+        return user;
     }
 
     public User updateByName(final User user) {
@@ -84,13 +86,13 @@ public class UserService {
                     // user.setPassword(bCryptPasswordEncoder.encode(password));
                     this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
                 } else {
-                    throw new IllegalStateException("Password is incorrect");
+                    throw new BookNetException(ErrorType.USR_PWD_NOT_VALID.getMessage());
                 }
             }
             currUser = this.userRepo.findByName(user.getName());
             return currUser;
         }
-        throw new IllegalStateException("Email is not valid");
+        throw new BookNetException(ErrorType.USR_EMAIL_NOT_VALID.getMessage());
     }
 
     public User createAdmin(final User admin) {
@@ -99,7 +101,7 @@ public class UserService {
             this.userRepo.save(admin);
             return this.userRepo.findByName(admin.getName());
         }
-        throw new IllegalStateException("Such user already exists");
+        throw new BookNetException(ErrorType.USR_ALREADY_EXISTS.getMessage());
     }
 
     public User activateAccount(final String email, final String code) {
@@ -107,7 +109,7 @@ public class UserService {
             this.userRepo.activateAccount(email);
             return userRepo.findByEmail(email);
         }
-        throw new IllegalStateException("There is no recover code");
+        throw new BookNetException(ErrorType.NO_SUCH_RECOVER_CODE.getMessage());
     }
 
     public boolean deactivateAccount(final long id) {
@@ -115,7 +117,7 @@ public class UserService {
             userRepo.deactivateAccount(id);
             return true;
         }
-        throw new IllegalStateException("There is no such a user");
+        throw new BookNetException(ErrorType.USR_NOT_FOUND.getMessage());
     }
 
     public List<User> searchUsersByUsername(final String search) {
@@ -141,9 +143,6 @@ public class UserService {
 
     private boolean emailIsValid(final User currUser, final String email) {
         return !email.isEmpty() && email.matches(UserService.EMAIL_REGEX)
-            && (
-            this.userRepo.findByEmail(email) == null
-                || currUser.getEmail().equals(email)
-        );
+            && (this.userRepo.findByEmail(email) == null || currUser.getEmail().equals(email));
     }
 }
