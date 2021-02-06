@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/css/material-dashboard.css"
             ],
             "scripts": []
           },

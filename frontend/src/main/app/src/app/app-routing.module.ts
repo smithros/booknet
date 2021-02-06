@@ -4,12 +4,16 @@ import {LoginComponent} from './components/authorization/login/login.component';
 import {UserListComponent} from './components/user-list/user-list.component';
 import {RegisterComponent} from './components/authorization/register/register.component';
 import {LandingComponent} from './components/landing/landing.component';
+import {ErrorPageComponent} from './components/error-page/error-page.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user/get/all', component: UserListComponent},
-  {path: 'home', component: LandingComponent}
+  {path: 'home', component: LandingComponent},
+  {path: '', component: LandingComponent, pathMatch: 'full'},
+  {path: 'error', component: ErrorPageComponent},
+  {path: '**', component: ErrorPageComponent}
 ];
 
 @NgModule({

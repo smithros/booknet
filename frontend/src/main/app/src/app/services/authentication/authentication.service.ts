@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../models/user';
 import {environment} from '../../../environments/environment';
+import {StorageService} from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import {environment} from '../../../environments/environment';
 export class AuthenticationService {
   private readonly backendUrl;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private storageService: StorageService) {
     this.backendUrl = environment.apiBaseUrl;
   }
 
@@ -31,5 +33,11 @@ export class AuthenticationService {
     console.log(form);
 
     return this.http.post<User>(`${this.backendUrl}/register`, form);
+  }
+
+  public logout(): void {
+    //window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('user');
+    this.storageService.setUser(null);
   }
 }
