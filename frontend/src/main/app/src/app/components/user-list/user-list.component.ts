@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user-service/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-list',
@@ -9,16 +10,23 @@ import {UserService} from '../../services/user-service/user.service';
 })
 export class UserListComponent implements OnInit {
 
-  private users: User[] = [];
+  public users: User[] = [];
 
   constructor(private userService: UserService) {
   }
 
   ngOnInit() {
-    this.userService.findAll().subscribe(data => {
-      this.users = data;
-      console.log(this.users);
-    });
+    this.getUsers();
   }
 
+  public getUsers(): void {
+    this.userService.findAll().subscribe(
+      (response: User[]) => {
+        this.users = response;
+        console.log(this.users);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+  }
 }
