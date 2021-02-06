@@ -63,7 +63,7 @@ public class AuthorizationService {
     }
 
 
-    public User register(String login, String password, String email) {
+    public User register(final String login, final String password, final String email) {
         if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
             if (this.userRepository.findByName(login) == null
                 && this.userRepository.findByEmail(email) == null) {

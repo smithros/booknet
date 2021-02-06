@@ -7,9 +7,12 @@ import {User} from '../../models/user';
 })
 export class StorageService {
   public currentUser: Observable<User>;
-  private currentUserSubject!: BehaviorSubject<User>;
+  private currentUserSubject: BehaviorSubject<User>;
 
   constructor() {
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(<string> sessionStorage.getItem('user'))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -17,7 +20,7 @@ export class StorageService {
     return this.currentUserSubject.getValue();
   }
 
-  public setUser(value: any) {
+  public setUser(value: any): void {
     this.currentUserSubject.next(value);
   }
 }

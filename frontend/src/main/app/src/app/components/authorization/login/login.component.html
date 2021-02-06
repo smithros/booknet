@@ -1,5 +1,3 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-      rel="stylesheet"/>
 
 <div class="container">
   <div class="row">
@@ -8,12 +6,12 @@
       <!-- Nav tabs -->
       <div class="tab" role="tabpanel">
         <div class="logo mb-5">
-          <a routerLink="/">BOOKNET</a>
+          <a routerLink="/">Free online Library</a>
         </div>
 
         <ul class="nav nav-tabs" role="tablist">
           <li class="active" role="presentation"><a aria-controls="home" role="tab">sign in</a></li>
-          <li role="presentation"><a aria-controls="profile" role="tab" routerLink="/registration">sign
+          <li role="presentation"><a aria-controls="profile" role="tab" routerLink="/register">sign
             up</a>
           </li>
         </ul>
@@ -43,6 +41,9 @@
 
               <div *ngIf="isError" class="alert alert-danger text-center" role="alert">
                 Username or password is incorrect!
+              </div>
+              <div class="form-group forgot-pass">
+                <a routerLink="/recover">Forgot password?</a>
               </div>
             </form>
           </div>

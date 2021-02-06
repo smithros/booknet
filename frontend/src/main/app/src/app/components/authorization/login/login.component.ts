@@ -13,10 +13,10 @@ import {StorageService} from '../../../services/storage/storage.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  isError: boolean = false;
-  loginGroup!: FormGroup;
-  subscription!: Subscription;
-  loginSubscription!: Subscription;
+  public isError: boolean = false;
+  public loginGroup!: FormGroup;
+  public subscription!: Subscription;
+  public loginSubscription!: Subscription;
 
   constructor(private http: HttpClient,
               public authService: AuthenticationService,
@@ -27,28 +27,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  get username() {
+  public get username() {
     return this.loginGroup.get('username');
   }
 
-  get password() {
+  public get password() {
     return this.loginGroup.get('password');
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.loginGroup = new FormGroup({
       username: new FormControl(''),
       password: new FormControl('')
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.loginSubscription) {
-      this.loginSubscription.unsubscribe();
-    }
   }
 
   public login(): void {
@@ -58,9 +49,28 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.loginSubscription = this.authService.login(username, password).subscribe(
       user => {
-        this.storageService.setUser(user);
-        sessionStorage.setItem('user', JSON.stringify(user));
-        this.router.navigateByUrl('/');
-      });
+        if (!user.verified || !user.activated) {
+          this.router.navigateByUrl('/verify');
+        } else {
+          this.storageService.setUser(user);
+          sessionStorage.setItem('user', JSON.stringify(user));
+          this.router.navigateByUrl('/');
+          console.log(user);
+        }
+      },
+      () => {
+        this.isError = true;
+        this.loginGroup.patchValue({password: ''});
+      }
+    );
+  }
+
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 }
