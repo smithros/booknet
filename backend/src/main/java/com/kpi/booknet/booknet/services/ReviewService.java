@@ -28,6 +28,8 @@ package com.kpi.booknet.booknet.services;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import com.kpi.booknet.booknet.exceptions.BookNetException;
+import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.ReviewRepository;
@@ -83,6 +85,8 @@ public class ReviewService {
     public void deleteReviewById(final long reviewId) {
         if (this.reviewRepo.findById(reviewId) != null) {
             this.reviewRepo.deleteById(reviewId);
+        } else {
+            throw new BookNetException(ErrorType.NO_REVIEW_WITH_SUCH_ID.getMessage());
         }
     }
 

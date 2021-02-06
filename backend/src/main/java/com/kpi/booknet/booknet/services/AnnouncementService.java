@@ -26,6 +26,8 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
+import com.kpi.booknet.booknet.exceptions.BookNetException;
+import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Announcement;
 import com.kpi.booknet.booknet.repos.AnnouncementRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
@@ -70,7 +72,7 @@ public class AnnouncementService {
         if (this.getById(id) != null) {
             return this.announcementRepo.deleteById(id);
         }
-        throw new IllegalStateException("No announcement with such a Id");
+        throw new BookNetException(ErrorType.NO_SUCH_ANNOUNCEMENT.getMessage());
     }
 
     public Announcement create(final Announcement ann) {

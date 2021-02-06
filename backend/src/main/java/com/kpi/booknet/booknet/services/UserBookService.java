@@ -57,27 +57,16 @@ public class UserBookService {
     }
 
     public List<Book> getAllUsersBooks(final long userId) {
-        return this.userBookRepo.findAllBookIdsByUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(this.userBookRepo.findAllBookIdsByUserId(userId));
     }
 
     public List<Book> getAllFavouriteBooks(final long userId) {
-        return this.userBookRepo.findAllByFavouriteIsTrueAndUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(
+            this.userBookRepo.findAllByFavouriteIsTrueAndUserId(userId));
     }
 
     public List<Book> getAllReadBooks(long userId) {
-        return this.userBookRepo.findAllByReadIsTrueAndUserId(userId)
-            .stream()
-            .map(this.bookRepo::findById)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        return this.constructListOfBooks(this.userBookRepo.findAllByReadIsTrueAndUserId(userId));
     }
 
     public List<UserBook> getAllUserBooksByUserId(final long userId) {
@@ -113,4 +102,10 @@ public class UserBookService {
         return this.userBookRepo.findByUserIdAndBookId(userBook.getUserId(), userBook.getBookId());
     }
 
+    private List<Book> constructListOfBooks(final List<Long> ids) {
+        return ids.stream()
+            .map(this.bookRepo::findById)
+            .map(Optional::get)
+            .collect(Collectors.toList());
+    }
 }

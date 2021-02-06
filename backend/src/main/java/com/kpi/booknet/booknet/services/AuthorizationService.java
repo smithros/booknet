@@ -25,6 +25,8 @@
 
 package com.kpi.booknet.booknet.services;
 
+import com.kpi.booknet.booknet.exceptions.BookNetException;
+import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
@@ -53,13 +55,13 @@ public class AuthorizationService {
                 if (password.matches(user.getPassword())) {
                     return user;
                 } else {
-                    throw new IllegalStateException("Password is not correct");
+                    throw new BookNetException(ErrorType.USR_PWD_NOT_CORRECT.getMessage());
                 }
                 // }
             }
-            throw new IllegalStateException("User is absent or not activated");
+            throw new BookNetException(ErrorType.USR_NOT_ACTIVATED_OR_IS_ABSENT.getMessage());
         }
-        throw new IllegalStateException("Login or password is empty");
+        throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());
     }
 
 
@@ -77,6 +79,6 @@ public class AuthorizationService {
                 return this.userRepository.findByName(login);
             }
         }
-        throw new IllegalStateException("Login or password or email is empty");
+        throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());
     }
 }
