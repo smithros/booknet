@@ -25,6 +25,7 @@
 
 package com.kpi.booknet.booknet.controllers;
 
+import java.util.HashSet;
 import java.util.Set;
 import com.kpi.booknet.booknet.model.Achievement;
 import com.kpi.booknet.booknet.model.Author;
@@ -78,8 +79,14 @@ public class TestHelloController {
         book.setStatus(true);
         book.setPhotoId(bookPhoto);
         book.setFileId(bookFile);
-        book.setAuthors(Set.of(author, author2));
-        book.setGenres(Set.of(genre, genre1));
+        Set<Author> set1 = new HashSet<>();
+        set1.add(author);
+        set1.add(author2);
+        Set<Genre> set2 = new HashSet<>();
+        set2.add(genre);
+        set2.add(genre1);
+        book.setAuthors(set1);
+        book.setGenres(set2);
 
         bookRepository.save(book);
         return "passed";
@@ -108,8 +115,9 @@ public class TestHelloController {
         achievement.setDescription("Achiv");
         achievement.setEntity("Entity");
         achievement.setGenreId(genre);
-
-        user.setAchievements(Set.of(achievement));
+        Set<Achievement> set = new HashSet<>();
+        set.add(achievement);
+        user.setAchievements(set);
 
         userRepository.save(user);
         return "passed";
