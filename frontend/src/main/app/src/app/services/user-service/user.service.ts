@@ -9,11 +9,10 @@ import {environment} from '../../../environments/environment';
 })
 export class UserService {
 
-  private usersUrl: string = environment.apiBaseUrl;
-
   public inputRegExp = new RegExp(/^(?=\D)+\w*$/);
   public passwordRegExp = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$_!%*#?&])[A-Za-z\d@$!%*_#?&]{8,}$/);
   public emailRegExp = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
+  private usersUrl: string = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {
 
