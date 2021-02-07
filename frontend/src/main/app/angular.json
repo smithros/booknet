@@ -27,9 +27,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/assets/css/material-dashboard.css"
-            ],
+            "styles": [],
             "scripts": []
           },
           "configurations": {
