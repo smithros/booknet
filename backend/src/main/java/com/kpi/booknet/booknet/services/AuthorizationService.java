@@ -31,33 +31,30 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizationService {
-
-    private final UserRepository userRepository;
-    //private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepo;
+    private final BCryptPasswordEncoder pswdEncoder;
 
     @Autowired
-    public AuthorizationService(final UserRepository userRepository/*,
-                                final BCryptPasswordEncoder bCryptPasswordEncoder*/
-    ) {
-        this.userRepository = userRepository;
-        /*this.bCryptPasswordEncoder = bCryptPasswordEncoder;*/
+    public AuthorizationService(final UserRepository userRepo,
+                                final BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepo = userRepo;
+        this.pswdEncoder = bCryptPasswordEncoder;
     }
 
     public User authorize(final String login, final String password) {
         if (!login.isEmpty() && !password.isEmpty()) {
-            final User user = userRepository.findByName(login);
+            final User user = this.userRepo.findByName(login);
             if (user != null && user.isActivated()) {
-                //if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
-                if (password.matches(user.getPassword())) {
+                if (this.pswdEncoder.matches(password, user.getPassword())) {
                     return user;
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_CORRECT.getMessage());
                 }
-                // }
             }
             throw new BookNetException(ErrorType.USR_NOT_ACTIVATED_OR_IS_ABSENT.getMessage());
         }
@@ -66,16 +63,16 @@ public class AuthorizationService {
 
     public User register(final String login, final String password, final String email) {
         if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
-            if (this.userRepository.findByName(login) == null
-                && this.userRepository.findByEmail(email) == null) {
+            if (this.userRepo.findByName(login) == null
+                && this.userRepo.findByEmail(email) == null) {
                 final User user = User.builder()
                     .name(login)
-                    .password(password)
+                    .password(pswdEncoder.encode(password))
                     .email(email)
                     .role(UserRole.USER)
                     .build();
-                this.userRepository.save(user);
-                return this.userRepository.findByName(login);
+                this.userRepo.save(user);
+                return this.userRepo.findByName(login);
             }
         }
         throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());

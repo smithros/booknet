@@ -33,6 +33,7 @@ import com.kpi.booknet.booknet.repos.RecoverCodeRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,13 +52,16 @@ public class UserService {
 
     private final UserRepository userRepo;
     private final RecoverCodeRepository recoverCodeRepo;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(final UserRepository userRepository,
-                       final RecoverCodeRepository recoverCodeRepo
+                       final RecoverCodeRepository recoverCodeRepo,
+                       final BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         this.userRepo = userRepository;
         this.recoverCodeRepo = recoverCodeRepo;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getAllUsers() {
@@ -83,7 +87,7 @@ public class UserService {
                 this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
             } else {
                 if (this.passwordIsValid(password)) {
-                    // user.setPassword(bCryptPasswordEncoder.encode(password));
+                    user.setPassword(bCryptPasswordEncoder.encode(password));
                     this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_VALID.getMessage());
