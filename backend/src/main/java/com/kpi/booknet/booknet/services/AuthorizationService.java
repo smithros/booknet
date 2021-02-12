@@ -64,7 +64,6 @@ public class AuthorizationService {
         throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());
     }
 
-
     public User register(final String login, final String password, final String email) {
         if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
             if (this.userRepository.findByName(login) == null

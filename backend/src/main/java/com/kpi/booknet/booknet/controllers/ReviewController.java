@@ -73,12 +73,12 @@ public class ReviewController {
 
     @RequestMapping(value = "/accepted", method = RequestMethod.GET)
     public ResponseEntity<?> getAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(reviewService.getAcceptedReview(bookId));
+        return ResponseEntity.ok(reviewService.getAcceptedReviews(bookId));
     }
 
     @RequestMapping(value = "/notaccepted", method = RequestMethod.GET)
     public ResponseEntity<?> getNotAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(reviewService.getNotAcceptedReview(bookId));
+        return ResponseEntity.ok(reviewService.getNotAcceptedReviews(bookId));
     }
 
     @RequestMapping(value = "/accept/{id}")

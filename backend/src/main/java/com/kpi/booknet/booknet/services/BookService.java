@@ -54,7 +54,7 @@ public class BookService {
     }
 
     public Book createBook(final Book book) {
-        if (this.bookRepo.findById(book.getId()) == null) {
+        if (this.getBookById(book.getId()) == null) {
             this.bookRepo.save(book);
         }
         return book;
@@ -65,7 +65,7 @@ public class BookService {
     }
 
     public Book updateBook(final Book book) {
-        if (this.bookRepo.findById(book.getId()) != null) {
+        if (this.getBookById(book.getId()) != null) {
             this.bookRepo.updateBookById(
                 book.getTitle(), book.getText(), book.getPhotoId().getId(),
                 book.getFileId().getId(), book.isStatus(), book.getId());
@@ -98,5 +98,4 @@ public class BookService {
     public List<String> getAllGenresName() {
         return this.genreRepo.findAllGenresNames();
     }
-
 }

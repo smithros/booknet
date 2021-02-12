@@ -73,24 +73,24 @@ public class ReviewService {
         this.reviewRepo.acceptReview(reviewId);
     }
 
-    public List<Review> getAcceptedReview(final long bookId) {
+    public List<Review> getAcceptedReviews(final long bookId) {
         return this.reviewRepo.findReviewsByStatusIsTrueAndBookId(this.bookRepo.findById(bookId));
     }
 
-    public List<Review> getNotAcceptedReview(final long bookId) {
+    public List<Review> getNotAcceptedReviews(final long bookId) {
         return this.reviewRepo.findReviewsByStatusIsFalseAndBookId(this.bookRepo.findById(bookId));
     }
 
     @Transactional
     public void deleteReviewById(final long reviewId) {
-        if (this.reviewRepo.findById(reviewId) != null) {
+        if (this.getReviewById(reviewId) != null) {
             this.reviewRepo.deleteById(reviewId);
         } else {
             throw new BookNetException(ErrorType.NO_REVIEW_WITH_SUCH_ID.getMessage());
         }
     }
 
-    public List<Review> getAllReview() {
+    public List<Review> getAllReviews() {
         return this.reviewRepo.findAll();
     }
 }
