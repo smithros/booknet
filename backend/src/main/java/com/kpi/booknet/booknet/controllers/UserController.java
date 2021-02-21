@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,13 +43,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(final UserService userService) {
-        this.userService = userService;
-    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
     public ResponseEntity<User> update(@RequestParam(name = "login") final String login,

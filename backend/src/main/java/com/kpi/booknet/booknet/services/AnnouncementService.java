@@ -32,24 +32,15 @@ import com.kpi.booknet.booknet.model.Announcement;
 import com.kpi.booknet.booknet.repos.AnnouncementRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AnnouncementService {
     private final AnnouncementRepository announcementRepo;
     private final BookRepository bookRepo;
     private final UserRepository userRepo;
-
-    @Autowired
-    public AnnouncementService(final AnnouncementRepository announcementRepo,
-                               final BookRepository bookRepo,
-                               final UserRepository userRepo
-    ) {
-        this.announcementRepo = announcementRepo;
-        this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
-    }
 
     public Announcement getById(final long id) {
         return this.announcementRepo.findById(id);

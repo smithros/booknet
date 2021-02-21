@@ -38,7 +38,7 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,16 +46,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class TestHelloController {
 
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public TestHelloController(final BookRepository bookRepository, final UserRepository userRepository) {
-        this.bookRepository = bookRepository;
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/book/save")
     public String testBookSave() {

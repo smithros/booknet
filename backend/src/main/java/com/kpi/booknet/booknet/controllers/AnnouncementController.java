@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import com.kpi.booknet.booknet.model.Announcement;
 import com.kpi.booknet.booknet.services.AnnouncementService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,14 +42,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/announcements")
+@AllArgsConstructor
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;
-
-    @Autowired
-    public AnnouncementController(final AnnouncementService announcementService) {
-        this.announcementService = announcementService;
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getPublishedAnnouncements() {

@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,13 +42,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/book")
+@AllArgsConstructor
 public class BookController {
     private final BookService bookService;
-
-    @Autowired
-    public BookController(final BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Book> addBook(@RequestBody final Book book) {

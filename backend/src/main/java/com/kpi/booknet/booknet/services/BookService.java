@@ -34,24 +34,15 @@ import com.kpi.booknet.booknet.model.Genre;
 import com.kpi.booknet.booknet.repos.AuthorRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
-
-    @Autowired
-    public BookService(final BookRepository bookRepo,
-                       final GenreRepository genreRepo,
-                       final AuthorRepository authorRepo
-    ) {
-        this.bookRepo = bookRepo;
-        this.genreRepo = genreRepo;
-        this.authorRepo = authorRepo;
-    }
 
     public Book createBook(final Book book) {
         if (this.getBookById(book.getId()) == null) {

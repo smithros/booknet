@@ -30,21 +30,15 @@ import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthorizationService {
     private final UserRepository userRepo;
     private final BCryptPasswordEncoder pswdEncoder;
-
-    @Autowired
-    public AuthorizationService(final UserRepository userRepo,
-                                final BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepo = userRepo;
-        this.pswdEncoder = bCryptPasswordEncoder;
-    }
 
     public User authorize(final String login, final String password) {
         if (!login.isEmpty() && !password.isEmpty()) {

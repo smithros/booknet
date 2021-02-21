@@ -34,24 +34,15 @@ import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.ReviewRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepo;
     private final BookRepository bookRepo;
     private final UserRepository userRepo;
-
-    @Autowired
-    public ReviewService(final ReviewRepository reviewRepo,
-                         final BookRepository bookRepo,
-                         final UserRepository userRepo
-    ) {
-        this.reviewRepo = reviewRepo;
-        this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
-    }
 
     public Review getReviewById(final long id) {
         return this.reviewRepo.findById(id);
