@@ -28,7 +28,7 @@ package com.kpi.booknet.booknet.controllers;
 import java.util.Optional;
 import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.services.AuthorizationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,14 +39,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class AuthorizationController {
 
     private final AuthorizationService authService;
-
-    @Autowired
-    public AuthorizationController(final AuthorizationService authService) {
-        this.authService = authService;
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestParam(name = "login") final String login,

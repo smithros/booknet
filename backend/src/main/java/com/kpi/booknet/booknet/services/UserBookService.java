@@ -33,24 +33,15 @@ import com.kpi.booknet.booknet.model.UserBook;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserBookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserBookService {
     private final BookRepository bookRepo;
     private final UserBookRepository userBookRepo;
     private final UserRepository userRepo;
-
-    @Autowired
-    public UserBookService(final BookRepository bookRepo,
-                           final UserBookRepository userBookRepo,
-                           final UserRepository userRepository
-    ) {
-        this.bookRepo = bookRepo;
-        this.userBookRepo = userBookRepo;
-        this.userRepo = userRepository;
-    }
 
     public UserBook addBookToUser(final UserBook userBook) {
         return this.userBookRepo.save(userBook);

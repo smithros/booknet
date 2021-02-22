@@ -32,10 +32,12 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.RecoverCodeRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     /**
      * Email regex.
@@ -51,14 +53,7 @@ public class UserService {
 
     private final UserRepository userRepo;
     private final RecoverCodeRepository recoverCodeRepo;
-
-    @Autowired
-    public UserService(final UserRepository userRepository,
-                       final RecoverCodeRepository recoverCodeRepo
-    ) {
-        this.userRepo = userRepository;
-        this.recoverCodeRepo = recoverCodeRepo;
-    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<User> getAllUsers() {
         return this.userRepo.findAll();
@@ -83,7 +78,7 @@ public class UserService {
                 this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
             } else {
                 if (this.passwordIsValid(password)) {
-                    // user.setPassword(bCryptPasswordEncoder.encode(password));
+                    user.setPassword(bCryptPasswordEncoder.encode(password));
                     this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_VALID.getMessage());

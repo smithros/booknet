@@ -30,7 +30,7 @@ import java.util.Optional;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.UserBook;
 import com.kpi.booknet.booknet.services.UserBookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,13 +43,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/userBook")
+@AllArgsConstructor
 public class UserBookController {
     private final UserBookService userBookService;
-
-    @Autowired
-    public UserBookController(final UserBookService userBookService) {
-        this.userBookService = userBookService;
-    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<UserBook> addBookToUser(@RequestBody final UserBook userBook) {

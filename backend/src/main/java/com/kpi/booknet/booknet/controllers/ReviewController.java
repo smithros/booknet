@@ -28,7 +28,7 @@ package com.kpi.booknet.booknet.controllers;
 import java.util.Optional;
 import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.services.ReviewService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,14 +42,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/review")
+@AllArgsConstructor
 public class ReviewController {
 
     private final ReviewService reviewService;
-
-    @Autowired
-    public ReviewController(final ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addReview(@RequestBody final Review review) {
@@ -73,12 +69,12 @@ public class ReviewController {
 
     @RequestMapping(value = "/accepted", method = RequestMethod.GET)
     public ResponseEntity<?> getAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(reviewService.getAcceptedReview(bookId));
+        return ResponseEntity.ok(reviewService.getAcceptedReviews(bookId));
     }
 
     @RequestMapping(value = "/notaccepted", method = RequestMethod.GET)
     public ResponseEntity<?> getNotAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(reviewService.getNotAcceptedReview(bookId));
+        return ResponseEntity.ok(reviewService.getNotAcceptedReviews(bookId));
     }
 
     @RequestMapping(value = "/accept/{id}")

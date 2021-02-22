@@ -34,27 +34,18 @@ import com.kpi.booknet.booknet.model.Genre;
 import com.kpi.booknet.booknet.repos.AuthorRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
 
-    @Autowired
-    public BookService(final BookRepository bookRepo,
-                       final GenreRepository genreRepo,
-                       final AuthorRepository authorRepo
-    ) {
-        this.bookRepo = bookRepo;
-        this.genreRepo = genreRepo;
-        this.authorRepo = authorRepo;
-    }
-
     public Book createBook(final Book book) {
-        if (this.bookRepo.findById(book.getId()) == null) {
+        if (this.getBookById(book.getId()) == null) {
             this.bookRepo.save(book);
         }
         return book;
@@ -65,7 +56,7 @@ public class BookService {
     }
 
     public Book updateBook(final Book book) {
-        if (this.bookRepo.findById(book.getId()) != null) {
+        if (this.getBookById(book.getId()) != null) {
             this.bookRepo.updateBookById(
                 book.getTitle(), book.getText(), book.getPhotoId().getId(),
                 book.getFileId().getId(), book.isStatus(), book.getId());
@@ -98,5 +89,4 @@ public class BookService {
     public List<String> getAllGenresName() {
         return this.genreRepo.findAllGenresNames();
     }
-
 }
