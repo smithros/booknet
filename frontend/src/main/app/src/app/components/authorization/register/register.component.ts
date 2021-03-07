@@ -60,7 +60,6 @@ export class RegisterComponent implements OnInit {
   }
 
   public register(): void {
-    console.log('RegisterComponent:register');
     this.isError = false;
     let username = this.username!.value;
     let password = this.password!.value;
@@ -69,9 +68,8 @@ export class RegisterComponent implements OnInit {
     this.regSubscription = this.authenticationService.register(username, password, email).subscribe(
       data => {
         window.sessionStorage.setItem('token', JSON.stringify(data));
-        this.router.navigateByUrl('/verify');
+        //this.router.navigateByUrl('/verify');
       },
-
       err => {
         this.isError = true;
         this.regGroup.patchValue({password: '', confirmPassword: ''});
