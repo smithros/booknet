@@ -39,7 +39,8 @@ build/
 /bazel-out
 
 # dependencies
-/node_modules
+node_modules
+node
 
 # profiling files
 chrome-profiler-events*.json
@@ -75,3 +76,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+

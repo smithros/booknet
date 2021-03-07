@@ -38,7 +38,7 @@
   <name>frontend</name>
   <description>Diploma frontend code</description>
 
-  <!--<build>
+  <build>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -48,7 +48,7 @@
         <configuration>
           <nodeVersion>v12.13.0</nodeVersion>
           <npmVersion>6.12.0</npmVersion>
-          <workingDirectory>src/main</workingDirectory>
+          <workingDirectory>src/main/app</workingDirectory>
         </configuration>
 
         <executions>
@@ -88,6 +88,6 @@
       </resource>
     </resources>
 
-  </build>-->
+  </build>
 
 </project>
