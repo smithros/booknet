@@ -36,10 +36,13 @@ import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @AllArgsConstructor
 public class BookService {
+    private static final Logger log = LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
@@ -47,6 +50,7 @@ public class BookService {
     public Book createBook(final Book book) {
         if (this.getBookById(book.getId()) == null) {
             this.bookRepo.save(book);
+            log.info("Saved book: {}", book);
         }
         return book;
     }
