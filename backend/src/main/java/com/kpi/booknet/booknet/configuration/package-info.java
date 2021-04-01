@@ -22,23 +22,9 @@
  * SOFTWARE.
  */
 
-package com.kpi.booknet.booknet.repos;
-
-import java.util.List;
-import com.kpi.booknet.booknet.model.Author;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface AuthorRepository extends CrudRepository<Author, Long> {
-
-    List<Author> findAuthorsByName(String name);
-
-    @Query(
-        value = "select a.* from author a, author_book ab where ab.book_id = a.author_id and ab.book_id = :bookId",
-        nativeQuery = true
-    )
-    List<Author> findAuthorsByBookId(long bookId);
-
-}
+/**
+ * Contains application configuration classes.
+ *
+ * @since 0.1.0
+ */
+package com.kpi.booknet.booknet.configuration;
