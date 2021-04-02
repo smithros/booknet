@@ -25,6 +25,7 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
+import java.util.Locale;
 import com.kpi.booknet.booknet.exceptions.BookNetException;
 import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.User;
@@ -115,7 +116,7 @@ public class UserService {
     }
 
     public List<User> searchUsersByUsername(final String search) {
-        return this.userRepo.findAllByName(search.toLowerCase());
+        return this.userRepo.findAllByName(search.toLowerCase(Locale.ENGLISH));
     }
 
     public List<User> getAllAdmins() {
@@ -127,8 +128,8 @@ public class UserService {
     }
 
     private boolean notExistsInBase(final User admin) {
-        return this.userRepo.findByName(admin.getName()) == null &&
-            this.userRepo.findByEmail(admin.getEmail()) == null;
+        return this.userRepo.findByName(admin.getName()) == null
+            && this.userRepo.findByEmail(admin.getEmail()) == null;
     }
 
     private boolean passwordIsValid(final String password) {

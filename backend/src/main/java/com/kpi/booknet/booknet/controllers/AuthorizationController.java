@@ -39,14 +39,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
-public class AuthorizationController {
+public final class AuthorizationController {
 
-    private final AuthorizationService authService;
+    private final AuthorizationService service;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestParam(name = "login") final String login,
                                       @RequestParam(name = "password") final String password) {
-        return Optional.ofNullable(this.authService.authorize(login, password))
+        return Optional.ofNullable(this.service.authorize(login, password))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -55,7 +55,7 @@ public class AuthorizationController {
     public ResponseEntity<User> registration(@RequestParam(name = "login") final String login,
                                              @RequestParam(name = "password") final String password,
                                              @RequestParam(name = "email") final String email) {
-        return Optional.ofNullable(this.authService.register(login, password, email))
+        return Optional.ofNullable(this.service.register(login, password, email))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

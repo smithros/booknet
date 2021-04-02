@@ -57,7 +57,8 @@ public class AuthorizationService {
     public User register(final String login, final String password, final String email) {
         if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
             if (this.userRepo.findByName(login) == null
-                && this.userRepo.findByEmail(email) == null) {
+                && this.userRepo.findByEmail(email) == null
+            ) {
                 final User user = User.builder()
                     .name(login)
                     .password(pswdEncoder.encode(password))

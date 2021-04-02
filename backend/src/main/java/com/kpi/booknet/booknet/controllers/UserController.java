@@ -43,8 +43,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 @AllArgsConstructor
-public class UserController {
-    private final UserService userService;
+public final class UserController {
+    private final UserService service;
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
     public ResponseEntity<User> update(@RequestParam(name = "login") final String login,
@@ -55,7 +55,7 @@ public class UserController {
             .password(newPassword)
             .email(newEmail)
             .build();
-        final User response = userService.updateByName(updatedUser);
+        final User response = this.service.updateByName(updatedUser);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -63,7 +63,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<User> get(@PathVariable(value = "id") final long id) {
-        final User response = userService.getById(id);
+        final User response = this.service.getById(id);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -71,7 +71,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/admin")
     public ResponseEntity<User> createAdmin(@RequestBody final User admin) {
-        final User response = userService.createAdmin(admin);
+        final User response = this.service.createAdmin(admin);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -80,7 +80,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/activate")
     public ResponseEntity<User> activate(@RequestParam(name = "email") final String email,
                                          @RequestParam(name = "code") final String code) {
-        final User response = userService.activateAccount(email, code);
+        final User response = this.service.activateAccount(email, code);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -88,7 +88,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/deactivate")
     public ResponseEntity<?> deactivateAccount(@PathVariable(value = "id") final long id) {
-        return userService.deactivateAccount(id) ?
+        return this.service.deactivateAccount(id) ?
             new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
@@ -96,23 +96,23 @@ public class UserController {
     public ResponseEntity<List<User>> searchUsers(
         @PathVariable(value = "searchName") final String searchName
     ) {
-        final List<User> response = userService.searchUsersByUsername(searchName);
+        final List<User> response = this.service.searchUsersByUsername(searchName);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/all")
     public List<User> getAllUsers() {
-        return userService.getAllUsers();
+        return this.service.getAllUsers();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/allAdmins")
     public List<User> getAdmins() {
-        return userService.getAllAdmins();
+        return this.service.getAllAdmins();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/allModer")
     public List<User> getModerators() {
-        return userService.getAllModerators();
+        return this.service.getAllModerators();
     }
 }

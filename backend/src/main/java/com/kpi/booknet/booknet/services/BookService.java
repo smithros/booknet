@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class BookService {
-    private static final Logger log = LoggerFactory.getLogger(BookService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
@@ -49,7 +49,7 @@ public class BookService {
     public Book createBook(final Book book) {
         if (this.getBookById(book.getId()) == null) {
             this.bookRepo.save(book);
-            log.info("Saved book: {}", book);
+            LOG.info("Saved book: {}", book);
         }
         return book;
     }

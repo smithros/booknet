@@ -31,6 +31,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class BookNetException extends RuntimeException {
+public final class BookNetException extends RuntimeException {
     private String message;
 }

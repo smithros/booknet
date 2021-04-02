@@ -46,7 +46,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
-public class TestHelloController {
+public final class TestHelloController {
 
     private final BookRepository bookRepository;
     private final UserRepository userRepository;

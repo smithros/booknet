@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "usr_book")
-public class UserBook implements Serializable {
+public final class UserBook implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_book_id")

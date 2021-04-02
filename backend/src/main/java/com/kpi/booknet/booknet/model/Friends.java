@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "friends")
-public class Friends implements Serializable {
+public final class Friends implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "friends_id")

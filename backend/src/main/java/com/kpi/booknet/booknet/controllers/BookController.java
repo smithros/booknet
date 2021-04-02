@@ -42,19 +42,19 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/book")
 @AllArgsConstructor
-public class BookController {
-    private final BookService bookService;
+public final class BookController {
+    private final BookService service;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Book> addBook(@RequestBody final Book book) {
-        final Book response = bookService.createBook(book);
+        final Book response = this.service.createBook(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Book> updateBook(@RequestBody final Book book) {
-        final Book response = bookService.updateBook(book);
+        final Book response = this.service.updateBook(book);
         System.out.println(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -62,7 +62,7 @@ public class BookController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Book> getBookById(@PathVariable(name = "id") final long bookId) {
-        final Book response = bookService.getBookById(bookId);
+        final Book response = this.service.getBookById(bookId);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -70,31 +70,31 @@ public class BookController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+        return this.service.getAllBooks();
     }
 
     @RequestMapping(value = "/genres", method = RequestMethod.GET)
     public ResponseEntity<?> getAllGenres() {
-        return ResponseEntity.ok(bookService.getAllGenres());
+        return ResponseEntity.ok(this.service.getAllGenres());
     }
 
     @RequestMapping(value = "/authors", method = RequestMethod.GET)
     public ResponseEntity<?> getAllAuthors() {
-        return ResponseEntity.ok(bookService.getAllAuthors());
+        return ResponseEntity.ok(this.service.getAllAuthors());
     }
 
     @RequestMapping(value = "/genresName", method = RequestMethod.GET)
     public ResponseEntity<?> getAllGenresName() {
-        return ResponseEntity.ok(bookService.getAllGenresName());
+        return ResponseEntity.ok(this.service.getAllGenresName());
     }
 
     @RequestMapping(value = "/authors/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getAuthorsByBookId(@PathVariable(name = "id") final long bookId) {
-        return ResponseEntity.ok(bookService.getAuthorsByBookId(bookId));
+        return ResponseEntity.ok(this.service.getAuthorsByBookId(bookId));
     }
 
     @RequestMapping(value = "/genre/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getGenreByBookId(@PathVariable(name = "id") final long bookId) {
-        return ResponseEntity.ok(bookService.getGenreByBookId(bookId));
+        return ResponseEntity.ok(this.service.getGenreByBookId(bookId));
     }
 }

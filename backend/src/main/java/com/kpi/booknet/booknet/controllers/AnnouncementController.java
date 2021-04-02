@@ -42,13 +42,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/announcements")
 @AllArgsConstructor
-public class AnnouncementController {
+public final class AnnouncementController {
 
-    private final AnnouncementService announcementService;
+    private final AnnouncementService service;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getPublishedAnnouncements() {
-        final List<Announcement> response = announcementService.getPublished();
+        final List<Announcement> response = this.service.getPublished();
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -56,7 +56,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getUnpublishedAnnouncements() {
-        final List<Announcement> response = announcementService.getUnpublished();
+        final List<Announcement> response = this.service.getUnpublished();
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -64,7 +64,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getAllAnnouncements() {
-        final List<Announcement> response = announcementService.getAll();
+        final List<Announcement> response = this.service.getAll();
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -72,7 +72,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Announcement> getAnnouncement(@PathVariable("id") final long id) {
-        final Announcement response = announcementService.getById(id);
+        final Announcement response = this.service.getById(id);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -80,7 +80,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/newAnnouncement", method = RequestMethod.POST)
     public ResponseEntity<Announcement> createAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = announcementService.create(ann);
+        final Announcement response = this.service.create(ann);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -88,15 +88,15 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/publish", method = RequestMethod.POST)
     public ResponseEntity<Announcement> publishAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = announcementService.publish(ann);
-        return Optional.ofNullable(announcementService.publish(ann))
+        final Announcement response = this.service.publish(ann);
+        return Optional.ofNullable(this.service.publish(ann))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public ResponseEntity<Announcement> deleteAnnouncement(@PathVariable("id") final long id) {
-        final Announcement response = announcementService.delete(id);
+        final Announcement response = this.service.delete(id);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -104,7 +104,7 @@ public class AnnouncementController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Announcement> updateAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = announcementService.update(ann);
+        final Announcement response = this.service.update(ann);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));

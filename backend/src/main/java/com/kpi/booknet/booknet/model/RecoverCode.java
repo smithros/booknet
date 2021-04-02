@@ -46,7 +46,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "recover_code")
-public class RecoverCode implements Serializable {
+public final class RecoverCode implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recover_code_id")
