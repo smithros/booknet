@@ -5,9 +5,10 @@
 <br>
 This project supposed to be my bachelor course work. <br>
 It's a free online library of books that will allow users to read books, write review on them, rate them, search books, create own books collections with favourite, read and so on.
-It also proposes different annoucements, notifications, achievements about books.<br>
+It also proposes different announcements, notifications, achievements about books.<br>
 Also it provides a simple social network system with ability to add friends.
 
+Inspired by [this project](https://github.com/smithros/nc-training-center).
 ## Stack
 
 - [Spring Framework](https://spring.io/)
@@ -35,7 +36,7 @@ This project is a Maven multimodule project with two submodules:
  - frontend
 
 There are several ways to run a Spring Boot application on your local machine. 
-One way is to execute the `main` method in the `Application` class from your IDE 
+One way is to execute the `main` method in the `BookNetApplication` class from your IDE 
 and go to `http://localhost:8080`. 
 
 Alternatively you can use the 
@@ -55,4 +56,4 @@ This will automatically open `http://localhost:4200` in your browser.
 
 ## Deploy
 
-For application deployment we are using free cloud application platform [Heroku](https://dashboard.heroku.com).
+For application deployment free cloud application platform [Heroku](https://dashboard.heroku.com) is used.
