@@ -1,1 +1,107 @@
-<p>book works!</p>
+<app-navigation></app-navigation>
+<div style="padding-top: 67px; margin-left: 70px;"></div>
+
+<div class="container">
+    <div *ngIf="book" class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="justify-content-center row">
+                    <h2>{{book.title}}</h2>
+                </div>
+                <table class="table">
+                    <tr>
+                        <td rowspan="5">
+                            <div class="justify-content-center row">
+                               <!-- <app-book-img [book]="book"></app-book-img>-->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td *ngIf="authors">
+                            <div class="bmd-label-floating" >Authors:</div>
+                        </td>
+                        <td *ngFor="let author of authors" class="row">
+                            {{author.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Status
+                        </td>
+                        <td>
+                            {{book.status}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="book.genre">
+                        <td>
+                            Genre:
+                        </td>
+                        <td>
+                            {{book.genre}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            {{book.text}}
+                        </td>
+                    </tr>
+                </table>
+                <div>
+       <!--             <app-file-upload [book]="book"></app-file-upload>-->
+                </div>
+     <!--           <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
+                    <a   [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
+                </div>-->
+            </div>
+        </div>
+        <div *ngIf="userBookButtonVisible">
+            <button (click)="addBookToUser(book.id)" *ngIf="!userAddedBook" class="btn btn-primary" id="addBook">
+                Add to my books
+            </button>
+            <button (click)="deleteBookFromUser(book.id)" *ngIf="userAddedBook" class="btn btn-primary"
+                    id="removeBook">Remove from my books
+            </button>
+            <button [disabled]="!userFavReadVisible" (click)="addBookToFavourite(book.id)" *ngIf="!userAddedToFav" class="btn btn-primary" id="addFav">
+                Mark as favourite
+            </button>
+            <button [disabled]="!userFavReadVisible" (click)="removeBookFromFav(book.id)" *ngIf="userAddedToFav" class="btn btn-primary" id="removeFav">
+                Remove from favourite
+            </button>
+            <button [disabled]="!userFavReadVisible" (click)="addBookToRead(book.id)" *ngIf="!userAddedToRead" class="btn btn-primary" id="addRead">
+                Mark as read
+            </button>
+            <button [disabled]="!userFavReadVisible"  (click)="removeBookFromRead(book.id)" *ngIf="userAddedToRead" class="btn btn-primary"
+                    id="removeRead">Remove from read
+            </button>
+        </div>
+    </div>
+<!--    <div>
+        <app-reviews-list [book]="book"></app-reviews-list>
+    </div>-->
+    <div>
+        <div class="row justify-content-between">
+            <div *ngFor="let bookOfSuggestions of suggestionBook |  slice:0:3" class="col-3 col-lg-4  col-md-6 align-items-stretch row">
+                <div class="card card-profile">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3><a (click)="navigateToBook(bookOfSuggestions.id)"> {{bookOfSuggestions.title}}</a></h3>
+                        </div>
+                        <div class="card-description">
+                         <!--   <app-book-img [book]="bookOfSuggestions"></app-book-img>-->
+                            <div>
+                                <h4>Authors:</h4>
+                                <div *ngFor="let author of bookOfSuggestions.authors ">
+                                    <h4>{{author.name}}</h4>
+                                </div>
+                            </div>
+                            <h4 *ngIf="bookOfSuggestions.genre">Genre: {{bookOfSuggestions.genre}}</h4>
+                            <h4>Status: {{bookOfSuggestions.status}}</h4>
+                            <div>Overview: {{bookOfSuggestions.text}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

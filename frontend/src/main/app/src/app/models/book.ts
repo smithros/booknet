@@ -1,7 +1,7 @@
 import {Genre} from './genre';
 import {Author} from './author';
 
-export interface Book {
+export class Book {
   id: number;
   title: string;
   text: string;

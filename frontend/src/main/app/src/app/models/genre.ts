@@ -1,6 +1,6 @@
 import {Book} from './book';
 
-export interface Genre {
+export class Genre {
   id: number;
   desc: string;
   books: Book[];
