@@ -10,7 +10,7 @@ import {UserService} from '../../../services/user-service/user.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['../../../styles/login-register.css']
 })
 export class RegisterComponent implements OnInit {
   public regGroup!: FormGroup;
@@ -30,22 +30,6 @@ export class RegisterComponent implements OnInit {
     if (storage.getUser()) {
       this.router.navigateByUrl('/').then();
     }
-  }
-
-  public get username() {
-    return this.regGroup.get('username');
-  }
-
-  public get password() {
-    return this.regGroup.get('password');
-  }
-
-  public get email() {
-    return this.regGroup.get('email');
-  }
-
-  public get confirmPassword() {
-    return this.regGroup.get('confirmPassword');
   }
 
   public ngOnInit() {
@@ -68,7 +52,7 @@ export class RegisterComponent implements OnInit {
     this.regSubscription = this.authenticationService.register(username, password, email).subscribe(
       data => {
         window.sessionStorage.setItem('token', JSON.stringify(data));
-        //this.router.navigateByUrl('/verify');
+        this.router.navigateByUrl('/login');
       },
       err => {
         this.isError = true;
@@ -84,5 +68,21 @@ export class RegisterComponent implements OnInit {
     if (this.securitySubscription) {
       this.securitySubscription.unsubscribe();
     }
+  }
+
+  public get username() {
+    return this.regGroup.get('username');
+  }
+
+  public get password() {
+    return this.regGroup.get('password');
+  }
+
+  public get email() {
+    return this.regGroup.get('email');
+  }
+
+  public get confirmPassword() {
+    return this.regGroup.get('confirmPassword');
   }
 }
