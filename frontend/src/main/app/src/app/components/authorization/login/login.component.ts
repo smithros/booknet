@@ -9,7 +9,7 @@ import {StorageService} from '../../../services/storage/storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['../../../styles/login-register.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -25,14 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (storageService.getUser()) {
       this.router.navigateByUrl('/').then();
     }
-  }
-
-  public get username() {
-    return this.loginGroup.get('username');
-  }
-
-  public get password() {
-    return this.loginGroup.get('password');
   }
 
   public ngOnInit() {
@@ -72,5 +64,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginSubscription) {
       this.loginSubscription.unsubscribe();
     }
+  }
+
+  public get username() {
+    return this.loginGroup.get('username');
+  }
+
+  public get password() {
+    return this.loginGroup.get('password');
   }
 }

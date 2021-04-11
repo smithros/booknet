@@ -9,11 +9,13 @@ import {Review} from "../../models/review";
 import {Genre} from "../../models/genre";
 import {Author} from "../../models/author";
 import {UserBook} from "../../models/userBook";
+import {StorageService} from "../storage/storage.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService {
+export class ApiService {
 
   private url: string = environment.apiBaseUrl;
   private booksUrl: string = `${this.url}/book`;
@@ -21,7 +23,7 @@ export class ApiServiceService {
   private reviewsUrl: string = `${this.url}/review`;
   private userBookUrl: string = `${this.url}/userBook`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
   }
 
   getBooks(): Observable<Book[]> {
@@ -29,8 +31,8 @@ export class ApiServiceService {
     return this.http.get<Book[]>(url);
   }
 
-  getBookById(privateid: number): Observable<Book> {
-    const url = `${this.booksUrl}/id?id=${id}`;
+  getBookById(id: number): Observable<Book> {
+    const url = `${this.booksUrl}/${id}`;
     return this.http.get<Book>(url);
   }
 
@@ -60,29 +62,29 @@ export class ApiServiceService {
   }
 
   acceptRequest(sender: User, reciever: User): Observable<User> {
-    const url = `${this.url}/friends/accept` + '?access_token=';
+    const url = `${this.url}/friends/accept`;
     const paramsSender = new HttpParams()
       .set('sender', sender.id.toString()).set('reciever', reciever.id.toString());
     return this.http.post<User>(url, paramsSender);
   }
 
   rejectRequest(sender: User, reciever: User): Observable<User> {
-    const url = `${this.url}/friends/reject` + '?access_token=';
+    const url = `${this.url}/friends/reject`;
     const paramsSender = new HttpParams()
       .set('sender', sender.id.toString()).set('reciever', reciever.id.toString());
     return this.http.post<User>(url, paramsSender);
   }
 
   getAuthorsByBookId(bookId: number): Observable<Author[]> {
-    const url = `${this.booksUrl}/authors/book`;
-    const params = new HttpParams().set("book", bookId.toString());
+    const url = `${this.booksUrl}/authors/${bookId}`;
+    const params = new HttpParams().set("id", bookId.toString());
     return this.http.get<Author[]>(url, {params: params});
   }
 
-  getGenreByBookId(bookId: number): Observable<Genre> {
-    const url = `${this.booksUrl}/genre/book`;
-    const params = new HttpParams().set("book", bookId.toString());
-    return this.http.get<Genre>(url, {params: params});
+  getGenreByBookId(bookId: number): Observable<Genre[]> {
+    const url = `${this.booksUrl}/genres/${bookId}`;
+    const params = new HttpParams().set("id", bookId.toString());
+    return this.http.get<Genre[]>(url, {params: params});
   }
 
   getAllAuthor(): Observable<Author[]> {
@@ -217,5 +219,11 @@ export class ApiServiceService {
   getImageByBook(book: Book) {
     const url = `${this.booksUrl}/bookImage`;
     return this.http.post(url, book, {responseType: 'blob'});
+  }
+
+  checkPresentUser() {
+    if (this.storage.getUser() == null) {
+      this.router.navigate(['/login']);
+    }
   }
 }

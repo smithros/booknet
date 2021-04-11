@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Koval Rostyslav
+ * Copyright (c) 2020-2021 Rostyslav Koval
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package com.kpi.booknet.booknet.services;
@@ -58,7 +57,8 @@ public class AuthorizationService {
     public User register(final String login, final String password, final String email) {
         if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
             if (this.userRepo.findByName(login) == null
-                && this.userRepo.findByEmail(email) == null) {
+                && this.userRepo.findByEmail(email) == null
+            ) {
                 final User user = User.builder()
                     .name(login)
                     .password(pswdEncoder.encode(password))

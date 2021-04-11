@@ -1,4 +1,4 @@
-export interface Announcement {
+export class Announcement {
   id: number;
   desc: string;
   date: Date;

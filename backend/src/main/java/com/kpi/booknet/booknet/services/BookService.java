@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Koval Rostyslav
+ * Copyright (c) 2020-2021 Rostyslav Koval
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package com.kpi.booknet.booknet.services;
@@ -42,7 +41,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class BookService {
-    private static final Logger log = LoggerFactory.getLogger(BookService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
@@ -50,7 +49,7 @@ public class BookService {
     public Book createBook(final Book book) {
         if (this.getBookById(book.getId()) == null) {
             this.bookRepo.save(book);
-            log.info("Saved book: {}", book);
+            LOG.info("Saved book: {}", book);
         }
         return book;
     }
@@ -78,16 +77,16 @@ public class BookService {
         return (List<Author>) this.authorRepo.findAll();
     }
 
-    public List<Author> getAuthorsByBookId(long bookId) {
-        return this.authorRepo.findAuthorsByBookId(bookId);
+    public List<Author> getAuthorsByBookId(final long bookId) {
+        return this.authorRepo.findByBookId(bookId);
     }
 
     public List<Genre> getAllGenres() {
         return this.genreRepo.findAll();
     }
 
-    public Genre getGenreByBookId(long bookId) {
-        return this.genreRepo.findById(bookId);
+    public List<Genre> getGenreByBookId(final long bookId) {
+        return this.genreRepo.findByBookId(bookId);
     }
 
     public List<String> getAllGenresName() {

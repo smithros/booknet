@@ -9,6 +9,6 @@ export class AppComponent {
   title: string;
 
   constructor() {
-    this.title = 'Free online library';
+    this.title = 'Booknet';
   }
 }

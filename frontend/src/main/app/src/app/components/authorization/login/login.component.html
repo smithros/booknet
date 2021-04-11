@@ -1,55 +1,40 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-      rel="stylesheet"/>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-offset-3 col-md-6">
-
-      <!-- Nav tabs -->
-      <div class="tab" role="tabpanel">
-        <div class="logo mb-5">
-          <a routerLink="/">Free online Library</a>
+<app-navigation></app-navigation>
+<br>
+<br>
+<br>
+<div class="container" id="container">
+  <div class="form-container sign-in-container">
+    <form action="#">
+      <h1>Sign in</h1>
+      <span>with your login and password</span>
+      <form (ngSubmit)="login()" [formGroup]="loginGroup" class="form-horizontal">
+        <div class="form-group">
+          <input class="form-control" formControlName="username" id="username" maxlength="25"
+                 required type="text" placeholder="Username">
         </div>
-
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active" role="presentation"><a aria-controls="home" role="tab">sign in</a></li>
-          <li role="presentation"><a aria-controls="profile" role="tab" routerLink="/register">sign
-            up</a>
-          </li>
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content tabs">
-          <div class="tab-pane fade in active" id="Section1" role="tabpanel">
-            <form (ngSubmit)="login()" [formGroup]="loginGroup" class="form-horizontal">
-              <!-- Username -->
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input class="form-control" formControlName="username" id="username" maxlength="25"
-                       required type="text">
-              </div>
-              <!-- Password -->
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input class="form-control" formControlName="password" id="password"
-                       maxlength="25" required type="password">
-              </div>
-
-              <div class="form-group">
-                <button [disabled]="loginGroup.invalid" class="btn btn-default" type="submit">Sign
-                  in
-                </button>
-              </div>
-
-              <div *ngIf="isError" class="alert alert-danger text-center" role="alert">
-                Username or password is incorrect!
-              </div>
-              <div class="form-group forgot-pass">
-                <a routerLink="/recover">Forgot password?</a>
-              </div>
-            </form>
-          </div>
+        <div class="form-group">
+          <input class="form-control" formControlName="password" id="password"
+                 maxlength="25" required type="password" placeholder="Password">
         </div>
+        <div class="form-group">
+          <button [disabled]="loginGroup.invalid" type="submit" routerLink="/login">Sign in
+          </button>
+        </div>
+        <div *ngIf="isError" class="alert alert-danger text-center" role="alert">
+          Username or password is incorrect!
+        </div>
+        <div class="form-group forgot-pass">
+          <a routerLink="/recover">Forgot password?</a>
+        </div>
+      </form>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button class="ghost" id="signUp" type="submit" routerLink="/register">Sign Up</button>
       </div>
     </div>
   </div>

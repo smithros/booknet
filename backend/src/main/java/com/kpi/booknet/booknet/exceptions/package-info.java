@@ -22,15 +22,9 @@
  * SOFTWARE.
  */
 
+/**
+ * Contains classes of application exceptions.
+ *
+ * @since 0.1.0
+ */
 package com.kpi.booknet.booknet.exceptions;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-@EqualsAndHashCode(callSuper = true)
-@Data
-@AllArgsConstructor
-public final class BookNetException extends RuntimeException {
-    private String message;
-}

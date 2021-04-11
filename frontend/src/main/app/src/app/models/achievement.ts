@@ -1,4 +1,4 @@
-export interface Achievement {
+export class Achievement {
   id: number;
   desc: string;
   genreId: number;

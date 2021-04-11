@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Koval Rostyslav
+ * Copyright (c) 2020-2021 Rostyslav Koval
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package com.kpi.booknet.booknet.controllers;
@@ -44,19 +43,19 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/userBook")
 @AllArgsConstructor
-public class UserBookController {
-    private final UserBookService userBookService;
+public final class UserBookController {
+    private final UserBookService service;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<UserBook> addBookToUser(@RequestBody final UserBook userBook) {
-        final UserBook response = userBookService.addBookToUser(userBook);
+        final UserBook response = this.service.addBookToUser(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     public ResponseEntity<UserBook> getUserBookById(@RequestBody final UserBook userBook) {
-        final UserBook response = userBookService.getUserBookByBookUserId(userBook);
+        final UserBook response = this.service.getUserBookByBookUserId(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -65,7 +64,7 @@ public class UserBookController {
     public ResponseEntity<List<Book>> getAllUsersBooks(
         @RequestParam(name = "userId") final long userId
     ) {
-        final List<Book> response = userBookService.getAllUsersBooks(userId);
+        final List<Book> response = this.service.getAllUsersBooks(userId);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
@@ -74,7 +73,7 @@ public class UserBookController {
     public ResponseEntity<List<Book>> getAllFavouriteBooks(
         @RequestParam(name = "userId") final long userId
     ) {
-        final List<Book> response = userBookService.getAllFavouriteBooks(userId);
+        final List<Book> response = this.service.getAllFavouriteBooks(userId);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
@@ -83,42 +82,42 @@ public class UserBookController {
     public ResponseEntity<List<Book>> getAllReadBooks(
         @RequestParam(name = "userId") final long userId
     ) {
-        List<Book> response = userBookService.getAllReadBooks(userId);
+        List<Book> response = this.service.getAllReadBooks(userId);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/mark_read", method = RequestMethod.POST)
     public ResponseEntity<UserBook> markBookAsRead(@RequestBody final UserBook userBook) {
-        UserBook response = userBookService.markBookAsRead(userBook);
+        UserBook response = this.service.markBookAsRead(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/mark_fav", method = RequestMethod.POST)
     public ResponseEntity<UserBook> markBookAsFavourite(@RequestBody final UserBook userBook) {
-        UserBook response = userBookService.markBookAsFavourite(userBook);
+        UserBook response = this.service.markBookAsFavourite(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/remove_read", method = RequestMethod.POST)
     public ResponseEntity<UserBook> removeFromRead(@RequestBody final UserBook userBook) {
-        UserBook response = userBookService.removeFromRead(userBook);
+        UserBook response = this.service.removeFromRead(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/remove_fav", method = RequestMethod.POST)
     public ResponseEntity<UserBook> removeFromFavourite(@RequestBody final UserBook userBook) {
-        UserBook response = userBookService.removeFromFavourite(userBook);
+        UserBook response = this.service.removeFromFavourite(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResponseEntity<UserBook> deleteBookFromAdded(@RequestBody final UserBook userBook) {
-        UserBook response = userBookService.deleteFromAdded(userBook);
+        UserBook response = this.service.deleteFromAdded(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -127,7 +126,7 @@ public class UserBookController {
     public ResponseEntity<List<UserBook>> getAllUserBooksByUserId(
         @RequestParam(name = "userId") final long userId
     ) {
-        final List<UserBook> response = userBookService.getAllUserBooksByUserId(userId);
+        final List<UserBook> response = this.service.getAllUserBooksByUserId(userId);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }

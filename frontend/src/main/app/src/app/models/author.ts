@@ -1,6 +1,6 @@
 import {Book} from './book';
 
-export interface Author {
+export class Author {
   id: number;
   name: string;
   books: Book[];
