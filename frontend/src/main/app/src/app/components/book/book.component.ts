@@ -6,6 +6,7 @@ import {ApiService} from "../../services/api-service/api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StorageService} from "../../services/storage/storage.service";
 import {UserBook} from "../../models/userBook";
+import {Genre} from "../../models/genre";
 
 @Component({
   selector: 'app-book',
@@ -17,6 +18,7 @@ export class BookComponent implements OnInit {
   @Input()
   public book: Book;
   public authors: Author[] = [];
+  public genres: Genre[] = [];
   public suggestionBook: Book[] = [];
   public bookId: any;
 
@@ -51,15 +53,20 @@ export class BookComponent implements OnInit {
     this.apiService.getBookById(bookId).subscribe(
       res => {
         this.book = res;
+        console.log(res)
         this.apiService.getGenreByBookId(this.bookId).subscribe(
-          genre => {
-            this.book.genre.fill(genre);
+          genres => {
+            this.book.genres = [];
+            this.genres = genres;
+            genres.forEach(genre => this.book.genres.push(genre));
+            console.log("genres:" + genres)
           });
         this.apiService.getAuthorsByBookId(this.bookId).subscribe(
           authors => {
             this.book.authors = [];
             this.authors = authors;
             authors.forEach(author => this.book.authors.push(author));
+            console.log("authors:"+authors)
           }
         );
         this.apiService.getImageByBook(this.book).subscribe(

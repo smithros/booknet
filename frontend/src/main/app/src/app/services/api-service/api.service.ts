@@ -76,15 +76,15 @@ export class ApiService {
   }
 
   getAuthorsByBookId(bookId: number): Observable<Author[]> {
-    const url = `${this.booksUrl}/authors/book`;
-    const params = new HttpParams().set("book", bookId.toString());
+    const url = `${this.booksUrl}/authors/${bookId}`;
+    const params = new HttpParams().set("id", bookId.toString());
     return this.http.get<Author[]>(url, {params: params});
   }
 
-  getGenreByBookId(bookId: number): Observable<Genre> {
-    const url = `${this.booksUrl}/genre/book`;
-    const params = new HttpParams().set("book", bookId.toString());
-    return this.http.get<Genre>(url, {params: params});
+  getGenreByBookId(bookId: number): Observable<Genre[]> {
+    const url = `${this.booksUrl}/genres/${bookId}`;
+    const params = new HttpParams().set("id", bookId.toString());
+    return this.http.get<Genre[]>(url, {params: params});
   }
 
   getAllAuthor(): Observable<Author[]> {

@@ -77,16 +77,16 @@ public class BookService {
         return (List<Author>) this.authorRepo.findAll();
     }
 
-    public List<Author> getAuthorsByBookId(long bookId) {
-        return this.authorRepo.findAuthorsByBookId(bookId);
+    public List<Author> getAuthorsByBookId(final long bookId) {
+        return this.authorRepo.findByBookId(bookId);
     }
 
     public List<Genre> getAllGenres() {
         return this.genreRepo.findAll();
     }
 
-    public Genre getGenreByBookId(long bookId) {
-        return this.genreRepo.findById(bookId);
+    public List<Genre> getGenreByBookId(final long bookId) {
+        return this.genreRepo.findByBookId(bookId);
     }
 
     public List<String> getAllGenresName() {

@@ -6,7 +6,7 @@
     <div class="col-md-12">
       <div>
         <div class="row justify-content-around">
-          <div *ngFor="let book of books" class="col-lg-4  col-md-6 align-items-stretch row">
+          <div *ngFor="let book of books" class="col-lg-4 col-md-6 align-items-stretch row">
             <div class="card card-profile">
               <div class="card-body">
                 <div class="card-title">
@@ -14,14 +14,19 @@
                 </div>
                 <div class="card-description">
                   <h3>Status: {{book.status}}</h3>
+                  <h3>Text: {{book.text}}</h3>
                   <div>
                     <h3 *ngIf="book.authors">Authors:</h3>
                     <div *ngFor="let author of book.authors ">
-                      <h3>{{author.name}}</h3>
+                      <h4>{{author.name}}</h4>
                     </div>
                   </div>
-                  <h3 *ngIf="book.genre">Genre: {{book.genre}}</h3>
-                  <div>Overview: {{book.text}}</div>
+                  <div>
+                    <h3 *ngIf="book.genres">Genres:</h3>
+                    <div *ngFor="let genre of book.genres ">
+                      <h4>{{genre.desc}}</h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -18,32 +18,26 @@
                     </tr>
                     <tr>
                         <td *ngIf="authors">
-                            <div class="bmd-label-floating" >Authors:</div>
+                            <div class="bmd-label-floating">Authors:</div>
                         </td>
                         <td *ngFor="let author of authors" class="row">
                             {{author.name}}
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Status
-                        </td>
-                        <td>
-                            {{book.status}}
-                        </td>
+                        <td>Status</td>
+                        <td>{{book.status}}</td>
                     </tr>
-                    <tr *ngIf="book.genre">
-                        <td>
-                            Genre:
+                    <tr>
+                        <td *ngIf="genres">
+                            <div class="bmd-label-floating">Genres:</div>
                         </td>
-                        <td>
-                            {{book.genre}}
+                        <td *ngFor="let genre of genres" class="row">
+                            {{genre.desc}}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3">
-                            {{book.text}}
-                        </td>
+                        <td colspan="3">{{book.text}}</td>
                     </tr>
                 </table>
                 <div>
@@ -94,7 +88,12 @@
                                     <h4>{{author.name}}</h4>
                                 </div>
                             </div>
-                            <h4 *ngIf="bookOfSuggestions.genre">Genre: {{bookOfSuggestions.genre}}</h4>
+                            <div>
+                                <h4>Genres:</h4>
+                                <div *ngFor="let genre of bookOfSuggestions.genres ">
+                                    <h4>{{genre.desc}}</h4>
+                                </div>
+                            </div>
                             <h4>Status: {{bookOfSuggestions.status}}</h4>
                             <div>Overview: {{bookOfSuggestions.text}}</div>
                         </div>
@@ -102,6 +101,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

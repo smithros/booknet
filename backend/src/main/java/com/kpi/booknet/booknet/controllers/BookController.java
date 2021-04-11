@@ -93,8 +93,8 @@ public final class BookController {
         return ResponseEntity.ok(this.service.getAuthorsByBookId(bookId));
     }
 
-    @RequestMapping(value = "/genre/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getGenreByBookId(@PathVariable(name = "id") final long bookId) {
+    @RequestMapping(value = "/genres/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getGenresByBookId(@PathVariable(name = "id") final long bookId) {
         return ResponseEntity.ok(this.service.getGenreByBookId(bookId));
     }
 }

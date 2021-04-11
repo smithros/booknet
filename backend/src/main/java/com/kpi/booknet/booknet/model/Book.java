@@ -84,7 +84,7 @@ public final class Book implements Serializable {
     private Set<Genre> genres;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "author_book",
+    @JoinTable(name = "book_author",
         joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "author_id"))
     private Set<Author> authors;

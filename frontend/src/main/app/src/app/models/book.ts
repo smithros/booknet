@@ -6,7 +6,7 @@ export class Book {
   title: string;
   text: string;
   status: string;
-  genre: Genre[];
+  genres: Genre[];
   authors: Author[];
   photo: number;
   photoURL: string | ArrayBuffer;
