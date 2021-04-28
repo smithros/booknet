@@ -231,7 +231,7 @@ export class BookListComponent implements OnInit {
             authors => book.authors = authors
           );
           this.apiService.getGenreByBookId(book.id).subscribe(
-            genre => book.genre.fill(genre)
+            genres => book.genres = genres
           );
         });
 
