@@ -66,11 +66,11 @@ public final class Book implements Serializable {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @JoinColumn(name = "photo_id", referencedColumnName = "book_photo_id")
+    @JoinColumn(name = "photo_id", referencedColumnName = "book_id")
     @OneToOne(cascade = CascadeType.ALL)
     private BookPhoto photoId;
 
-    @JoinColumn(name = "file_id", referencedColumnName = "book_file_id")
+    @JoinColumn(name = "file_id", referencedColumnName = "book_id")
     @OneToOne(cascade = CascadeType.ALL)
     private BookFile fileId;
 

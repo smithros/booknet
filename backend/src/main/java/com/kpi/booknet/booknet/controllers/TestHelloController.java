@@ -54,9 +54,7 @@ public final class TestHelloController {
     @GetMapping("/book/save")
     public String testBookSave() {
         BookPhoto bookPhoto = new BookPhoto();
-        bookPhoto.setName("BookPhoto1");
         BookFile bookFile = new BookFile();
-        bookFile.setName("BookFile1");
 
         Author author = new Author();
         author.setName("Newells");

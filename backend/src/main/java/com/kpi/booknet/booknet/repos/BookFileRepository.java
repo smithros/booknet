@@ -25,7 +25,27 @@
 package com.kpi.booknet.booknet.repos;
 
 import com.kpi.booknet.booknet.model.BookFile;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public interface BookFileRepository extends CrudRepository<BookFile, Long> {
+
+    BookFile findByBookId(long id);
+
+    void deleteByBookId(long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into book_file (book_id, file) values (?1, ?2)", nativeQuery = true)
+    void addFile(long bookId, byte[] file);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update book_file set file = :file where book_id = :bookId", nativeQuery = true)
+    void updateFile(long bookId, byte[] file);
+
 }
