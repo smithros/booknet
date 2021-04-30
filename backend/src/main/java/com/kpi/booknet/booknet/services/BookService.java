@@ -61,8 +61,9 @@ public class BookService {
     public Book updateBook(final Book book) {
         if (this.getBookById(book.getId()) != null) {
             this.bookRepo.updateBookById(
-                book.getTitle(), book.getText(), book.getPhotoId().getBookId(),
-                book.getFileId().getBookId(), book.isStatus(), book.getId());
+                book.getTitle(), book.getText(), book.getPhotoId(),
+                book.getFileId(), book.isStatus(), book.getId());
+            LOG.info("Updated book: {}", book);
             return book;
         } else {
             throw new BookNetException(ErrorType.NO_BOOK_WITH_SUCH_ID.getMessage());

@@ -69,8 +69,8 @@ public final class TestHelloController {
         book.setTitle("test_book");
         book.setText("someText");
         book.setStatus(true);
-        book.setPhotoId(bookPhoto);
-        book.setFileId(bookFile);
+        book.setPhotoId(1L);
+        book.setFileId(1L);
         Set<Author> set1 = new HashSet<>();
         set1.add(author);
         set1.add(author2);

@@ -33,7 +33,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -66,13 +65,11 @@ public final class Book implements Serializable {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @JoinColumn(name = "photo_id", referencedColumnName = "book_id")
-    @OneToOne(cascade = CascadeType.ALL)
-    private BookPhoto photoId;
+    @Column(name = "photo_id")
+    private Long photoId;
 
-    @JoinColumn(name = "file_id", referencedColumnName = "book_id")
-    @OneToOne(cascade = CascadeType.ALL)
-    private BookFile fileId;
+    @Column(name = "file_id")
+    private Long fileId;
 
     @Column(name = "status")
     private boolean status;
