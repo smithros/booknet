@@ -18,15 +18,18 @@
                                 <h2><a [routerLink]="['book', book.id]"> {{book.title}}</a></h2>
                             </div>
                             <div class="card-description">
-<!--                                <app-book-img [book]="book"></app-book-img>-->
+                                <app-book-img [book]="book"></app-book-img>
                                 <h3>Status: {{book.status}}</h3>
                                 <div>
                                     <h3 *ngIf="book.authors">Authors:</h3>
                                     <div *ngFor="let author of book.authors ">
-                                        <h3>{{author.name}}</h3>
+                                        <h4>{{author.name}}</h4>
                                     </div>
                                 </div>
-                                <h3 *ngIf="book.genre">Genre: {{book.genre}}</h3>
+                                    <h3 *ngIf="book.genres">Genres:</h3>
+                                    <div *ngFor="let genre of book.genres ">
+                                      <h4>{{genre.desc}}</h4>
+                                    </div>
                                 <div>Overview: {{book.text}}</div>
                             </div>
 

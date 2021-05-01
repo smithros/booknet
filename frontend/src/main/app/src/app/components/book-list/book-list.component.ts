@@ -44,10 +44,10 @@ export class BookListComponent implements OnInit {
 
   private subscription: Subscription;
 
-  constructor(private apiService: ApiService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private storage: StorageService) {
+  constructor(public apiService: ApiService,
+              public route: ActivatedRoute,
+              public router: Router,
+              public storage: StorageService) {
 
   }
 

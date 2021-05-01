@@ -12,7 +12,7 @@
                     <tr>
                         <td rowspan="5">
                             <div class="justify-content-center row">
-                               <!-- <app-book-img [book]="book"></app-book-img>-->
+                                <app-book-img [book]="book"></app-book-img>
                             </div>
                         </td>
                     </tr>
@@ -41,7 +41,7 @@
                     </tr>
                 </table>
                 <div>
-       <!--             <app-file-upload [book]="book"></app-file-upload>-->
+                    <app-book-file [book]="book"></app-book-file>
                 </div>
      <!--           <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
                     <a   [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
@@ -81,7 +81,7 @@
                             <h3><a (click)="navigateToBook(bookOfSuggestions.id)"> {{bookOfSuggestions.title}}</a></h3>
                         </div>
                         <div class="card-description">
-                         <!--   <app-book-img [book]="bookOfSuggestions"></app-book-img>-->
+                            <app-book-img [book]="bookOfSuggestions"></app-book-img>
                             <div>
                                 <h4>Authors:</h4>
                                 <div *ngFor="let author of bookOfSuggestions.authors ">

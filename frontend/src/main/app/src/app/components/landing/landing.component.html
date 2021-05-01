@@ -13,7 +13,7 @@
                   <h2><a [routerLink]="['books/book', book.id]"> {{book.title}}</a></h2>
                 </div>
                 <div class="card-description">
-                  <h3>Status: {{book.status}}</h3>
+                  <app-book-img [book]="book"></app-book-img>
                   <h3>Text: {{book.text}}</h3>
                   <div>
                     <h3 *ngIf="book.authors">Authors:</h3>
