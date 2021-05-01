@@ -23,7 +23,9 @@ export class ApiService {
   private reviewsUrl: string = `${this.url}/review`;
   private userBookUrl: string = `${this.url}/userBook`;
 
-  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
+  constructor(private http: HttpClient,
+              private storage: StorageService,
+              private router: Router) {
   }
 
   getBooks(): Observable<Book[]> {

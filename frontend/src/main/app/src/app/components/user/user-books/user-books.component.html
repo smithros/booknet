@@ -1,0 +1,72 @@
+<app-navigation></app-navigation>
+<app-sidebar></app-sidebar>
+<div style="padding-top: 67px; margin-left: 260px">
+
+  <div class="row">
+    <div class="col-9">
+      <div class="justify-content-center row text-muted content">
+        <h1 id="myText">My Books List</h1>
+      </div>
+      <div>
+        <div id="btnwrapper">
+          <button (click)="router.navigate(['/userBooks'])" class="btn btn-primary">My Books</button>
+          <div class="divider"></div>
+          <button (click)="router.navigate(['/userBooks/read'])" class="btn btn-primary">My Read Books
+          </button>
+          <div class="divider"></div>
+          <button (click)="router.navigate(['/userBooks/favourite'])" class="btn btn-primary">My Favourite
+            Books
+          </button>
+        </div>
+      </div>
+      <div>
+        <div class="row justify-content-center">
+          <div><h3 *ngIf="emptyBookList">Since you do not have
+            any books, we suggest you most rated books</h3></div>
+          <div *ngFor="let book of userBookList"
+               class="col-lg-4 align-items-stretch row">
+            <div class="card card-profile">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3><a [routerLink]="['book', book.id]"> {{book.title}}</a></h3>
+                </div>
+                <div class="card-description">
+                  <app-book-img [book]="book"></app-book-img>
+                  <h3>Status: {{book.status}}</h3>
+                  <div>
+                    <h3 *ngIf="book.authors">Authors:</h3>
+                    <div *ngFor="let author of book.authors ">
+                      <h4>{{author.name}}</h4>
+                    </div>
+                  </div>
+                  <h3 *ngIf="book.genres">Genres:</h3>
+                  <div *ngFor="let genre of book.genres ">
+                    <h4>{{genre.desc}}</h4>
+                  </div>
+                  <div>Overview: {{book.text}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3">
+      <form action="">
+        <div class="card-body bmd-form-group row">
+          <div class="m-auto">
+            <h3>Search Book</h3>
+          </div>
+          <div class="input-group no-border">
+            <input class="col-12 form-control" [(ngModel)]="searchTitle" name="header"
+                   placeholder="Search by book title"
+                   type="text" required>
+            <i class="material-icons">search</i>
+            <span class="ripple-container"></span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
