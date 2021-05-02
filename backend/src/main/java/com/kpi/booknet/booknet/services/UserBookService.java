@@ -27,12 +27,14 @@ package com.kpi.booknet.booknet.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import com.kpi.booknet.booknet.dto.UserBookDto;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.UserBook;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserBookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,9 +43,14 @@ public class UserBookService {
     private final BookRepository bookRepo;
     private final UserBookRepository userBookRepo;
     private final UserRepository userRepo;
+    private final ModelMapper mapper;
 
-    public UserBook addBookToUser(final UserBook userBook) {
-        return this.userBookRepo.save(userBook);
+    public UserBookDto addBookToUser(final UserBookDto userBook) {
+        final UserBook ent = this.convertUbToEntity(userBook);
+        if (this.userAlreadyHasBook(userBook, ent)) {
+            this.userBookRepo.save(ent);
+        }
+        return userBook;
     }
 
     public List<Book> getAllUsersBooks(final long userId) {
@@ -56,40 +63,48 @@ public class UserBookService {
     }
 
     public List<Book> getAllReadBooks(long userId) {
-        return this.constructListOfBooks(this.userBookRepo.findAllByReadIsTrueAndUserId(userId));
+        return this.constructListOfBooks(
+            this.userBookRepo.findAllByReadIsTrueAndUserId(userId));
     }
 
     public List<UserBook> getAllUserBooksByUserId(final long userId) {
         return this.userBookRepo.findAllByUserId(this.userRepo.findById(userId));
     }
 
-    public UserBook deleteFromAdded(final UserBook ub) {
-        this.userBookRepo.deleteByUserIdAndBookId(ub.getUserId(), ub.getBookId());
+    public UserBookDto deleteFromAdded(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        this.userBookRepo.deleteByUserIdAndBookId(ent.getUserId(), ent.getBookId());
         return ub;
     }
 
-    public UserBook markBookAsRead(final UserBook ub) {
-        this.userBookRepo.markBookAsRead(ub.getUserId(), ub.getBookId());
+    public UserBookDto markBookAsRead(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        this.userBookRepo.markBookAsRead(ent.getUserId(), ent.getBookId());
         return ub;
     }
 
-    public UserBook markBookAsFavourite(final UserBook ub) {
-        this.userBookRepo.markBookAsFavourite(ub.getUserId(), ub.getBookId());
+    public UserBookDto markBookAsFavourite(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        this.userBookRepo.markBookAsFavourite(ent.getUserId(), ent.getBookId());
         return ub;
     }
 
-    public UserBook removeFromRead(final UserBook ub) {
-        this.userBookRepo.removeFromRead(ub.getUserId(), ub.getBookId());
+    public UserBookDto removeFromRead(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        this.userBookRepo.removeFromRead(ent.getUserId(), ent.getBookId());
         return ub;
     }
 
-    public UserBook removeFromFavourite(final UserBook ub) {
-        this.userBookRepo.removeFromFavourite(ub.getUserId(), ub.getBookId());
+    public UserBookDto removeFromFavourite(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        this.userBookRepo.removeFromFavourite(ent.getUserId(), ent.getBookId());
         return ub;
     }
 
-    public UserBook getUserBookByBookUserId(UserBook userBook) {
-        return this.userBookRepo.findByUserIdAndBookId(userBook.getUserId(), userBook.getBookId());
+    public UserBookDto getUserBookByBookUserId(final UserBookDto ub) {
+        final UserBook ent = this.convertUbToEntity(ub);
+        return this.convertUbToDto(
+            this.userBookRepo.findByUserIdAndBookId(ent.getUserId(), ent.getBookId()));
     }
 
     private List<Book> constructListOfBooks(final List<Long> ids) {
@@ -97,5 +112,33 @@ public class UserBookService {
             .map(this.bookRepo::findById)
             .map(Optional::get)
             .collect(Collectors.toList());
+    }
+
+    private boolean userAlreadyHasBook(final UserBookDto userBook, final UserBook ent) {
+        return this.getAllUsersBooks(userBook.getUserId())
+            .stream()
+            .filter(book -> book.getId() == ent.getBookId().getId())
+            .findFirst()
+            .orElse(null) == null;
+    }
+
+    private UserBookDto convertUbToDto(final UserBook ub) {
+        UserBookDto dto = this.mapper.map(ub, UserBookDto.class);
+        dto.setId(ub.getId());
+        dto.setBookId(ub.getBookId().getId());
+        dto.setUserId(ub.getUserId().getId());
+        dto.setFavourite(ub.isFavourite());
+        dto.setRead(ub.isRead());
+        return dto;
+    }
+
+    private UserBook convertUbToEntity(final UserBookDto ub) {
+        UserBook ent = this.mapper.map(ub, UserBook.class);
+        ent.setId(ub.getId());
+        ent.setBookId(this.bookRepo.findById(ub.getBookId()).get());
+        ent.setUserId(this.userRepo.findById(ub.getUserId()).get());
+        ent.setFavourite(ub.isFavourite());
+        ent.setRead(ub.isRead());
+        return ent;
     }
 }

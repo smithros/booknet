@@ -5,24 +5,21 @@
   <div class="row">
     <div class="col-9">
       <div class="justify-content-center row text-muted content">
-        <h1 id="myText">My Books List</h1>
+        <h1>My Books List</h1>
       </div>
       <div>
         <div id="btnwrapper">
           <button (click)="router.navigate(['/userBooks'])" class="btn btn-primary">My Books</button>
           <div class="divider"></div>
-          <button (click)="router.navigate(['/userBooks/read'])" class="btn btn-primary">My Read Books
-          </button>
+          <button (click)="router.navigate(['/userBooks/read'])" class="btn btn-primary">My Read Books</button>
           <div class="divider"></div>
-          <button (click)="router.navigate(['/userBooks/favourite'])" class="btn btn-primary">My Favourite
-            Books
-          </button>
+          <button (click)="router.navigate(['/userBooks/favourite'])" class="btn btn-primary">My Favourite Books</button>
         </div>
       </div>
       <div>
         <div class="row justify-content-center">
-          <div><h3 *ngIf="emptyBookList">Since you do not have
-            any books, we suggest you most rated books</h3></div>
+          <!--<div><h3 *ngIf="emptyBookList">Since you do not have
+            any books, we suggest you most rated books</h3></div>-->
           <div *ngFor="let book of userBookList"
                class="col-lg-4 align-items-stretch row">
             <div class="card card-profile">
@@ -52,7 +49,7 @@
       </div>
     </div>
 
-    <div class="col-3">
+    <!--<div class="col-3">
       <form action="">
         <div class="card-body bmd-form-group row">
           <div class="m-auto">
@@ -67,6 +64,6 @@
           </div>
         </div>
       </form>
-    </div>
+    </div>-->
   </div>
 </div>

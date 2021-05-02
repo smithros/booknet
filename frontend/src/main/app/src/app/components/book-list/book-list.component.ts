@@ -108,6 +108,7 @@ export class BookListComponent implements OnInit {
 
     let userBook: UserBook = new UserBook();
     userBook.userId = this.storage.getUser().id;
+    console.log(this.apiService.getAllFavouriteBooks(userBook))
     this.subscription = this.apiService.getAllFavouriteBooks(userBook).subscribe(
       res => {
         this.userFavBookList = res;
@@ -128,6 +129,7 @@ export class BookListComponent implements OnInit {
 
     let userBook: UserBook = new UserBook();
     userBook.userId = this.storage.getUser().id;
+    console.log(this.apiService.getAllFavouriteBooks(userBook))
     this.subscription = this.apiService.getAllReadBooks(userBook).subscribe(
       res => {
         this.userReadBookList = res;

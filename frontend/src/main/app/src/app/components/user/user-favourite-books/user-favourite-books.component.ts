@@ -22,7 +22,6 @@ export class UserFavouriteBooksComponent extends BookListComponent implements On
 
   ngOnInit() {
     super.getAllFavouriteBooks();
-
     super.getAllAuthor();
     super.getAllGenre();
   }

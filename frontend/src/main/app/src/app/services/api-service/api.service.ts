@@ -146,13 +146,13 @@ export class ApiService {
 
   addBookToUser(userBook: UserBook): Observable<UserBook> {
     const url = `${this.userBookUrl}/add`;
+    console.log("addBookToUser" + JSON.stringify(userBook))
     return this.http.post<UserBook>(url, userBook);
   }
 
   getAllUserBooks(userBook: UserBook): Observable<Book[]> {
     const url = `${this.userBookUrl}/all`;
-    const params = new HttpParams()
-      .set('userId', userBook.userId.toString());
+    const params = new HttpParams().set('userId', userBook.userId.toString());
     return this.http.get<Book[]>(url, {params: params});
   }
 
@@ -166,7 +166,7 @@ export class ApiService {
 
   getAllUserBooksByUserId(userId: number): Observable<UserBook[]> {
     const params = new HttpParams().set('userId', userId.toString());
-    const url = `${this.userBookUrl}/mark_read`;
+    const url = `${this.userBookUrl}/getAllById`;
     return this.http.post<UserBook[]>(url, {params: params});
   }
 

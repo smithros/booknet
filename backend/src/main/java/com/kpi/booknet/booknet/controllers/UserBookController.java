@@ -26,6 +26,7 @@ package com.kpi.booknet.booknet.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import com.kpi.booknet.booknet.dto.UserBookDto;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.UserBook;
 import com.kpi.booknet.booknet.services.UserBookService;
@@ -47,15 +48,15 @@ public final class UserBookController {
     private final UserBookService service;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> addBookToUser(@RequestBody final UserBook userBook) {
-        final UserBook response = this.service.addBookToUser(userBook);
+    public ResponseEntity<UserBookDto> addBookToUser(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.addBookToUser(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
-    public ResponseEntity<UserBook> getUserBookById(@RequestBody final UserBook userBook) {
-        final UserBook response = this.service.getUserBookByBookUserId(userBook);
+    public ResponseEntity<UserBookDto> getUserBookById(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.getUserBookByBookUserId(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -82,42 +83,42 @@ public final class UserBookController {
     public ResponseEntity<List<Book>> getAllReadBooks(
         @RequestParam(name = "userId") final long userId
     ) {
-        List<Book> response = this.service.getAllReadBooks(userId);
+        final List<Book> response = this.service.getAllReadBooks(userId);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/mark_read", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> markBookAsRead(@RequestBody final UserBook userBook) {
-        UserBook response = this.service.markBookAsRead(userBook);
+    public ResponseEntity<UserBookDto> markBookAsRead(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.markBookAsRead(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/mark_fav", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> markBookAsFavourite(@RequestBody final UserBook userBook) {
-        UserBook response = this.service.markBookAsFavourite(userBook);
+    public ResponseEntity<UserBookDto> markBookAsFavourite(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.markBookAsFavourite(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/remove_read", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> removeFromRead(@RequestBody final UserBook userBook) {
-        UserBook response = this.service.removeFromRead(userBook);
+    public ResponseEntity<UserBookDto> removeFromRead(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.removeFromRead(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/remove_fav", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> removeFromFavourite(@RequestBody final UserBook userBook) {
-        UserBook response = this.service.removeFromFavourite(userBook);
+    public ResponseEntity<UserBookDto> removeFromFavourite(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.removeFromFavourite(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<UserBook> deleteBookFromAdded(@RequestBody final UserBook userBook) {
-        UserBook response = this.service.deleteFromAdded(userBook);
+    public ResponseEntity<UserBookDto> deleteBookFromAdded(@RequestBody final UserBookDto userBook) {
+        final UserBookDto response = this.service.deleteFromAdded(userBook);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

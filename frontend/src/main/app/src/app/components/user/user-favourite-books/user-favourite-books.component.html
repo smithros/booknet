@@ -35,8 +35,8 @@
                       <h3>{{author.name}}</h3>
                     </div>
                   </div>
-                  <h3 *ngIf="book.genres">Genres:</h3>
-                  <div *ngFor="let genre of book.genres ">
+                  <h3 *ngIf="favBook.genres">Genres:</h3>
+                  <div *ngFor="let genre of favBook.genres ">
                     <h4>{{genre.desc}}</h4>
                   </div>
                   <div>Overview: {{favBook.text}}</div>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="col-3">
+    <!--<div class="col-3">
       <form action="">
         <div class="card-body bmd-form-group row">
           <div class="m-auto">
@@ -63,6 +63,6 @@
           </div>
         </div>
       </form>
-    </div>
+    </div>-->
   </div>
 </div>

@@ -83,5 +83,7 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
         "and ub.bookId = :bookId")
     void removeFromFavourite(@Param("userId") User userId, @Param("bookId") Book bookId);
 
+    @Transactional
+    @Modifying
     void deleteByUserIdAndBookId(User userId, Book bookId);
 }
