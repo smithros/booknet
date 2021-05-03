@@ -1,6 +1,6 @@
 export class Announcement {
   id: number;
-  desc: string;
+  description: string;
   date: Date;
   status: boolean;
   bookId: number;

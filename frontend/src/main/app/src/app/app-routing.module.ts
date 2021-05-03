@@ -11,6 +11,8 @@ import {UserBooksComponent} from "./components/user/user-books/user-books.compon
 import {UserReadBooksComponent} from "./components/user/user-read-books/user-read-books.component";
 import {UserFavouriteBooksComponent} from "./components/user/user-favourite-books/user-favourite-books.component";
 import {AddBookComponent} from "./components/add-book/add-book.component";
+import {AnnouncementComponent} from "./components/announcement/announcement.component";
+import {AnnouncementListComponent} from "./components/announcement-list/announcement-list.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -34,6 +36,9 @@ const routes: Routes = [
   {path: 'userBooks/read/books/book/:bookId', component: BookListComponent},
   {path: 'userBooks/books/book/:bookId', component: BookComponent},
   {path: 'books/addBook', component: AddBookComponent},
+  {path: 'books/:bookId/announcement', component: AnnouncementComponent},
+  {path: 'announcement', component: AnnouncementComponent},
+  {path: 'announcementlist', component: AnnouncementListComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},
 ];

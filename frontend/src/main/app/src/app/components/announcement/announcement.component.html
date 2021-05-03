@@ -1,0 +1,31 @@
+<div class="navigation">
+  <app-navigation></app-navigation>
+  <router-outlet></router-outlet>
+</div>
+<div>
+  <form class="form">
+    <div class="header">
+      <h2>Create new announcement</h2>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputDescription">Description</label>
+        <input [(ngModel)]="model.description"
+               class="form-control" id="inputDescription" name="description"
+               placeholder="Description" maxlength="100"
+               type="text" #text="ngModel">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputDate">Date of event</label>
+      <input class="form-control" id="inputDate" type="date" name="date"
+              [ngModel]="model.date | date: 'yyyy-MM-dd'"
+              (ngModelChange)="model.date = $event">
+    </div>
+    <button
+      [disabled]="(this.model.date > this.formatted_date
+                  && this.model.description.length > 0 && text.valid)" class="btn btn-primary"
+      (click)="createAnnouncement()" [routerLink]="['/books']"><a>Save</a>
+    </button>
+  </form>
+</div>
