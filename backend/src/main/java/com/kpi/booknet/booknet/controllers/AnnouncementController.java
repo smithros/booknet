@@ -26,6 +26,7 @@ package com.kpi.booknet.booknet.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import com.kpi.booknet.booknet.dto.AnnouncementDto;
 import com.kpi.booknet.booknet.model.Announcement;
 import com.kpi.booknet.booknet.services.AnnouncementService;
 import lombok.AllArgsConstructor;
@@ -47,14 +48,14 @@ public final class AnnouncementController {
     private final AnnouncementService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Announcement>> getPublishedAnnouncements() {
-        final List<Announcement> response = this.service.getPublished();
+    public ResponseEntity<List<AnnouncementDto>> getPublishedAnnouncements() {
+        final List<AnnouncementDto> response = this.service.getPublished();
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/unpublished", method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getUnpublishedAnnouncements() {
         final List<Announcement> response = this.service.getUnpublished();
         return Optional.ofNullable(response)
@@ -79,8 +80,10 @@ public final class AnnouncementController {
     }
 
     @RequestMapping(value = "/newAnnouncement", method = RequestMethod.POST)
-    public ResponseEntity<Announcement> createAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = this.service.create(ann);
+    public ResponseEntity<AnnouncementDto> createAnnouncement(
+        @RequestBody final AnnouncementDto ann
+    ) {
+        final AnnouncementDto response = this.service.create(ann);
         return Optional.ofNullable(response)
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));

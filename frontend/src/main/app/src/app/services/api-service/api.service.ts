@@ -23,7 +23,9 @@ export class ApiService {
   private reviewsUrl: string = `${this.url}/review`;
   private userBookUrl: string = `${this.url}/userBook`;
 
-  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
+  constructor(private http: HttpClient,
+              private storage: StorageService,
+              private router: Router) {
   }
 
   getBooks(): Observable<Book[]> {
@@ -149,8 +151,7 @@ export class ApiService {
 
   getAllUserBooks(userBook: UserBook): Observable<Book[]> {
     const url = `${this.userBookUrl}/all`;
-    const params = new HttpParams()
-      .set('userId', userBook.userId.toString());
+    const params = new HttpParams().set('userId', userBook.userId.toString());
     return this.http.get<Book[]>(url, {params: params});
   }
 
@@ -164,7 +165,7 @@ export class ApiService {
 
   getAllUserBooksByUserId(userId: number): Observable<UserBook[]> {
     const params = new HttpParams().set('userId', userId.toString());
-    const url = `${this.userBookUrl}/mark_read`;
+    const url = `${this.userBookUrl}/getAllById`;
     return this.http.post<UserBook[]>(url, {params: params});
   }
 

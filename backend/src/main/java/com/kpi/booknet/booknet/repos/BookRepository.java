@@ -38,14 +38,14 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     Book findById(long id);
 
     @Query(
-        value = "select b.* from author_book ab, book b where ab.book_id = b.book_id and ab.author_id = ?1",
+        value = "select b.* from book_author ab, book b where ab.book_id = b.book_id and ab.author_id = ?1",
         nativeQuery = true
     )
     List<Book> findBooksByAuthorId(long authorId);
 
     @Transactional
     @Modifying
-    @Query(value = "insert into author_book (book_id, author_id) values (?1, ?2)", nativeQuery = true)
+    @Query(value = "insert into book_author (book_id, author_id) values (?1, ?2)", nativeQuery = true)
     void connectAuthorAndBook(long bookId, long authorId);
 
     @Transactional

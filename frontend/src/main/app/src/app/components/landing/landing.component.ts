@@ -17,7 +17,6 @@ export class LandingComponent implements OnInit {
     this.api.getBooks().toPromise().then(
       books => {
         this.books = books;
-        console.log(this.books);
       }
     );
   }

@@ -5,7 +5,7 @@ export class Book {
   id: number;
   title: string;
   text: string;
-  status: string;
+  status: boolean;
   genres: Genre[];
   authors: Author[];
   photo: number;

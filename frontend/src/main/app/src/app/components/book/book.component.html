@@ -12,7 +12,7 @@
                     <tr>
                         <td rowspan="5">
                             <div class="justify-content-center row">
-                               <!-- <app-book-img [book]="book"></app-book-img>-->
+                                <app-book-img [book]="book"></app-book-img>
                             </div>
                         </td>
                     </tr>
@@ -41,31 +41,31 @@
                     </tr>
                 </table>
                 <div>
-       <!--             <app-file-upload [book]="book"></app-file-upload>-->
+                    <app-book-file [book]="book"></app-book-file>
                 </div>
-     <!--           <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
-                    <a   [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
-                </div>-->
+                <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
+                    <a [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
+                </div>
             </div>
         </div>
         <div *ngIf="userBookButtonVisible">
-            <button (click)="addBookToUser(book.id)" *ngIf="!userAddedBook" class="btn btn-primary" id="addBook">
-                Add to my books
+            <button (click)="addBookToUser(book.id)" *ngIf="!userAddedBook"
+                    class="btn btn-primary" id="addBook">Add to my books
             </button>
-            <button (click)="deleteBookFromUser(book.id)" *ngIf="userAddedBook" class="btn btn-primary"
-                    id="removeBook">Remove from my books
+            <button (click)="deleteBookFromUser(book.id)" *ngIf="userAddedBook"
+                    class="btn btn-primary" id="removeBook">Remove from my books
             </button>
-            <button [disabled]="!userFavReadVisible" (click)="addBookToFavourite(book.id)" *ngIf="!userAddedToFav" class="btn btn-primary" id="addFav">
-                Mark as favourite
+            <button [disabled]="!userFavReadVisible" (click)="addBookToFavourite(book.id)"
+                    *ngIf="!userAddedToFav" class="btn btn-primary" id="addFav">Mark as favourite
             </button>
-            <button [disabled]="!userFavReadVisible" (click)="removeBookFromFav(book.id)" *ngIf="userAddedToFav" class="btn btn-primary" id="removeFav">
-                Remove from favourite
+            <button [disabled]="!userFavReadVisible" (click)="removeBookFromFav(book.id)"
+                    *ngIf="userAddedToFav" class="btn btn-primary" id="removeFav">Remove from favourite
             </button>
-            <button [disabled]="!userFavReadVisible" (click)="addBookToRead(book.id)" *ngIf="!userAddedToRead" class="btn btn-primary" id="addRead">
-                Mark as read
+            <button [disabled]="!userFavReadVisible" (click)="addBookToRead(book.id)"
+                    *ngIf="!userAddedToRead" class="btn btn-primary" id="addRead">Mark as read
             </button>
-            <button [disabled]="!userFavReadVisible"  (click)="removeBookFromRead(book.id)" *ngIf="userAddedToRead" class="btn btn-primary"
-                    id="removeRead">Remove from read
+            <button [disabled]="!userFavReadVisible"  (click)="removeBookFromRead(book.id)"
+                    *ngIf="userAddedToRead" class="btn btn-primary" id="removeRead">Remove from read
             </button>
         </div>
     </div>
@@ -81,7 +81,7 @@
                             <h3><a (click)="navigateToBook(bookOfSuggestions.id)"> {{bookOfSuggestions.title}}</a></h3>
                         </div>
                         <div class="card-description">
-                         <!--   <app-book-img [book]="bookOfSuggestions"></app-book-img>-->
+                            <app-book-img [book]="bookOfSuggestions"></app-book-img>
                             <div>
                                 <h4>Authors:</h4>
                                 <div *ngFor="let author of bookOfSuggestions.authors ">

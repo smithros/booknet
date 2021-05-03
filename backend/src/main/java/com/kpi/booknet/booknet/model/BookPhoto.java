@@ -29,6 +29,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -42,12 +43,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "book_photo")
 public final class BookPhoto implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_photo_id")
-    private int id;
-
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "book_id")
+    private long bookId;
 
     @Column(name = "file")
     private byte[] photo;

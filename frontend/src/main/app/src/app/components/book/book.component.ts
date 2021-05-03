@@ -41,6 +41,7 @@ export class BookComponent implements OnInit {
   ngOnInit() {
     this.bookId = parseInt(this.route.snapshot.paramMap.get('bookId'));
     this.getBook(this.bookId);
+    this.checkUser()
   }
 
   navigateToBook(bookId: number) {
@@ -53,20 +54,17 @@ export class BookComponent implements OnInit {
     this.apiService.getBookById(bookId).subscribe(
       res => {
         this.book = res;
-        console.log(res)
         this.apiService.getGenreByBookId(this.bookId).subscribe(
           genres => {
             this.book.genres = [];
             this.genres = genres;
             genres.forEach(genre => this.book.genres.push(genre));
-            console.log("genres:" + genres)
           });
         this.apiService.getAuthorsByBookId(this.bookId).subscribe(
           authors => {
             this.book.authors = [];
             this.authors = authors;
             authors.forEach(author => this.book.authors.push(author));
-            console.log("authors:"+authors)
           }
         );
         this.apiService.getImageByBook(this.book).subscribe(
@@ -169,6 +167,38 @@ export class BookComponent implements OnInit {
     this.subscription = this.apiService.deleteFromAdded(userBook).subscribe(
       res => {
         console.log(res);
+      }
+    );
+  }
+
+  checkUser(){
+    if (this.storage.getUser()!=null) {
+      this.addAnnouncementVisible = true;
+      this.userBookButtonVisible = true;
+      this.checkButton();
+    }
+  }
+
+  checkButton(){
+    let userBook:UserBook = new UserBook();
+    userBook.userId = this.storage.getUser().id;
+    userBook.bookId = this.bookId;
+    this.subscription = this.apiService.getAllUserBooks(userBook).subscribe(
+      res => {
+        this.userAddedBook = res.find(book => book.id == this.book.id) != null;
+        this.userFavReadVisible = res.find(book => book.id == this.book.id) != null;
+
+      });
+    this.subscription = this.apiService.getAllFavouriteBooks(userBook).subscribe(
+      res=>{
+        this.userAddedToFav = res.find(book => book.id == this.book.id) != null;
+        this.userFavReadVisible = res.find(book => book.id == this.book.id) != null;
+      }
+    );
+    this.subscription = this.apiService.getAllReadBooks(userBook).subscribe(
+      res=>{
+        this.userAddedToRead = res.find(book => book.id == this.book.id) != null;
+        this.userFavReadVisible = res.find(book => book.id == this.book.id) != null;
       }
     );
   }

@@ -44,10 +44,10 @@ export class BookListComponent implements OnInit {
 
   private subscription: Subscription;
 
-  constructor(private apiService: ApiService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private storage: StorageService) {
+  constructor(public apiService: ApiService,
+              public route: ActivatedRoute,
+              public router: Router,
+              public storage: StorageService) {
 
   }
 
@@ -73,9 +73,9 @@ export class BookListComponent implements OnInit {
   }
 
   checkModerator() {
-    if (this.storage.getUser().userRole == 'moderator') {
+    //if (this.storage.getUser().userRole == 'moderator') {
       this.addBookVisible = true;
-    }
+    //}
   }
 
   /*
@@ -231,7 +231,7 @@ export class BookListComponent implements OnInit {
             authors => book.authors = authors
           );
           this.apiService.getGenreByBookId(book.id).subscribe(
-            genre => book.genre.fill(genre)
+            genres => book.genres = genres
           );
         });
 

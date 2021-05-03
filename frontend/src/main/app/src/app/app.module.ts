@@ -22,7 +22,13 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ReviewComponent } from './components/review/review.component';
 import { ReviewListComponent } from './components/review-list/review-list.component';
 import { SearchComponent } from './components/search/search.component';
-import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { BookImgComponent } from './components/book-img/book-img.component';
+import { BookFileComponent } from './components/book-file/book-file.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
+import { UserBooksComponent } from './components/user/user-books/user-books.component';
+import { UserReadBooksComponent } from './components/user/user-read-books/user-read-books.component';
+import { UserFavouriteBooksComponent } from './components/user/user-favourite-books/user-favourite-books.component';
+import { DateFormatPipe } from './date-pipe/date-format.pipe';
 
 
 @NgModule({
@@ -44,7 +50,13 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     ReviewComponent,
     ReviewListComponent,
     SearchComponent,
-    UploadFileComponent
+    BookImgComponent,
+    BookFileComponent,
+    AddBookComponent,
+    UserBooksComponent,
+    UserReadBooksComponent,
+    UserFavouriteBooksComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,
