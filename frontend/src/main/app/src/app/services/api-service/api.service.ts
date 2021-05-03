@@ -146,7 +146,6 @@ export class ApiService {
 
   addBookToUser(userBook: UserBook): Observable<UserBook> {
     const url = `${this.userBookUrl}/add`;
-    console.log("addBookToUser" + JSON.stringify(userBook))
     return this.http.post<UserBook>(url, userBook);
   }
 

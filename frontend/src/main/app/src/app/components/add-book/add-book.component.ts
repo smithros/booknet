@@ -13,7 +13,6 @@ import {Author} from "../../models/author";
 })
 export class AddBookComponent implements OnInit {
   public model: Book = new Book();
-  public genres: Genre[] = [];
   public createdBook: FormGroup;
   public regExp = new RegExp(/^[A-Za-z0-9_]+$/);
 
@@ -21,13 +20,6 @@ export class AddBookComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder) {
-  }
-
-  getGenres() {
-    this.apiService.getAllGenre().subscribe(
-      genres => {
-        this.genres = genres;
-      });
   }
 
   get authors(): FormArray {
@@ -51,37 +43,68 @@ export class AddBookComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  get genres(): FormArray {
+    return this.createdBook.get("genres") as FormArray
+  }
 
+  newGenre(): FormGroup {
+    return this.formBuilder.group({
+      genre: ['', Validators.pattern(this.regExp)]
+    })
+  }
+
+  addGenre() {
+    this.genres.push(this.newGenre());
+  }
+
+  removeGenre(i: number) {
+    this.genres.removeAt(i);
+    if (i == 0) {
+      this.genres.push(this.newGenre());
+    }
+  }
+
+  ngOnInit() {
     this.createdBook = this.formBuilder.group({
-      header: ['', [Validators.required, Validators.pattern(this.regExp)]],
-      overview: ['', [Validators.required, Validators.pattern(this.regExp)]],
+      title: ['', [Validators.required, Validators.pattern(this.regExp)]],
+      text: ['', [Validators.required, Validators.pattern(this.regExp)]],
       status: ['', [Validators.required, Validators.pattern(this.regExp)]],
-      genre: ['', [Validators.required, Validators.pattern(this.regExp)]],
+      genres: this.formBuilder.array([]),
       authors: this.formBuilder.array([])
     });
     this.authors.push(this.newAuthor());
-    this.getGenres();
+    this.genres.push(this.newGenre());
   }
 
   createBook(): void {
     const book = this.createdBook.controls;
-    this.model.title = book.header.value;
-    this.model.text = book.overview.value;
-    this.model.genres = book.genre.value;
+    this.model.title = book.title.value;
+    this.model.text = book.text.value;
     this.model.status = book.status.value;
+    this.model.authors = [];
+    this.model.genres = [];
 
     this.authors.getRawValue().forEach(author => {
-      let newAuthors: Author = {id: 0, name: author['author'], books: null};
-      this.model.authors.push(newAuthors);
+      let newAuthor: Author = {id: 0, name: author['author'], books: null};
+      this.model.authors.push(newAuthor);
+    });
+
+    this.genres.getRawValue().forEach(genre => {
+      let newGenre: Genre = {id: 0, desc: genre['genre'], books: null};
+      this.model.genres.push(newGenre);
     });
 
     this.apiService.createBook(this.model)
       .subscribe(res => {
           this.model.authors = [];
+          this.model.genres = [];
         },
         err => {
           this.router.navigateByUrl('/error');
         });
+  }
+
+  back() {
+    this.router.navigateByUrl('/books');
   }
 }

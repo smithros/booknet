@@ -26,6 +26,8 @@ package com.kpi.booknet.booknet.dto;
 
 import java.io.Serializable;
 import java.util.Set;
+import com.kpi.booknet.booknet.model.Author;
+import com.kpi.booknet.booknet.model.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +44,6 @@ public final class BookDto implements Serializable {
     private Long photoId;
     private Long fileId;
     private boolean status;
-    private Set<GenreDto> genres;
-    private Set<AuthorDto> authors;
+    private Set<Genre> genres;
+    private Set<Author> authors;
 }

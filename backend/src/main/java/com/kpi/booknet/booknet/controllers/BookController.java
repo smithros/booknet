@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import com.kpi.booknet.booknet.dto.BookDto;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.BookFile;
 import com.kpi.booknet.booknet.model.BookPhoto;
@@ -57,8 +58,8 @@ public final class BookController {
     private final BookFilesService files;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Book> addBook(@RequestBody final Book book) {
-        final Book response = this.service.createBook(book);
+    public ResponseEntity<BookDto> addBook(@RequestBody final BookDto book) {
+        final BookDto response = this.service.createBook(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

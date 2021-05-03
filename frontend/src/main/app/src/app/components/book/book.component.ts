@@ -54,7 +54,6 @@ export class BookComponent implements OnInit {
     this.apiService.getBookById(bookId).subscribe(
       res => {
         this.book = res;
-        console.log(res)
         this.apiService.getGenreByBookId(this.bookId).subscribe(
           genres => {
             this.book.genres = [];

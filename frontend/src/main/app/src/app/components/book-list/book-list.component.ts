@@ -73,9 +73,9 @@ export class BookListComponent implements OnInit {
   }
 
   checkModerator() {
-    if (this.storage.getUser().userRole == 'moderator') {
+    //if (this.storage.getUser().userRole == 'moderator') {
       this.addBookVisible = true;
-    }
+    //}
   }
 
   /*

@@ -25,6 +25,7 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.List;
+import com.kpi.booknet.booknet.dto.BookDto;
 import com.kpi.booknet.booknet.exceptions.BookNetException;
 import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Author;
@@ -34,6 +35,7 @@ import com.kpi.booknet.booknet.repos.AuthorRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,11 +47,13 @@ public class BookService {
     private final BookRepository bookRepo;
     private final GenreRepository genreRepo;
     private final AuthorRepository authorRepo;
+    private final ModelMapper mapper;
 
-    public Book createBook(final Book book) {
-        if (this.getBookById(book.getId()) == null) {
-            this.bookRepo.save(book);
-            LOG.info("Saved book: {}", book);
+    public BookDto createBook(final BookDto book) {
+        final Book entity = this.convertBookToEntity(book);
+        if (this.getBookById(entity.getId()) == null) {
+            this.bookRepo.save(entity);
+            LOG.info("Saved book: {}", entity);
         }
         return book;
     }
@@ -92,5 +96,31 @@ public class BookService {
 
     public List<String> getAllGenresName() {
         return this.genreRepo.findAllGenresNames();
+    }
+
+    private BookDto convertBookToDto(final Book book) {
+        BookDto dto = this.mapper.map(book, BookDto.class);
+        dto.setId(book.getId());
+        dto.setTitle(book.getTitle());
+        dto.setText(book.getText());
+        dto.setStatus(book.isStatus());
+        dto.setPhotoId(book.getPhotoId());
+        dto.setFileId(book.getFileId());
+        dto.setAuthors(book.getAuthors());
+        dto.setGenres(book.getGenres());
+        return dto;
+    }
+
+    private Book convertBookToEntity(final BookDto book) {
+        Book ent = this.mapper.map(book, Book.class);
+        ent.setId(book.getId());
+        ent.setTitle(book.getTitle());
+        ent.setText(book.getText());
+        ent.setStatus(book.isStatus());
+        ent.setPhotoId(book.getPhotoId());
+        ent.setFileId(book.getFileId());
+        ent.setAuthors(book.getAuthors());
+        ent.setGenres(book.getGenres());
+        return ent;
     }
 }
