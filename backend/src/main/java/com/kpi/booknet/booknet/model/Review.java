@@ -78,7 +78,7 @@ public final class Review implements Serializable {
 
     @Max(value = 10)
     @Column(name = "grade")
-    private Integer grade;
+    private Long grade;
 
     @Column(name = "status")
     private boolean status;

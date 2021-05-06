@@ -25,6 +25,7 @@
 package com.kpi.booknet.booknet.controllers;
 
 import java.util.Optional;
+import com.kpi.booknet.booknet.dto.ReviewDto;
 import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.services.ReviewService;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,8 @@ public final class ReviewController {
     private final ReviewService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addReview(@RequestBody final Review review) {
+    public ResponseEntity<?> addReview(@RequestBody final ReviewDto review) {
+        System.out.println(review);
         return Optional.ofNullable(this.service.createReview(review))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));

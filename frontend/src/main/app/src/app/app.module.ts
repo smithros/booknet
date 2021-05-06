@@ -20,7 +20,6 @@ import {BookComponent} from './components/book/book.component';
 import {BookListComponent} from './components/book-list/book-list.component';
 import {CalendarComponent} from './components/calendar/calendar.component';
 import {ReviewComponent} from './components/review/review.component';
-import {ReviewListComponent} from './components/review-list/review-list.component';
 import {SearchComponent} from './components/search/search.component';
 import {BookImgComponent} from './components/book-img/book-img.component';
 import {BookFileComponent} from './components/book-file/book-file.component';
@@ -37,6 +36,8 @@ import {EditProfileComponent} from './components/user/edit-profile/edit-profile.
 import {UserMenuComponent} from './components/user/user-menu/user-menu.component';
 import {UserSettingsComponent} from './components/user/user-settings/user-settings.component';
 import {ViewProfileComponent} from './components/user/view-profile/view-profile.component';
+import {ReviewListComponent} from "./components/review-list/review-list.component";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import {ViewProfileComponent} from './components/user/view-profile/view-profile.
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    CKEditorModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

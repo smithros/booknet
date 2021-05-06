@@ -11,6 +11,7 @@ import {Author} from "../../models/author";
 import {UserBook} from "../../models/userBook";
 import {StorageService} from "../storage/storage.service";
 import {Router} from "@angular/router";
+import {Location} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class ApiService {
 
   constructor(private http: HttpClient,
               private storage: StorageService,
-              private router: Router) {
+              private router: Router,
+              private location: Location) {
   }
 
   getBooks(): Observable<Book[]> {
@@ -107,6 +109,7 @@ export class ApiService {
   }
 
   createReview(review: Review): Observable<Review> {
+    console.log("createReview" + JSON.stringify(review));
     const url = `${this.reviewsUrl}`;
     return this.http.post<Review>(url, review);
   }
@@ -226,5 +229,9 @@ export class ApiService {
     if (this.storage.getUser() == null) {
       this.router.navigate(['/login']);
     }
+  }
+
+  back() {
+    this.location.back()
   }
 }

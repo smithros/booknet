@@ -27,6 +27,7 @@ package com.kpi.booknet.booknet.services;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import com.kpi.booknet.booknet.dto.ReviewDto;
 import com.kpi.booknet.booknet.exceptions.BookNetException;
 import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Review;
@@ -34,6 +35,7 @@ import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.ReviewRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,17 +44,20 @@ public class ReviewService {
     private final ReviewRepository reviewRepo;
     private final BookRepository bookRepo;
     private final UserRepository userRepo;
+    private final ModelMapper mapper;
 
     public Review getReviewById(final long id) {
         return this.reviewRepo.findById(id);
     }
 
-    public Review createReview(final Review review) {
+    public ReviewDto createReview(final ReviewDto review) {
         review.setDate(new Date());
-        review.setBookId(this.bookRepo.findById(review.getBookId().getId()));
-        review.setUserId(this.userRepo.findById(review.getUserId().getId()));
-        review.setAdminId(this.userRepo.findById(review.getAdminId().getId()));
-        return this.reviewRepo.save(review);
+        review.setBookId(this.bookRepo.findById(review.getBookId()).get().getId());
+        review.setUserId(this.userRepo.findById(review.getUserId()).get().getId());
+        review.setAdminId(this.userRepo.findById(review.getAdminId()).get().getId());
+        Review ent = this.convertToEntity(review);
+        this.reviewRepo.save(ent);
+        return review;
     }
 
     public List<Review> getReviewOfBook(final long bookId) {
@@ -82,5 +87,29 @@ public class ReviewService {
 
     public List<Review> getAllReviews() {
         return this.reviewRepo.findAll();
+    }
+
+    private ReviewDto convertToDto(final Review ann) {
+        ReviewDto dto = this.mapper.map(ann, ReviewDto.class);
+        dto.setId(ann.getId());
+        dto.setDate(ann.getDate());
+        dto.setGrade(ann.getGrade());
+        dto.setText(ann.getText());
+        dto.setAdminId(ann.getAdminId().getId());
+        dto.setBookId(ann.getBookId().getId());
+        dto.setUserId(ann.getUserId().getId());
+        return dto;
+    }
+
+    private Review convertToEntity(final ReviewDto ann) {
+        Review ent = this.mapper.map(ann, Review.class);
+        ent.setId(ann.getId());
+        ent.setDate(ann.getDate());
+        ent.setGrade(ann.getGrade());
+        ent.setText(ann.getText());
+        ent.setAdminId(this.userRepo.findById(ann.getAdminId()).get());
+        ent.setBookId(this.bookRepo.findById(ann.getBookId()).get());
+        ent.setUserId(this.userRepo.findById(ann.getUserId()).get());
+        return ent;
     }
 }

@@ -103,16 +103,14 @@ public class AnnouncementService {
     }
 
     private Announcement convertToEntity(final AnnouncementDto ann) {
-        System.out.println(ann);
         Announcement ent = this.mapper.map(ann, Announcement.class);
         ent.setId(ann.getId());
         ent.setDescription(ann.getDescription());
-        ent.setAdminId(this.userRepo.findById(ann.getAdminId()).get());
         ent.setOwnerId(this.userRepo.findById(ann.getOwnerId()).get());
+        ent.setAdminId(this.userRepo.findById(ann.getAdminId()).get());
         ent.setBookId(this.bookRepo.findById(ann.getBookId()).get());
         ent.setDate(ann.getDate());
         ent.setStatus(ann.isStatus());
-        System.out.println(ent);
         return ent;
     }
 }
