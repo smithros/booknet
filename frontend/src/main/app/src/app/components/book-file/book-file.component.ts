@@ -39,9 +39,9 @@ export class BookFileComponent implements OnInit {
   ngOnInit() {
     let user: User = this.storage.getUser();
     if (user != null) {
-      if (user.userRole == 'moderator') {
+      //if (user.userRole == 'moderator') {
         this.fileUploadVisible = true;
-      }
+      //}
     }
     this.uploadFile()
   }
@@ -69,7 +69,7 @@ export class BookFileComponent implements OnInit {
     let index = name.lastIndexOf(".");
     let extensions = name.substring(index, name.length);
     console.log(event.target.files[0].size);
-    if (event.target.files[0].size / 1000 > 1100) {
+    if (event.target.files[0].size / 1000 > 2863474) {
       this.maxSize = true;
     } else {
       if (this.imgExtensions.indexOf(extensions) != -1) {
