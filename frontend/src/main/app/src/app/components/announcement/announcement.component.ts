@@ -25,7 +25,7 @@ export class AnnouncementComponent implements OnInit {
   public currentUser: User;
   public bookId: number;
   public currentDate: Date;
-  public formatted_date: string;
+  public formatted_date: any;
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,

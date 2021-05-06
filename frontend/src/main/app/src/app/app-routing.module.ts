@@ -13,6 +13,10 @@ import {UserFavouriteBooksComponent} from "./components/user/user-favourite-book
 import {AddBookComponent} from "./components/add-book/add-book.component";
 import {AnnouncementComponent} from "./components/announcement/announcement.component";
 import {AnnouncementListComponent} from "./components/announcement-list/announcement-list.component";
+import {CalendarComponent} from "./components/calendar/calendar.component";
+import {AnnouncementProposeComponent} from "./components/announcement-propose/announcement-propose.component";
+import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
+import {ReviewComponent} from "./components/review/review.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -39,6 +43,13 @@ const routes: Routes = [
   {path: 'books/:bookId/announcement', component: AnnouncementComponent},
   {path: 'announcement', component: AnnouncementComponent},
   {path: 'announcementlist', component: AnnouncementListComponent},
+  {path: 'announcementpublish', component: AnnouncementProposeComponent},
+  {path: 'calendar', component: CalendarComponent},
+  {path: 'user', component: UserProfileComponent},
+  {path: 'user/:id', component: UserProfileComponent},
+  {path: 'user/:id/books', component: BookListComponent},
+  {path: 'user/:id/books/book/:id', component: BookComponent},
+  {path: 'books/book/:bookId/review/:reviewId', component: ReviewComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},
 ];

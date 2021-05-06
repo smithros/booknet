@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../models/user';
 import {environment} from '../../../environments/environment';
@@ -17,6 +17,50 @@ export class UserService {
   constructor(private http: HttpClient) {
 
   }
+
+  public getUser(id: string) {
+    const url = `${this.usersUrl}/user/${id}`;
+    return this.http.get<User>(url);
+  }
+
+  public deactivateAccount(id: string) {
+    const url = `${this.usersUrl}/user/${id}/deactivate`;
+    return this.http.get(url);
+  }
+
+  updateProfile(user: User) {
+    let url = `${this.usersUrl}/user/update`;
+    let form = new FormData();
+    form.append('login', user.name);
+    form.append('newPassword', user.userPassword);
+    form.append('newEmail', user.email);
+    return this.http.post<User>(url, form);
+  }
+
+  sendRequest(sender: number, receiver: number): Observable<User> {
+    let url = `${this.usersUrl}/friends/send`;
+    let form = new FormData();
+    const params = new HttpParams()
+      .set('sender', sender.toString()).set('reciever', receiver.toString());
+    return this.http.post<User>(url, params);
+  }
+
+  getUserSettings(userId:number):Observable<User> {
+    let params = new HttpParams().append(
+      'userId', userId.toString()
+    );
+
+    let url = `${this.usersUrl}/getSettings`;
+    return this.http.post<User>(url, params);
+  }
+  checkRequest(sender: number, receiver: number) {
+    let url = `${this.usersUrl}/friends/check`;
+    let form = new FormData();
+    form.append('sender', sender.toString());
+    form.append('receiver', receiver.toString());
+    return this.http.post(url,form);
+  }
+
 
   public findAll(): Observable<User[]> {
     return this.http.get<User[]>(`${this.usersUrl}/user/get/all`);

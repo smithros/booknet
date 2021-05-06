@@ -1,1 +1,18 @@
-<p>announcement-propose works!</p>
+<div class="navigation">
+  <router-outlet></router-outlet>
+</div>
+<div class="announcement">
+  <ul class="list-rectangle">
+    <li *ngFor="let announcement of announcements">
+      <!--div class="alert alert-warning"-->
+      <div> {{announcement.description}}</div>
+      <div> {{announcement.date}}</div>
+      <!--/div-->
+      <div class="btn-default btn">
+        <a [routerLink]="['/books/book',announcement.bookId]">More about book</a>
+      </div>
+      <button class="btn btn-primary" (click)="publishAnnouncement(announcement)">Publish
+      </button>
+    </li>
+  </ul>
+</div>

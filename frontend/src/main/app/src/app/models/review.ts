@@ -7,4 +7,5 @@ export class Review {
   adminId: number;
   grade: number;
   status: boolean;
+  username: string;
 }

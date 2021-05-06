@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.storageService.setUser(user);
           sessionStorage.setItem('user', JSON.stringify(user));
           this.router.navigateByUrl('/');
-          console.log(user);
         }
       },
       () => {
