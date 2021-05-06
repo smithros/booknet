@@ -1,0 +1,15 @@
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: rgba(255, 252, 246, 0.09);
+}
+
+.menu {
+  width: 18rem;
+}
+
+.selected, .selected:hover {
+  color: black;
+}
