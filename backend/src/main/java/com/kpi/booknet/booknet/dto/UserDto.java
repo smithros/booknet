@@ -44,5 +44,4 @@ public final class UserDto implements Serializable {
     private String recoverCode;
     private boolean verified;
     private boolean activated;
-    private Set<AchievementDto> achievements;
 }
