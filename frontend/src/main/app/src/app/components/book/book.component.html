@@ -18,34 +18,31 @@
                     </tr>
                     <tr>
                         <td *ngIf="authors">
-                            <div class="bmd-label-floating">Authors:</div>
+                            <div>Authors:</div>
                         </td>
                         <td *ngFor="let author of authors" class="row">
                             {{author.name}}
                         </td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td>{{book.status}}</td>
-                    </tr>
-                    <tr>
                         <td *ngIf="genres">
-                            <div class="bmd-label-floating">Genres:</div>
+                            <div>Genres:</div>
                         </td>
                         <td *ngFor="let genre of genres" class="row">
                             {{genre.desc}}
                         </td>
                     </tr>
                     <tr>
+                        <td>Overview:</td>
                         <td colspan="3">{{book.text}}</td>
                     </tr>
                 </table>
                 <div>
                     <app-book-file [book]="book"></app-book-file>
                 </div>
-                <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
-                    <a [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
-                </div>
+                <button *ngIf = "addAnnouncementVisible" class="btn btn-primary">
+                    <a [routerLink]="['/books',book.id,'announcement']" class="ann">Create announcement</a>
+                </button>
             </div>
         </div>
         <div *ngIf="userBookButtonVisible">
@@ -95,7 +92,7 @@
                                 </div>
                             </div>
                             <h4>Status: {{bookOfSuggestions.status}}</h4>
-                            <div>Overview: {{bookOfSuggestions.text}}</div>
+                            <div>Overview: {{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</div>
                         </div>
                     </div>
                 </div>

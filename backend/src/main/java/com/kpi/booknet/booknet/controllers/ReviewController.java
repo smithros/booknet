@@ -78,13 +78,13 @@ public final class ReviewController {
         return ResponseEntity.ok(this.service.getNotAcceptedReviews(bookId));
     }
 
-    @RequestMapping(value = "/accept/{id}")
-    public void acceptReview(@PathVariable(name = "id") final long reviewId) {
-        this.service.acceptReview(reviewId);
+    @RequestMapping(value = "/accept")
+    public void acceptReview(@RequestBody ReviewDto review) {
+        this.service.acceptReview(review);
     }
 
-    @RequestMapping(value = "/delete/{id}")
-    public void deleteReviewById(@PathVariable(name = "id") final long reviewId) {
+    @RequestMapping(value = "/delete")
+    public void deleteReviewById(@RequestParam(name = "id") final long reviewId) {
         this.service.deleteReviewById(reviewId);
     }
 }

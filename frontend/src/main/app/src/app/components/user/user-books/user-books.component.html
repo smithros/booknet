@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-9">
       <div class="justify-content-center row text-muted content">
-        <h1>My Books List</h1>
+        <h2 id="myText">My Books List</h2>
       </div>
       <div>
         <div id="btnwrapper">
@@ -29,7 +29,6 @@
                 </div>
                 <div class="card-description">
                   <app-book-img [book]="book"></app-book-img>
-                  <h3>Status: {{book.status}}</h3>
                   <div>
                     <h3 *ngIf="book.authors">Authors:</h3>
                     <div *ngFor="let author of book.authors ">
@@ -40,7 +39,9 @@
                   <div *ngFor="let genre of book.genres ">
                     <h4>{{genre.desc}}</h4>
                   </div>
-                  <div>Overview: {{book.text}}</div>
+                  <div><h3>Overview:</h3>
+                    <h4>{{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</h4>
+                  </div>
                 </div>
               </div>
             </div>

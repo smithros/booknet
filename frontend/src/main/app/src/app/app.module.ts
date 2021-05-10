@@ -18,7 +18,6 @@ import {AnnouncementListComponent} from './components/announcement-list/announce
 import {AnnouncementProposeComponent} from './components/announcement-propose/announcement-propose.component';
 import {BookComponent} from './components/book/book.component';
 import {BookListComponent} from './components/book-list/book-list.component';
-import {CalendarComponent} from './components/calendar/calendar.component';
 import {ReviewComponent} from './components/review/review.component';
 import {SearchComponent} from './components/search/search.component';
 import {BookImgComponent} from './components/book-img/book-img.component';
@@ -27,9 +26,6 @@ import {AddBookComponent} from './components/add-book/add-book.component';
 import {UserBooksComponent} from './components/user/user-books/user-books.component';
 import {UserReadBooksComponent} from './components/user/user-read-books/user-read-books.component';
 import {UserFavouriteBooksComponent} from './components/user/user-favourite-books/user-favourite-books.component';
-import {DateFormatPipe} from './date-pipe/date-format.pipe';
-import {CalendarModule, DateAdapter} from "angular-calendar";
-import {adapterFactory} from "angular-calendar/date-adapters/moment";
 import {UserProfileComponent} from './components/user/user-profile/user-profile.component';
 import {DeactivateAccountComponent} from './components/user/deactivate-account/deactivate-account.component';
 import {EditProfileComponent} from './components/user/edit-profile/edit-profile.component';
@@ -38,6 +34,7 @@ import {UserSettingsComponent} from './components/user/user-settings/user-settin
 import {ViewProfileComponent} from './components/user/view-profile/view-profile.component';
 import {ReviewListComponent} from "./components/review-list/review-list.component";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {AboutComponent} from './components/about/about.component';
 
 
 @NgModule({
@@ -55,7 +52,6 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     AnnouncementProposeComponent,
     BookComponent,
     BookListComponent,
-    CalendarComponent,
     ReviewComponent,
     ReviewListComponent,
     SearchComponent,
@@ -65,13 +61,13 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     UserBooksComponent,
     UserReadBooksComponent,
     UserFavouriteBooksComponent,
-    DateFormatPipe,
     UserProfileComponent,
     DeactivateAccountComponent,
     EditProfileComponent,
     UserMenuComponent,
     UserSettingsComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,10 +75,6 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    }),
     CKEditorModule
   ],
   providers: [AuthenticationService],

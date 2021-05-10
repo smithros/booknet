@@ -24,7 +24,6 @@ export class AnnouncementListComponent implements OnInit {
   public getAllAnnouncement() {
     this.apiService.getAnnouncements().subscribe(
       res => {
-        console.log(res)
         this.announcements = res;
       },
       err => {

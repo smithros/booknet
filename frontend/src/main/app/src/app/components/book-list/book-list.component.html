@@ -3,13 +3,15 @@
 
 <div class="row">
     <div class="col-9">
-        <div class="justify-content-center row text-muted content">
-            <h1>All books</h1>
-        </div>
+
         <div>
-            <div class="ml-5">
-                <a *ngIf="addBookVisible" [routerLink]="['addBook']" class="btn btn-primary btn-default">Add book</a>
+            <div class="ml-5 text-muted content" >
+              <h3>To add new book, please press the button:</h3>
+                <a *ngIf="addBookVisible" [routerLink]="['addBook']" class="btn btn-primary">Add book</a>
             </div>
+          <div class="justify-content-center row text-muted content">
+            <h1>Booknet present books:</h1>
+          </div>
             <div class="row justify-content-around" >
                 <div *ngFor="let book of books" class="col-lg-4 align-items-stretch  row">
                     <div class="card card-profile">
@@ -19,7 +21,6 @@
                             </div>
                             <div class="card-description">
                                 <app-book-img [book]="book"></app-book-img>
-                                <h3>Status: {{book.status}}</h3>
                                 <div>
                                     <h3 *ngIf="book.authors">Authors:</h3>
                                     <div *ngFor="let author of book.authors ">
@@ -30,7 +31,9 @@
                                     <div *ngFor="let genre of book.genres ">
                                       <h4>{{genre.desc}}</h4>
                                     </div>
-                                <div>Overview: {{book.text}}</div>
+                                <div><h3>Overview:</h3>
+                                  <h4>{{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>

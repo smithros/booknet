@@ -41,9 +41,6 @@ export class AnnouncementProposeComponent implements OnInit {
   public publishAnnouncement(announcement: Announcement) {
     this.apiService.publishAnnouncement(announcement).subscribe(
       res => {
-      },
-      err => {
-        alert(JSON.parse(JSON.stringify(err)).message);
       }
     );
     this.getAllAnnouncement();

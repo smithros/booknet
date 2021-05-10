@@ -14,7 +14,6 @@
                 </div>
                 <div class="card-description">
                   <app-book-img [book]="book"></app-book-img>
-                  <h3>Text: {{book.text}}</h3>
                   <div>
                     <h3 *ngIf="book.authors">Authors:</h3>
                     <div *ngFor="let author of book.authors ">
@@ -27,6 +26,8 @@
                       <h4>{{genre.desc}}</h4>
                     </div>
                   </div>
+                  <h3>Overview:</h3>
+                  <h4>{{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</h4>
                 </div>
               </div>
             </div>

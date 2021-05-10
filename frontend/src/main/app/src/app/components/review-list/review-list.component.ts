@@ -37,7 +37,7 @@ export class ReviewListComponent implements OnInit {
   constructor(private commonService: ApiService,
               private route: ActivatedRoute,
               private router: Router,
-              private  userService: UserService,
+              private userService: UserService,
               private storage: StorageService,
               private formBuilder: FormBuilder) {
   }
