@@ -27,6 +27,7 @@ package com.kpi.booknet.booknet.services;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import com.kpi.booknet.booknet.dto.ReviewDto;
 import com.kpi.booknet.booknet.exceptions.BookNetException;
 import com.kpi.booknet.booknet.exceptions.ErrorType;
@@ -64,16 +65,24 @@ public class ReviewService {
         return this.reviewRepo.findReviewsByBookId(this.bookRepo.findById(bookId));
     }
 
-    public void acceptReview(final long reviewId) {
-        this.reviewRepo.acceptReview(reviewId);
+    public void acceptReview(final ReviewDto review) {
+        Review ent = this.convertToEntity(review);
+        if (this.getReviewById(ent.getId()) != null) {
+            ent.setStatus(true);
+            this.reviewRepo.acceptReview(ent.getId(), ent.getAdminId());
+        }
     }
 
-    public List<Review> getAcceptedReviews(final long bookId) {
-        return this.reviewRepo.findReviewsByStatusIsTrueAndBookId(this.bookRepo.findById(bookId));
+    public List<ReviewDto> getAcceptedReviews(final long bookId) {
+        final List<Review> lst =
+            this.reviewRepo.findReviewsByStatusIsTrueAndBookId(this.bookRepo.findById(bookId));
+        return lst.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public List<Review> getNotAcceptedReviews(final long bookId) {
-        return this.reviewRepo.findReviewsByStatusIsFalseAndBookId(this.bookRepo.findById(bookId));
+    public List<ReviewDto> getNotAcceptedReviews(final long bookId) {
+        final List<Review> lst =
+            this.reviewRepo.findReviewsByStatusIsFalseAndBookId(this.bookRepo.findById(bookId));
+        return lst.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Transactional
