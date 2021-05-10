@@ -6,7 +6,7 @@
   <ul class="list-rectangle">
     <li *ngFor="let announcement of announcements">
       <div> {{announcement.description}}</div>
-      <div> {{announcement.date}}</div>
+      <div> {{announcement.date | date:'yyyy-MM-dd'}}</div>
       <div class="btn-default btn">
         <a [routerLink]="['/books/book', announcement.bookId]">More about book</a>
       </div>

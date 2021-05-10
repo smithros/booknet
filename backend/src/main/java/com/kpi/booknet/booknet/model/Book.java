@@ -62,7 +62,7 @@ public final class Book implements Serializable {
 
     @NotBlank
     @NotNull
-    @Column(name = "text", nullable = false)
+    @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
 
     @Column(name = "photo_id")

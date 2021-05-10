@@ -26,9 +26,6 @@ import {AddBookComponent} from './components/add-book/add-book.component';
 import {UserBooksComponent} from './components/user/user-books/user-books.component';
 import {UserReadBooksComponent} from './components/user/user-read-books/user-read-books.component';
 import {UserFavouriteBooksComponent} from './components/user/user-favourite-books/user-favourite-books.component';
-import {DateFormatPipe} from './date-pipe/date-format.pipe';
-import {CalendarModule, DateAdapter} from "angular-calendar";
-import {adapterFactory} from "angular-calendar/date-adapters/moment";
 import {UserProfileComponent} from './components/user/user-profile/user-profile.component';
 import {DeactivateAccountComponent} from './components/user/deactivate-account/deactivate-account.component';
 import {EditProfileComponent} from './components/user/edit-profile/edit-profile.component';
@@ -37,7 +34,7 @@ import {UserSettingsComponent} from './components/user/user-settings/user-settin
 import {ViewProfileComponent} from './components/user/view-profile/view-profile.component';
 import {ReviewListComponent} from "./components/review-list/review-list.component";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
-import { AboutComponent } from './components/about/about.component';
+import {AboutComponent} from './components/about/about.component';
 
 
 @NgModule({
@@ -64,14 +61,13 @@ import { AboutComponent } from './components/about/about.component';
     UserBooksComponent,
     UserReadBooksComponent,
     UserFavouriteBooksComponent,
-    DateFormatPipe,
     UserProfileComponent,
     DeactivateAccountComponent,
     EditProfileComponent,
     UserMenuComponent,
     UserSettingsComponent,
     ViewProfileComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
