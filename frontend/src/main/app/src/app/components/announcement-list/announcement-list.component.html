@@ -5,10 +5,10 @@
 <div class="announcement">
   <ul class="list-rectangle">
     <li *ngFor="let announcement of announcements">
-      <div> {{announcement.description}}</div>
-      <div> {{announcement.date | date:'yyyy-MM-dd'}}</div>
-      <div class="btn-default btn">
-        <a [routerLink]="['/books/book', announcement.bookId]">More about book</a>
+      <div>Information: {{announcement.description}}</div>
+      <div>Date of event: {{announcement.date | date:'yyyy-MM-dd'}}</div>
+      <div class="btn btn-primary">
+        <a class="ann" [routerLink]="['/books/book', announcement.bookId]">More about book</a>
       </div>
     </li>
   </ul>

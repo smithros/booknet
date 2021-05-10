@@ -55,8 +55,7 @@ export class AnnouncementComponent implements OnInit {
     //}
     this.model.ownerId = this.currentUser.id;
     this.apiService.createAnnouncement(this.model).subscribe(
-      err => {
-        alert(JSON.parse(JSON.stringify(err)).message);
+      res => {
       }
     );
   }

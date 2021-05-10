@@ -1,6 +1,4 @@
-
 .form {
-
   padding: 130px 130px;
   position: relative;
 }
@@ -29,7 +27,6 @@
   text-align: left;
 }
 
-.header-h1-left h1::before,
 .header-h1-left h1::after {
   left: 0;
   transform: translateX(0);

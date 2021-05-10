@@ -15,6 +15,8 @@ export class AddBookComponent implements OnInit {
   public model: Book = new Book();
   public createdBook: FormGroup;
   public regExp = new RegExp(/^[A-Za-z0-9_]+$/);
+  public successCreatedBook: boolean = false;
+  public errorCreatedBook: boolean = false;
 
   constructor(private apiService: ApiService,
               private route: ActivatedRoute,
@@ -68,7 +70,7 @@ export class AddBookComponent implements OnInit {
     this.createdBook = this.formBuilder.group({
       title: ['', [Validators.required, Validators.pattern(this.regExp)]],
       text: ['', [Validators.required, Validators.pattern(this.regExp)]],
-      status: ['', [Validators.required, Validators.pattern(this.regExp)]],
+      status: undefined,
       genres: this.formBuilder.array([]),
       authors: this.formBuilder.array([])
     });
@@ -98,8 +100,10 @@ export class AddBookComponent implements OnInit {
       .subscribe(res => {
           this.model.authors = [];
           this.model.genres = [];
+          this.successCreatedBook = true;
         },
         err => {
+        this.errorCreatedBook = true;
           this.router.navigateByUrl('/error');
         });
   }

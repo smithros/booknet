@@ -40,9 +40,9 @@
                 <div>
                     <app-book-file [book]="book"></app-book-file>
                 </div>
-                <div *ngIf = "addAnnouncementVisible" class="btn-default btn">
-                    <a [routerLink]="['/books',book.id,'announcement']">Create announcement</a>
-                </div>
+                <button *ngIf = "addAnnouncementVisible" class="btn btn-primary">
+                    <a [routerLink]="['/books',book.id,'announcement']" class="ann">Create announcement</a>
+                </button>
             </div>
         </div>
         <div *ngIf="userBookButtonVisible">

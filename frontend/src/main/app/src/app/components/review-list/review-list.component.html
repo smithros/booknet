@@ -1,7 +1,9 @@
 <div>
-  <div><h1>Reviews</h1></div>
+  <br>
+  <br>
+  <div><h2>Books reviews list: </h2></div>
   <div>
-    <button (click)="addReviewVisible=!addReviewVisible" class="btn btn-default">Add review</button>
+    <button (click)="addReviewVisible=!addReviewVisible" class="btn btn-primary">Add review</button>
     <form *ngIf="addReviewVisible" [formGroup]="createdReviewForm" action="">
       <table class="table">
         <tr>
@@ -28,10 +30,10 @@
         </tr>
       </table>
       <div class="col-4 row m-auto">
-        <div *ngIf="successCreatedReview" class="success-link m-auto p-2"><h3 class="text-dark text-center">Success added review!!!!!</h3></div>
-        <div *ngIf="errorCreatedReview" class="danger-link m-auto p-2"><h3 class="text-dark text-center">Error created review!!!!!</h3></div>
+        <div *ngIf="successCreatedReview" class="success-link m-auto p-2"><h3 class="text-dark text-center">Successfully added review!</h3></div>
+        <div *ngIf="errorCreatedReview" class="danger-link m-auto p-2"><h3 class="text-dark text-center">Error in review creating!</h3></div>
       </div>
-      <button (click)="createReview();" [disabled]="!createdReviewForm.valid" class="btn btn-default">Submit
+      <button (click)="createReview();" [disabled]="!createdReviewForm.valid" class="btn btn-primary">Submit
       </button>
     </form>
   </div>
@@ -52,7 +54,7 @@
       </div>
     </div>
     <div *ngIf="notAcceptedReviewVisible">
-      <div>Not accepted reviews</div>
+      <div><h3>Not accepted reviews below: </h3></div>
       <div *ngFor="let review of notAcceptedReviews" class="card">
         <div class="card-header card-header-primary">User: {{review.username}}</div>
         <div class="card-body">
