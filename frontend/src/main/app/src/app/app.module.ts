@@ -70,7 +70,8 @@ import { AboutComponent } from './components/about/about.component';
     EditProfileComponent,
     UserMenuComponent,
     UserSettingsComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
