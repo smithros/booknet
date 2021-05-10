@@ -18,7 +18,6 @@ import {AnnouncementListComponent} from './components/announcement-list/announce
 import {AnnouncementProposeComponent} from './components/announcement-propose/announcement-propose.component';
 import {BookComponent} from './components/book/book.component';
 import {BookListComponent} from './components/book-list/book-list.component';
-import {CalendarComponent} from './components/calendar/calendar.component';
 import {ReviewComponent} from './components/review/review.component';
 import {SearchComponent} from './components/search/search.component';
 import {BookImgComponent} from './components/book-img/book-img.component';
@@ -38,6 +37,7 @@ import {UserSettingsComponent} from './components/user/user-settings/user-settin
 import {ViewProfileComponent} from './components/user/view-profile/view-profile.component';
 import {ReviewListComponent} from "./components/review-list/review-list.component";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { AboutComponent } from './components/about/about.component';
 
 
 @NgModule({
@@ -55,7 +55,6 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     AnnouncementProposeComponent,
     BookComponent,
     BookListComponent,
-    CalendarComponent,
     ReviewComponent,
     ReviewListComponent,
     SearchComponent,
@@ -79,10 +78,6 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    }),
     CKEditorModule
   ],
   providers: [AuthenticationService],
