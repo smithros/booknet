@@ -35,6 +35,7 @@ import {ViewProfileComponent} from './components/user/view-profile/view-profile.
 import {ReviewListComponent} from "./components/review-list/review-list.component";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {AboutComponent} from './components/about/about.component';
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 
 @NgModule({
@@ -77,7 +78,7 @@ import {AboutComponent} from './components/about/about.component';
     FormsModule,
     CKEditorModule
   ],
-  providers: [AuthenticationService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
