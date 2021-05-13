@@ -36,7 +36,10 @@ import {ReviewListComponent} from "./components/review-list/review-list.componen
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {AboutComponent} from './components/about/about.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -69,6 +72,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     UserSettingsComponent,
     ViewProfileComponent,
     AboutComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +80,12 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, AuthenticationService],
   bootstrap: [AppComponent]

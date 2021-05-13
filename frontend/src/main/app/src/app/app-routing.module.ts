@@ -17,6 +17,7 @@ import {AnnouncementProposeComponent} from "./components/announcement-propose/an
 import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
 import {ReviewComponent} from "./components/review/review.component";
 import {AboutComponent} from "./components/about/about.component";
+import {CalendarComponent} from "./components/calendar/calendar.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -54,6 +55,7 @@ const routes: Routes = [
   {path: 'userBooks/favourite/announcementlist', component: AnnouncementListComponent},
   {path: 'books/book/:bookId/review/:reviewId', component: ReviewComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'calendar', component: CalendarComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},
 ];
