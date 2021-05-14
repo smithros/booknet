@@ -24,14 +24,10 @@ export class AuthenticationService {
   }
 
   public register(login: string, password: string, email: string) {
-    console.log('AuthenticationService:register');
     let form = new FormData();
     form.append('login', login);
     form.append('password', password);
     form.append('email', email);
-
-    console.log(form);
-
     return this.http.post<User>(`${this.backendUrl}/register`, form);
   }
 

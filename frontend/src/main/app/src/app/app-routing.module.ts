@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './components/authorization/login/login.component';
-import {UserListComponent} from './components/user-list/user-list.component';
 import {RegisterComponent} from './components/authorization/register/register.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {ErrorPageComponent} from './components/error-page/error-page.component';
@@ -18,11 +17,11 @@ import {UserProfileComponent} from "./components/user/user-profile/user-profile.
 import {ReviewComponent} from "./components/review/review.component";
 import {AboutComponent} from "./components/about/about.component";
 import {CalendarComponent} from "./components/calendar/calendar.component";
+import {SearchComponent} from "./components/search/search.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'user/get/all', component: UserListComponent},
   {path: 'home', component: LandingComponent},
   {path: '', component: LandingComponent, pathMatch: 'full'},
   {path: 'book', component: BookComponent},
@@ -56,6 +55,7 @@ const routes: Routes = [
   {path: 'books/book/:bookId/review/:reviewId', component: ReviewComponent},
   {path: 'about', component: AboutComponent},
   {path: 'calendar', component: CalendarComponent},
+  {path: 'search', component: SearchComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},
 ];

@@ -12,6 +12,7 @@ import {UserBook} from "../../models/userBook";
 import {StorageService} from "../storage/storage.service";
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
+import {BookFilter} from "../../models/bookFilter";
 
 @Injectable({
   providedIn: 'root'
@@ -63,20 +64,6 @@ export class ApiService {
   publishAnnouncement(announcement: Announcement): Observable<Announcement> {
     const url = `${this.announcementsUrl}/publish`;
     return this.http.post<Announcement>(url, announcement);
-  }
-
-  acceptRequest(sender: User, reciever: User): Observable<User> {
-    const url = `${this.url}/friends/accept`;
-    const paramsSender = new HttpParams()
-      .set('sender', sender.id.toString()).set('reciever', reciever.id.toString());
-    return this.http.post<User>(url, paramsSender);
-  }
-
-  rejectRequest(sender: User, reciever: User): Observable<User> {
-    const url = `${this.url}/friends/reject`;
-    const paramsSender = new HttpParams()
-      .set('sender', sender.id.toString()).set('reciever', reciever.id.toString());
-    return this.http.post<User>(url, paramsSender);
   }
 
   getAuthorsByBookId(bookId: number): Observable<Author[]> {
@@ -218,6 +205,11 @@ export class ApiService {
   getMostRatedBooks(): Observable<Book[]> {
     const url = `${this.booksUrl}/rate`;
     return this.http.get<Book[]>(url);
+  }
+
+  getBooksByFilter(filter: BookFilter): Observable<Book[]> {
+    const url = `${this.booksUrl}/filter`;
+    return this.http.post<Book[]>(url, filter);
   }
 
   getImageByBook(book: Book) {

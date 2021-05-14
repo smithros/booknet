@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './components/authorization/login/login.component';
 import {AuthenticationService} from './services/authentication/authentication.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {UserListComponent} from './components/user-list/user-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import {RegisterComponent} from './components/authorization/register/register.component';
 import {LandingComponent} from './components/landing/landing.component';
@@ -45,7 +44,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   declarations: [
     AppComponent,
     LoginComponent,
-    UserListComponent,
     RegisterComponent,
     LandingComponent,
     ErrorPageComponent,

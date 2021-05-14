@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../models/user';
 import {environment} from '../../../environments/environment';
+import {userSearch} from "../../models/userSearch";
 
 @Injectable({
   providedIn: 'root'
@@ -37,14 +38,6 @@ export class UserService {
     return this.http.post<User>(url, form);
   }
 
-  sendRequest(sender: number, receiver: number): Observable<User> {
-    let url = `${this.usersUrl}/friends/send`;
-    let form = new FormData();
-    const params = new HttpParams()
-      .set('sender', sender.toString()).set('reciever', receiver.toString());
-    return this.http.post<User>(url, params);
-  }
-
   getUserSettings(userId:number):Observable<User> {
     let params = new HttpParams().append(
       'userId', userId.toString()
@@ -53,17 +46,14 @@ export class UserService {
     let url = `${this.usersUrl}/getSettings`;
     return this.http.post<User>(url, params);
   }
-  checkRequest(sender: number, receiver: number) {
-    let url = `${this.usersUrl}/friends/check`;
-    let form = new FormData();
-    form.append('sender', sender.toString());
-    form.append('receiver', receiver.toString());
-    return this.http.post(url,form);
+
+  searchByUsername(username: string) {
+    let url = `${this.usersUrl}/user/search/${username}`;
+    return this.http.get<userSearch[]>(url);
   }
 
-
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.usersUrl}/user/get/all`);
+  public findAll(): Observable<userSearch[]> {
+    return this.http.get<userSearch[]>(`${this.usersUrl}/user/get/all`);
   }
 
   public save(user: User) {
