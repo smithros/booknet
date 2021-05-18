@@ -14,9 +14,14 @@ export class StorageService {
 
   constructor() {
     this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(<string> sessionStorage.getItem('user'))
+      JSON.parse(sessionStorage.getItem('user'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
+
+    this.currentFilterSubject = new BehaviorSubject<BookFilter>(
+      {header: "", author: [], genre: []}
+      );
+    this.currentFilter = this.currentFilterSubject.asObservable();
   }
 
   public getUser(): User {

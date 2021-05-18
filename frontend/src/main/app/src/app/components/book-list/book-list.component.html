@@ -3,11 +3,10 @@
 
 <div class="row">
     <div class="col-9">
-
         <div>
-            <div class="ml-5 text-muted content" >
+            <div *ngIf="addBookVisible" class="ml-5 text-muted content" >
               <h3>To add new book, please press the button:</h3>
-                <a *ngIf="addBookVisible" [routerLink]="['addBook']" class="btn btn-primary">Add book</a>
+                <a [routerLink]="['addBook']" class="btn btn-primary">Add book</a>
             </div>
           <div class="justify-content-center row text-muted content">
             <h1>Booknet present books:</h1>
@@ -42,7 +41,7 @@
         </div>
     </div>
 
-    <!--<div class="col-3">
+    <div class="col-3">
         <form action="">
             <div class="card-body bmd-form-group row">
                 <div class="m-auto">
@@ -98,5 +97,5 @@
                 </div>
             </div>
         </form>
-    </div>-->
+    </div>
 </div>

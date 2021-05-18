@@ -15,8 +15,7 @@ import {Genre} from "../../models/genre";
 })
 export class BookComponent implements OnInit {
 
-  @Input()
-  public book: Book;
+  @Input() public book: Book;
   public authors: Author[] = [];
   public genres: Genre[] = [];
   public suggestionBook: Book[] = [];
@@ -173,7 +172,9 @@ export class BookComponent implements OnInit {
 
   checkUser(){
     if (this.storage.getUser()!=null) {
-      this.addAnnouncementVisible = true;
+      if (this.storage.getUser().userRole == 'moderator') {
+        this.addAnnouncementVisible = true;
+      }
       this.userBookButtonVisible = true;
       this.checkButton();
     }

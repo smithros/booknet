@@ -39,7 +39,9 @@
                     <div *ngFor="let genre of readBook.genres ">
                       <h4>{{genre.desc}}</h4>
                     </div>
-                    <div>Overview: {{readBook.text}}</div>
+                    <div><h3>Overview:</h3>
+                      <h4>{{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</h4>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -49,7 +51,7 @@
       </div>
     </div>
 
-    <!--<div class="col-3">
+    <div class="col-3">
       <form action="">
         <div class="card-body bmd-form-group row">
           <div class="m-auto">
@@ -64,6 +66,6 @@
           </div>
         </div>
       </form>
-    </div>-->
+    </div>
   </div>
 </div>

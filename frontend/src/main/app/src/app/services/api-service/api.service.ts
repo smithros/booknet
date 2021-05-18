@@ -18,7 +18,6 @@ import {BookFilter} from "../../models/bookFilter";
   providedIn: 'root'
 })
 export class ApiService {
-
   private url: string = environment.apiBaseUrl;
   private booksUrl: string = `${this.url}/book`;
   private announcementsUrl: string = `${this.url}/announcements`;
@@ -208,6 +207,7 @@ export class ApiService {
   }
 
   getBooksByFilter(filter: BookFilter): Observable<Book[]> {
+    console.log(JSON.stringify(filter));
     const url = `${this.booksUrl}/filter`;
     return this.http.post<Book[]>(url, filter);
   }

@@ -39,6 +39,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import {CalendarModule, DateAdapter} from "angular-calendar";
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule,
     FormsModule,
     CKEditorModule,
+    Ng2SearchPipeModule,
     BrowserAnimationsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,

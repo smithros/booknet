@@ -26,6 +26,7 @@ package com.kpi.booknet.booknet.services;
 
 import java.util.List;
 import com.kpi.booknet.booknet.dto.BookDto;
+import com.kpi.booknet.booknet.dto.BookFilter;
 import com.kpi.booknet.booknet.exceptions.BookNetException;
 import com.kpi.booknet.booknet.exceptions.ErrorType;
 import com.kpi.booknet.booknet.model.Author;
@@ -122,5 +123,11 @@ public class BookService {
         ent.setAuthors(book.getAuthors());
         ent.setGenres(book.getGenres());
         return ent;
+    }
+
+    public List<Book> filterBooks(final BookFilter bookFilter) {
+        return this.bookRepo.filterBooks(
+            bookFilter.getHeader(), bookFilter.getGenres(), bookFilter.getAuthors()
+        );
     }
 }
