@@ -24,23 +24,18 @@
 
 package com.kpi.booknet.booknet.dto;
 
-import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Component
-@Getter
-@Setter
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookFilter {
-    private List<String> genres;
     private String header;
+    private List<String> genres;
     private List<String> authors;
-    private Object[] args;
-
-    public BookFilter() {
-        genres = new ArrayList<>();
-        authors = new ArrayList<>();
-    }
 }

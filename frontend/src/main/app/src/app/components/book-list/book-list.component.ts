@@ -37,8 +37,8 @@ export class BookListComponent implements OnInit {
   filterAuthors: Item[] = [];
   searchGenre;
   searchAuthor;
-  bookFilter: BookFilter;
-  historyFilter: BookFilter;
+  bookFilter: BookFilter = new BookFilter();
+  historyFilter: BookFilter = new BookFilter();
 
   private subscription: Subscription;
 
@@ -166,8 +166,8 @@ export class BookListComponent implements OnInit {
   }
 
   searchByFilter() {
-    this.bookFilter.author = [];
-    this.bookFilter.genre = [];
+    this.bookFilter.authors = [];
+    this.bookFilter.genres = [];
 
     this.filterGenres = this.selectedGenres
       .filter(v => v.selected);
@@ -175,15 +175,15 @@ export class BookListComponent implements OnInit {
       .filter(v => v.selected);
 
     this.filterGenres.forEach(genre => {
-      this.bookFilter.genre.push(genre.name);
+      this.bookFilter.genres.push(genre.name);
     });
     this.filterAuthors.forEach(author => {
-      this.bookFilter.author.push(author.name);
+      this.bookFilter.authors.push(author.name);
     });
 
 
-    this.historyFilter.genre.push(...(this.bookFilter.genre || []));
-    this.historyFilter.author.push(...(this.bookFilter.author || []));
+    this.historyFilter.genres.push(...(this.bookFilter.genres || []));
+    this.historyFilter.authors.push(...(this.bookFilter.authors || []));
     this.storage.setFilter(this.historyFilter);
     this.books = [];
     this.apiService.getBooksByFilter(this.bookFilter).subscribe(
@@ -204,8 +204,8 @@ export class BookListComponent implements OnInit {
 
   resetFiler() {
     this.bookFilter.header = "";
-    this.bookFilter.author = [];
-    this.bookFilter.genre = [];
+    this.bookFilter.authors = [];
+    this.bookFilter.genres = [];
     this.filterGenres = [];
     this.filterAuthors = [];
     this.selectedGenres.forEach(genre => genre.selected = false);

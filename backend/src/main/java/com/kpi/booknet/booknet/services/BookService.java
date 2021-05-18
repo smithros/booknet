@@ -126,6 +126,9 @@ public class BookService {
     }
 
     public List<Book> filterBooks(final BookFilter bookFilter) {
+        System.out.println("header " + bookFilter.getHeader());
+        System.out.println("genres " + bookFilter.getGenres());
+        System.out.println("authors " + bookFilter.getAuthors());
         return this.bookRepo.filterBooks(
             bookFilter.getHeader(), bookFilter.getGenres(), bookFilter.getAuthors()
         );

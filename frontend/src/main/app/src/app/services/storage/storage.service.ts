@@ -19,7 +19,7 @@ export class StorageService {
     this.currentUser = this.currentUserSubject.asObservable();
 
     this.currentFilterSubject = new BehaviorSubject<BookFilter>(
-      {header: "", author: [], genre: []}
+      {header: "", authors: [], genres: []}
       );
     this.currentFilter = this.currentFilterSubject.asObservable();
   }

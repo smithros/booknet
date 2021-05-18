@@ -183,15 +183,18 @@ public final class BookController {
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    @RequestMapping(value = "/filter", method = RequestMethod.POST,
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<List<Book>> filterBook(
-        @RequestBody BookFilter bookFilter
+        @RequestBody final BookFilter bookFilter
     ) {
-        System.out.println(bookFilter);
         List<Book> books = new ArrayList<>();
-        if(!(bookFilter.getHeader().trim().isEmpty() &&
-            bookFilter.getAuthors().size()==0 &&
-            bookFilter.getGenres().size() ==0)) {
+        if (!(bookFilter.getHeader().trim().isEmpty()
+            && bookFilter.getAuthors().size() == 0
+            && bookFilter.getGenres().size() == 0)
+        ) {
             books = this.service.filterBooks(bookFilter);
             return ResponseEntity.ok(books);
         }

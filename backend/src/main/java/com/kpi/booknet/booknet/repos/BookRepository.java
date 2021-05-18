@@ -56,7 +56,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 
     @Query(
-        value = "select b.* from book b where b.title like '%'||?1||'%'",
+        value = "select b.* from book b where upper(b.title) like upper('%'||'?1'||'%')",
         nativeQuery = true
     )
     List<Book> filterBooks(String header, List<String> genres, List<String> authors);
