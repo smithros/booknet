@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './components/authorization/login/login.component';
 import {AuthenticationService} from './services/authentication/authentication.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {UserListComponent} from './components/user-list/user-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import {RegisterComponent} from './components/authorization/register/register.component';
 import {LandingComponent} from './components/landing/landing.component';
@@ -36,13 +35,16 @@ import {ReviewListComponent} from "./components/review-list/review-list.componen
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {AboutComponent} from './components/about/about.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserListComponent,
     RegisterComponent,
     LandingComponent,
     ErrorPageComponent,
@@ -69,6 +71,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     UserSettingsComponent,
     ViewProfileComponent,
     AboutComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,13 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    Ng2SearchPipeModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, AuthenticationService],
   bootstrap: [AppComponent]

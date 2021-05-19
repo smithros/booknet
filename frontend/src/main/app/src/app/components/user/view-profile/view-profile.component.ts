@@ -28,28 +28,11 @@ export class ViewProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.user = changes.user.currentValue;
-    if (this.user.id && this.currentUser.id != this.user.id && this.currentUser.userRole == 'user') {
-      this.subscription = this.userService.checkRequest(this.currentUser.id, this.user.id).subscribe(
-        () => {this.isAbleToAddToFriend = true;},
-        () => {this.isAbleToAddToFriend = false;}
-      );
-    }
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  sendRequest() {
-    this.userService.sendRequest(this.currentUser.id, this.user.id).subscribe(
-      res => {
-        this.isAbleToAddToFriend = false;
-      },
-      err => {
-        alert("Error in add friends");
-      }
-    );
   }
 }

@@ -11,7 +11,7 @@ import {BookListComponent} from "../../book-list/book-list.component";
 })
 export class UserBooksComponent extends BookListComponent implements OnInit {
 
-  private searchTitle: string;
+  public searchTitle: string;
 
   constructor(public apiService: ApiService,
               public route: ActivatedRoute,
@@ -24,5 +24,7 @@ export class UserBooksComponent extends BookListComponent implements OnInit {
     super.getUsersBookList();
     super.getAllAuthor();
     super.getAllGenre();
+    super.checkHistoryFilter();
   }
 }
+

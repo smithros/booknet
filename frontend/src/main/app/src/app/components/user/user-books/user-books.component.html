@@ -20,7 +20,7 @@
         <div class="row justify-content-center">
           <!--<div><h3 *ngIf="emptyBookList">Since you do not have
             any books, we suggest you most rated books</h3></div>-->
-          <div *ngFor="let book of userBookList"
+          <div *ngFor="let book of userBookList | filter: searchTitle"
                class="col-lg-4 align-items-stretch row">
             <div class="card card-profile">
               <div class="card-body">
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <!--<div class="col-3">
+    <div class="col-3">
       <form action="">
         <div class="card-body bmd-form-group row">
           <div class="m-auto">
@@ -65,6 +65,6 @@
           </div>
         </div>
       </form>
-    </div>-->
+    </div>
   </div>
 </div>

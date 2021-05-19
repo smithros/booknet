@@ -26,9 +26,11 @@ package com.kpi.booknet.booknet.controllers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import com.kpi.booknet.booknet.dto.BookDto;
+import com.kpi.booknet.booknet.dto.BookFilter;
 import com.kpi.booknet.booknet.model.Book;
 import com.kpi.booknet.booknet.model.BookFile;
 import com.kpi.booknet.booknet.model.BookPhoto;
@@ -67,7 +69,6 @@ public final class BookController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Book> updateBook(@RequestBody final Book book) {
         final Book response = this.service.updateBook(book);
-        System.out.println(book);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -180,5 +181,23 @@ public final class BookController {
         BookFile response = this.files.deleteFile(bookFile);
         return Optional.ofNullable(response).map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @RequestMapping(value = "/filter", method = RequestMethod.POST,
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<List<Book>> filterBook(
+        @RequestBody final BookFilter bookFilter
+    ) {
+        List<Book> books = new ArrayList<>();
+        if (!(bookFilter.getHeader().trim().isEmpty()
+            && bookFilter.getAuthors().size() == 0
+            && bookFilter.getGenres().size() == 0)
+        ) {
+            books = this.service.filterBooks(bookFilter);
+            return ResponseEntity.ok(books);
+        }
+        return ResponseEntity.ok(books);
     }
 }

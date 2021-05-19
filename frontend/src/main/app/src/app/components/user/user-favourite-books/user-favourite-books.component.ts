@@ -11,7 +11,7 @@ import {StorageService} from "../../../services/storage/storage.service";
 })
 export class UserFavouriteBooksComponent extends BookListComponent implements OnInit {
 
-  private searchTitle: string;
+  public searchTitle: string;
 
   constructor(public apiService: ApiService,
               public route: ActivatedRoute,
@@ -24,5 +24,6 @@ export class UserFavouriteBooksComponent extends BookListComponent implements On
     super.getAllFavouriteBooks();
     super.getAllAuthor();
     super.getAllGenre();
+    super.checkHistoryFilter();
   }
 }

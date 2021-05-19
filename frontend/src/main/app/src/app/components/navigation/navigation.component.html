@@ -9,7 +9,7 @@
         <div class="input-group no-border">
           <label>
             <input [(ngModel)]="searchString" autocomplete="off" class="form-control" maxlength="20"
-                   name="search-field" placeholder="Search..." type="text">
+                   name="search-field" placeholder="User search..." type="text">
           </label>
           <button (click)="clear()" [queryParams]="{search: searchString}"
                   class="btn btn-default btn-round btn-just-icon"

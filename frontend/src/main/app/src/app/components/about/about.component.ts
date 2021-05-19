@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {StorageService} from "../../services/storage/storage.service";
 
 @Component({
   selector: 'app-about',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  username: string
+
+  constructor(private storage: StorageService) { }
 
   ngOnInit() {
+    this.username = this.storage.getUser().name;
   }
-
 }

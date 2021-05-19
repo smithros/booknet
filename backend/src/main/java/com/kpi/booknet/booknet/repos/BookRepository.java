@@ -25,6 +25,7 @@
 package com.kpi.booknet.booknet.repos;
 
 import java.util.List;
+import com.kpi.booknet.booknet.dto.BookFilter;
 import com.kpi.booknet.booknet.model.Book;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -53,4 +54,109 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     @Query(value = "update book set title = :title, text = :text, photo_id = :photoId, file_id = :fileId, status = :status where book_id = :bookId", nativeQuery = true)
     void updateBookById(String title, String text, long photoId, long fileId, boolean status, long bookId);
 
+    //TODO dynamic query generation
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_author ba on b.book_id    = ba.book_id\n" +
+            "    join book_genre  bg on b.book_id    = bg.book_id\n" +
+            "    join genre       g  on bg.genre_id  = g.genre_id\n" +
+            "    join author      a  on ba.author_id = a.author_id\n" +
+            "\n" +
+            "where\n" +
+            "    upper(b.title) like upper('%'||?1||'%')\n" +
+            "    and g.description in (?2)\n" +
+            "    and a.name in (?3)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooks(String header, List<String> genres, List<String> authors);
+
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "where\n" +
+            "    upper(b.title) like upper('%'||?1||'%')\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByHeader(String header);
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_genre  bg on b.book_id    = bg.book_id\n" +
+            "    join genre       g  on bg.genre_id  = g.genre_id\n" +
+            "\n" +
+            "where\n" +
+            "    g.description in (?1)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByGenres(List<String> genres);
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_author ba on b.book_id    = ba.book_id\n" +
+            "    join author      a  on ba.author_id = a.author_id\n" +
+            "\n" +
+            "where\n" +
+            "    a.name in (?1)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByAuthors(List<String> authors);
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_genre  bg on b.book_id    = bg.book_id\n" +
+            "    join genre       g  on bg.genre_id  = g.genre_id\n" +
+            "\n" +
+            "where\n" +
+            "    upper(b.title) like upper('%'||?1||'%')\n" +
+            "    and g.description in (?2)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByHeaderAndGenres(String header, List<String> genre);
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_author ba on b.book_id    = ba.book_id\n" +
+            "    join author      a  on ba.author_id = a.author_id\n" +
+            "\n" +
+            "where\n" +
+            "    upper(b.title) like upper('%'||?1||'%')\n" +
+            "    and a.name in (?2)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByHeaderAndAuthors(String header, List<String> authors);
+
+    @Query(
+        value = "select\n" +
+            "    b.*\n" +
+            "from\n" +
+            "    book b\n" +
+            "    join book_author ba on b.book_id    = ba.book_id\n" +
+            "    join book_genre  bg on b.book_id    = bg.book_id\n" +
+            "    join genre       g  on bg.genre_id  = g.genre_id\n" +
+            "    join author      a  on ba.author_id = a.author_id\n" +
+            "\n" +
+            "where\n" +
+            "    g.description in (?1)\n" +
+            "    and a.name in (?2)\n",
+        nativeQuery = true
+    )
+    List<Book> filterBooksByGenreAndAuthor(List<String> genres, List<String> authors);
 }
