@@ -49,11 +49,11 @@ export class ReviewListComponent implements OnInit {
   }
 
   checkAdmin(){
-    if(this.storage.getUser()!=null){
-      //if (this.storage.getUser().userRole == 'moderator') {
+    if (this.storage.getUser()!=null){
+      if (this.storage.getUser().userRole == 'moderator') {
         this.getNotAcceptedReviews();
         this.notAcceptedReviewVisible = true;
-      //}
+      }
     }
   }
 
