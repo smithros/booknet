@@ -24,6 +24,8 @@
 
 package com.kpi.booknet.booknet.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.kpi.booknet.booknet.dto.BookDto;
 import com.kpi.booknet.booknet.dto.BookFilter;
@@ -125,12 +127,37 @@ public class BookService {
         return ent;
     }
 
+    //TODO dynamic query generation
     public List<Book> filterBooks(final BookFilter bookFilter) {
-        System.out.println("header " + bookFilter.getHeader());
-        System.out.println("genres " + bookFilter.getGenres());
-        System.out.println("authors " + bookFilter.getAuthors());
-        return this.bookRepo.filterBooks(
-            bookFilter.getHeader(), bookFilter.getGenres(), bookFilter.getAuthors()
-        );
+        List<Book> res = new ArrayList<>();
+        final String header = bookFilter.getHeader();
+        final List<String> genres = bookFilter.getGenres();
+        final List<String> authors = bookFilter.getAuthors();
+        final boolean bHeader = header == null || header.isEmpty();
+        final boolean bGenre = genres == null || genres.isEmpty();
+        final boolean bAuthor = authors == null || authors.isEmpty();
+
+        if (!bHeader && !bGenre && !bAuthor) {
+            res = this.bookRepo.filterBooks(header, genres, authors);
+        }
+        if (!bHeader && bGenre && bAuthor) {
+            res = this.bookRepo.filterBooksByHeader(header);
+        }
+        if (!bGenre && bAuthor && bHeader) {
+            res = this.bookRepo.filterBooksByGenres(genres);
+        }
+        if (!bAuthor && bGenre && bHeader) {
+            res = this.bookRepo.filterBooksByAuthors(authors);
+        }
+        if (!bGenre && !bHeader && bAuthor) {
+            res = this.bookRepo.filterBooksByHeaderAndGenres(header, genres);
+        }
+        if (!bAuthor && !bHeader && bGenre) {
+            res = this.bookRepo.filterBooksByHeaderAndAuthors(header, authors);
+        }
+        if (!bGenre && !bAuthor && bHeader) {
+            res = this.bookRepo.filterBooksByGenreAndAuthor(genres, authors);
+        }
+        return res;
     }
 }
