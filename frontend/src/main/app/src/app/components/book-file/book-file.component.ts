@@ -39,13 +39,12 @@ export class BookFileComponent implements OnInit {
   ngOnInit() {
     let user: User = this.storage.getUser();
     if (user != null) {
-      //if (user.userRole == 'moderator') {
+      if (user.userRole == 'moderator') {
         this.fileUploadVisible = true;
-      //}
+      }
     }
     this.uploadFile()
   }
-
 
   uploadFile() {
     const url = `${this.siteUrl}` + `/book/bookFile`;
