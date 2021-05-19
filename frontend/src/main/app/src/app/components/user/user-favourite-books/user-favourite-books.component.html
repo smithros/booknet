@@ -9,17 +9,20 @@
       </div>
       <div>
         <div id="btnwrapper">
-          <button (click)="router.navigate(['/userBooks'])" class="btn btn-primary">My Books</button>
-          <div class="divider"></div>
-          <button (click)="router.navigate(['/userBooks/read'])" class="btn btn-primary">My Read Books
+          <button (click)="router.navigate(['/userBooks'])" class="btn btn-primary">My Books
           </button>
           <div class="divider"></div>
-          <button (click)="getAllFavouriteBooks()" class="btn btn-primary">My Favourite Books</button>
+          <button (click)="router.navigate(['/userBooks/read'])" class="btn btn-primary">My Read
+            Books
+          </button>
+          <div class="divider"></div>
+          <button (click)="getAllFavouriteBooks()" class="btn btn-primary">My Favourite Books
+          </button>
         </div>
         <div class="row justify-content-center">
-          <div style="text-align: center; font-size: 30px"><h3 *ngIf="emptyFavList">Since you do not
-            have favourite books, we suggest you most rated books</h3></div>
-          <div *ngFor="let favBook of userFavBookList"
+<!--          <div style="text-align: center; font-size: 30px"><h3 *ngIf="emptyFavList">Since you do not
+            have favourite books, we suggest you most rated books</h3></div>-->
+          <div *ngFor="let favBook of userFavBookList | filter: searchTitle"
                class="col-lg-4 align-items-stretch align-items-center row">
             <div class="card card-profile">
               <div class="card-body">
@@ -28,7 +31,6 @@
                 </div>
                 <div class="card-description">
                   <app-book-img [book]="favBook"></app-book-img>
-                  <h3>Status: {{favBook.status}}</h3>
                   <div>
                     <h3 *ngIf="favBook.authors">Authors:</h3>
                     <div *ngFor="let author of favBook.authors ">
@@ -40,8 +42,9 @@
                     <h4>{{genre.desc}}</h4>
                   </div>
                   <div><h3>Overview:</h3>
-                    <h4>{{ (book.text.length>50)? (book.text | slice:0:50)+'...':(book.text) }}</h4>
+                    <h4>{{ (favBook.text.length > 50) ? (favBook.text | slice:0:50) + '...' : (favBook.text) }}</h4>
                   </div>
+                </div>
               </div>
             </div>
           </div>

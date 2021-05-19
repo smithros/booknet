@@ -207,7 +207,6 @@ export class ApiService {
   }
 
   getBooksByFilter(filter: BookFilter): Observable<Book[]> {
-    console.log(JSON.stringify(filter));
     const url = `${this.booksUrl}/filter`;
     return this.http.post<Book[]>(url, filter);
   }

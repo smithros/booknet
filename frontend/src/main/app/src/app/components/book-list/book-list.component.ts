@@ -154,7 +154,6 @@ export class BookListComponent implements OnInit {
         console.log(err)
       }
     );
-
   }
 
   checkHistoryFilter() {
@@ -181,7 +180,6 @@ export class BookListComponent implements OnInit {
       this.bookFilter.authors.push(author.name);
     });
 
-
     this.historyFilter.genres.push(...(this.bookFilter.genres || []));
     this.historyFilter.authors.push(...(this.bookFilter.authors || []));
     this.storage.setFilter(this.historyFilter);
@@ -202,7 +200,7 @@ export class BookListComponent implements OnInit {
     );
   }
 
-  resetFiler() {
+  resetFilter() {
     this.bookFilter.header = "";
     this.bookFilter.authors = [];
     this.bookFilter.genres = [];
