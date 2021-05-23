@@ -49,10 +49,10 @@ export class AnnouncementComponent implements OnInit {
 
   createAnnouncement(): void {
     this.model.bookId = this.bookId;
-    //if (this.currentUser.userRole == 'moderator') {
-    this.model.status = true;
-    this.model.adminId = this.currentUser.id;
-    //}
+    if (this.currentUser.role == 'MODERATOR') {
+      this.model.status = true;
+      this.model.adminId = this.currentUser.id;
+    }
     this.model.ownerId = this.currentUser.id;
     this.apiService.createAnnouncement(this.model).subscribe(
       res => {

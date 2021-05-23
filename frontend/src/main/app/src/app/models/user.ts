@@ -3,7 +3,7 @@ export class User {
   name: string;
   userPassword: string
   email: string
-  userRole: string
+  role: string
   recoverCode: string
   verified: boolean
   activated: boolean
