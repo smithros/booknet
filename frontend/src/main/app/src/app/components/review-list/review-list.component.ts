@@ -23,10 +23,10 @@ export class ReviewListComponent implements OnInit {
   public addReviewVisible: boolean;
   public bookId: number;
 
-  public successCreatedReview:boolean = false;
-  public errorCreatedReview:boolean = false;
+  public successCreatedReview: boolean = false;
+  public errorCreatedReview: boolean = false;
   public createdReview: Review = new Review();
-  public notAcceptedReviewVisible:boolean = false;
+  public notAcceptedReviewVisible: boolean = false;
   public createdReviewForm = this.formBuilder.group({
     grade: [5, Validators.required],
     text: ['', Validators.required]
@@ -48,12 +48,12 @@ export class ReviewListComponent implements OnInit {
     this.ngOnChanges();
   }
 
-  checkAdmin(){
-    if(this.storage.getUser()!=null){
-      //if (this.storage.getUser().userRole == 'moderator') {
+  checkAdmin() {
+    if (this.storage.getUser() != null) {
+      if (this.storage.getUser().role == 'MODERATOR') {
         this.getNotAcceptedReviews();
         this.notAcceptedReviewVisible = true;
-      //}
+      }
     }
   }
 

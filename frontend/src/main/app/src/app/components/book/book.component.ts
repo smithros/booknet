@@ -172,7 +172,7 @@ export class BookComponent implements OnInit {
 
   checkUser(){
     if (this.storage.getUser()!=null) {
-      if (this.storage.getUser().userRole == 'moderator') {
+      if (this.storage.getUser().role == 'MODERATOR') {
         this.addAnnouncementVisible = true;
       }
       this.userBookButtonVisible = true;

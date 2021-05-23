@@ -8,6 +8,8 @@ It's a free online library of books that will allow users to read books, write r
 It also proposes different announcements, notifications, achievements about books.<br>
 Also it provides a simple social network system with ability to add friends.
 
+Link: [booknet](https://booknet-diploma.herokuapp.com/#/).
+
 Inspired by [this project](https://github.com/smithros/nc-training-center).
 ## Stack
 

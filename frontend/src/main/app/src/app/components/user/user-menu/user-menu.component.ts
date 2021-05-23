@@ -40,14 +40,13 @@ export class UserMenuComponent implements OnInit, OnChanges {
     if (this.user.id) {
       if (this.user.id == this.currentUser.id) {
         this.isAllowedToDeactivate = false;
-        this.isAllowedToAdd = this.currentUser.userRole == 'super' || this.currentUser.userRole == 'admin';
-        this.isAllowedToChange = this.currentUser.userRole == 'user';
-        this.isAllowedToPublish = this.currentUser.userRole == 'moderator';
+        this.isAllowedToAdd = this.currentUser.role == 'ADMIN';
+        this.isAllowedToChange = this.currentUser.role == 'USER';
+        this.isAllowedToPublish = this.currentUser.role == 'MODERATOR';
       } else {
         this.isAllowedToAdd = this.isAllowedToPublish = false;
-        this.isAllowedToDeactivate = this.isAllowedToChange = this.currentUser.userRole == 'super'
-          && this.user.userRole != 'user'
-          || (this.currentUser.userRole == 'admin' && this.user.userRole == 'moderator');
+        this.isAllowedToDeactivate = this.user.role != 'USER'
+          && (this.currentUser.role == 'ADMIN' || this.user.role == 'MODERATOR');
       }
     }
   }

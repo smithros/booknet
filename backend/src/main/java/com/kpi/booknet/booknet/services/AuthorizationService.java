@@ -62,6 +62,8 @@ public class AuthorizationService {
                 final User user = User.builder()
                     .name(login)
                     .password(pswdEncoder.encode(password))
+                    .activated(true)
+                    .verified(true)
                     .email(email)
                     .role(UserRole.USER)
                     .build();

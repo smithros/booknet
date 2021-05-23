@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.user = new User();
     this.searchSubscription = this.userService.getUser(id).subscribe(
       user => {
-        if (this.currentUser.userRole == 'user' && user.userRole != 'user') {
+        if (this.currentUser.role == 'USER' && user.role != 'USER') {
           this.router.navigateByUrl('/error');
         }
         this.user = user;
