@@ -26,7 +26,6 @@ package com.kpi.booknet.booknet.controllers;
 
 import java.util.Optional;
 import com.kpi.booknet.booknet.dto.ReviewDto;
-import com.kpi.booknet.booknet.model.Review;
 import com.kpi.booknet.booknet.services.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,33 +48,31 @@ public final class ReviewController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addReview(@RequestBody final ReviewDto review) {
-        System.out.println(review);
         return Optional.ofNullable(this.service.createReview(review))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/{id}")
-    public ResponseEntity<?> getReviewById(@PathVariable(name = "id") final long reviewId) {
-        Review response = this.service.getReviewById(reviewId);
-        return Optional.ofNullable(response)
+    public ResponseEntity<?> getReviewById(@PathVariable(name = "id") final long id) {
+        return Optional.ofNullable(this.service.getReviewById(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<?> getReviewsOfBook(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(this.service.getReviewOfBook(bookId));
+    public ResponseEntity<?> getReviewsOfBook(@RequestParam(name = "book") final long id) {
+        return ResponseEntity.ok(this.service.getReviewOfBook(id));
     }
 
     @RequestMapping(value = "/accepted", method = RequestMethod.GET)
-    public ResponseEntity<?> getAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(this.service.getAcceptedReviews(bookId));
+    public ResponseEntity<?> getAcceptedReviews(@RequestParam(name = "book") final long id) {
+        return ResponseEntity.ok(this.service.getAcceptedReviews(id));
     }
 
     @RequestMapping(value = "/notaccepted", method = RequestMethod.GET)
-    public ResponseEntity<?> getNotAcceptedReviews(@RequestParam(name = "book") final long bookId) {
-        return ResponseEntity.ok(this.service.getNotAcceptedReviews(bookId));
+    public ResponseEntity<?> getNotAcceptedReviews(@RequestParam(name = "book") final long id) {
+        return ResponseEntity.ok(this.service.getNotAcceptedReviews(id));
     }
 
     @RequestMapping(value = "/accept")
@@ -84,7 +81,7 @@ public final class ReviewController {
     }
 
     @RequestMapping(value = "/delete")
-    public void deleteReviewById(@RequestParam(name = "id") final long reviewId) {
-        this.service.deleteReviewById(reviewId);
+    public void deleteReviewById(@RequestParam(name = "id") final long id) {
+        this.service.deleteReviewById(id);
     }
 }

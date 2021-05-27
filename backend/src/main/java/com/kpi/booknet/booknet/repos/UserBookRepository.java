@@ -61,29 +61,29 @@ public interface UserBookRepository extends CrudRepository<UserBook, Long> {
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.read = true where ub.userId = :userId " +
-        "and ub.bookId = :bookId")
-    void markBookAsRead(@Param("userId") User userId, @Param("bookId") Book bookId);
+    @Query("update UserBook ub set ub.read = true where ub.userId = :uid " +
+        "and ub.bookId = :bid")
+    void markBookAsRead(@Param("uid") User uid, @Param("bid") Book bid);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.favourite = true where ub.userId = :userId " +
-        "and ub.bookId = :bookId")
-    void markBookAsFavourite(@Param("userId") User userId, @Param("bookId") Book bookId);
+    @Query("update UserBook ub set ub.favourite = true where ub.userId = :uid " +
+        "and ub.bookId = :bid")
+    void markBookAsFavourite(@Param("uid") User uid, @Param("bid") Book bid);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.read = false where ub.userId = :userId " +
-        "and ub.bookId = :bookId")
-    void removeFromRead(@Param("userId") User userId, @Param("bookId") Book bookId);
+    @Query("update UserBook ub set ub.read = false where ub.userId = :uid " +
+        "and ub.bookId = :bid")
+    void removeFromRead(@Param("uid") User uid, @Param("bid") Book bid);
 
     @Transactional
     @Modifying
-    @Query("update UserBook ub set ub.favourite = false where ub.userId = :userId " +
-        "and ub.bookId = :bookId")
-    void removeFromFavourite(@Param("userId") User userId, @Param("bookId") Book bookId);
+    @Query("update UserBook ub set ub.favourite = false where ub.userId = :uid " +
+        "and ub.bookId = :bid")
+    void removeFromFavourite(@Param("uid") User uid, @Param("bid") Book bid);
 
     @Transactional
     @Modifying
-    void deleteByUserIdAndBookId(User userId, Book bookId);
+    void deleteByUserIdAndBookId(User uid, Book bid);
 }

@@ -32,15 +32,10 @@ public enum ErrorType {
     USR_NOT_FOUND("User with such id not found"),
     USR_PWD_NOT_CORRECT("User password is not correct"),
     USR_NOT_ACTIVATED_OR_IS_ABSENT("User is absent or not activated"),
-
     NO_SUCH_RECOVER_CODE("There is no such recover code"),
-
     NO_SUCH_ANNOUNCEMENT("No announcement with such a id"),
-
     EMPTY_CREDENTIALS("Login or password or email is empty"),
-
     NO_BOOK_WITH_SUCH_ID("Book with such id not found"),
-
     NO_REVIEW_WITH_SUCH_ID("Review with such id not found");
 
     private final String message;

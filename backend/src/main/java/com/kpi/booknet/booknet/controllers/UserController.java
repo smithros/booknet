@@ -55,24 +55,21 @@ public final class UserController {
             .password(newPassword)
             .email(newEmail)
             .build();
-        final User response = this.service.updateByName(updatedUser);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.updateByName(updatedUser))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<User> get(@PathVariable(value = "id") final long id) {
-        final User response = this.service.getById(id);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getById(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/admin")
     public ResponseEntity<User> createAdmin(@RequestBody final User admin) {
-        final User response = this.service.createAdmin(admin);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.createAdmin(admin))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -80,8 +77,7 @@ public final class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/activate")
     public ResponseEntity<User> activate(@RequestParam(name = "email") final String email,
                                          @RequestParam(name = "code") final String code) {
-        final User response = this.service.activateAccount(email, code);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.activateAccount(email, code))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -94,9 +90,9 @@ public final class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{searchName}")
     public ResponseEntity<List<User>> searchUsers(
-        @PathVariable(value = "searchName") final String searchName
+        @PathVariable(value = "searchName") final String search
     ) {
-        final List<User> response = this.service.searchUsersByUsername(searchName);
+        final List<User> response = this.service.searchUsersByUsername(search);
         return response.isEmpty() ?
             new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }

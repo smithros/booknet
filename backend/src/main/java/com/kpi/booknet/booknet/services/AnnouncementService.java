@@ -40,58 +40,62 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AnnouncementService {
-    private final AnnouncementRepository announcementRepo;
-    private final BookRepository bookRepo;
-    private final UserRepository userRepo;
+
+    private final AnnouncementRepository announ;
+
+    private final BookRepository books;
+
+    private final UserRepository users;
+
     private final ModelMapper mapper;
 
     public Announcement getById(final long id) {
-        return this.announcementRepo.findById(id);
+        return this.announ.findById(id);
     }
 
     public List<Announcement> getAll() {
-        return (List<Announcement>) this.announcementRepo.findAll();
+        return (List<Announcement>) this.announ.findAll();
     }
 
     public List<AnnouncementDto> getPublished() {
-        final List<Announcement> lst = this.announcementRepo.findAnnouncementsByStatusTrue();
+        final List<Announcement> lst = this.announ.findAnnouncementsByStatusTrue();
         return lst.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public List<Announcement> getUnpublished() {
-        return this.announcementRepo.findAnnouncementsByStatusFalse();
+        return this.announ.findAnnouncementsByStatusFalse();
     }
 
     public Announcement delete(final long id) {
         if (this.getById(id) != null) {
-            return this.announcementRepo.deleteById(id);
+            return this.announ.deleteById(id);
         }
         throw new BookNetException(ErrorType.NO_SUCH_ANNOUNCEMENT.getMessage());
     }
 
     public AnnouncementDto create(final AnnouncementDto ann) {
-        ann.setBookId(this.bookRepo.findById(ann.getBookId()).get().getId());
-        ann.setOwnerId(this.userRepo.findById(ann.getOwnerId()).get().getId());
-        ann.setAdminId(this.userRepo.findById(ann.getAdminId()).get().getId());
-        Announcement ent = this.convertToEntity(ann);
-        this.announcementRepo.save(ent);
+        ann.setBookId(this.books.findById(ann.getBookId()).get().getId());
+        ann.setOwnerId(this.users.findById(ann.getOwnerId()).get().getId());
+        ann.setAdminId(this.users.findById(ann.getAdminId()).get().getId());
+        final Announcement ent = this.convertToEntity(ann);
+        this.announ.save(ent);
         return ann;
     }
 
     public Announcement update(final Announcement ann) {
-        this.announcementRepo.updateById(ann.getDescription(), ann.getDate(), ann.isStatus(),
+        this.announ.updateById(ann.getDescription(), ann.getDate(), ann.isStatus(),
             ann.getBookId().getId(), ann.getAdminId().getId(),
             ann.getOwnerId().getId(), ann.getId());
         return ann;
     }
 
     public Announcement publish(final Announcement ann) {
-        this.announcementRepo.publish(ann.getId());
+        this.announ.publish(ann.getId());
         return ann;
     }
 
     private AnnouncementDto convertToDto(final Announcement ann) {
-        AnnouncementDto dto = this.mapper.map(ann, AnnouncementDto.class);
+        final AnnouncementDto dto = this.mapper.map(ann, AnnouncementDto.class);
         dto.setId(ann.getId());
         dto.setDescription(ann.getDescription());
         dto.setAdminId(ann.getAdminId().getId());
@@ -103,12 +107,12 @@ public class AnnouncementService {
     }
 
     private Announcement convertToEntity(final AnnouncementDto ann) {
-        Announcement ent = this.mapper.map(ann, Announcement.class);
+        final Announcement ent = this.mapper.map(ann, Announcement.class);
         ent.setId(ann.getId());
         ent.setDescription(ann.getDescription());
-        ent.setOwnerId(this.userRepo.findById(ann.getOwnerId()).get());
-        ent.setAdminId(this.userRepo.findById(ann.getAdminId()).get());
-        ent.setBookId(this.bookRepo.findById(ann.getBookId()).get());
+        ent.setOwnerId(this.users.findById(ann.getOwnerId()).get());
+        ent.setAdminId(this.users.findById(ann.getAdminId()).get());
+        ent.setBookId(this.books.findById(ann.getBookId()).get());
         ent.setDate(ann.getDate());
         ent.setStatus(ann.isStatus());
         return ent;

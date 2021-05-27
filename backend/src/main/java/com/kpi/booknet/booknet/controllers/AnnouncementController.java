@@ -49,32 +49,28 @@ public final class AnnouncementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<AnnouncementDto>> getPublishedAnnouncements() {
-        final List<AnnouncementDto> response = this.service.getPublished();
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getPublished())
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/unpublished", method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getUnpublishedAnnouncements() {
-        final List<Announcement> response = this.service.getUnpublished();
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getUnpublished())
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Announcement>> getAllAnnouncements() {
-        final List<Announcement> response = this.service.getAll();
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getAll())
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Announcement> getAnnouncement(@PathVariable("id") final long id) {
-        final Announcement response = this.service.getById(id);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getById(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -83,15 +79,13 @@ public final class AnnouncementController {
     public ResponseEntity<AnnouncementDto> createAnnouncement(
         @RequestBody final AnnouncementDto ann
     ) {
-        final AnnouncementDto response = this.service.create(ann);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.create(ann))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/publish", method = RequestMethod.POST)
     public ResponseEntity<Announcement> publishAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = this.service.publish(ann);
         return Optional.ofNullable(this.service.publish(ann))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -99,16 +93,14 @@ public final class AnnouncementController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public ResponseEntity<Announcement> deleteAnnouncement(@PathVariable("id") final long id) {
-        final Announcement response = this.service.delete(id);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.delete(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Announcement> updateAnnouncement(@RequestBody final Announcement ann) {
-        final Announcement response = this.service.update(ann);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.update(ann))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }

@@ -51,16 +51,18 @@ public class UserService {
     public static final String PASSWORD_REGEX
         = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$_!%*#?&])[A-Za-z\\d@$!%*_#?&]{8,}$";
 
-    private final UserRepository userRepo;
-    private final RecoverCodeRepository recoverCodeRepo;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository users;
+
+    private final RecoverCodeRepository recover;
+
+    private final BCryptPasswordEncoder encoder;
 
     public List<User> getAllUsers() {
-        return this.userRepo.findAll();
+        return this.users.findAll();
     }
 
     public User getById(final long id) {
-        final User user = this.userRepo.findById(id);
+        final User user = this.users.findById(id);
         if (!user.isActivated()) {
             throw new BookNetException(ErrorType.USR_NOT_ACTIVATED.getMessage());
         }
@@ -68,24 +70,24 @@ public class UserService {
     }
 
     public User updateByName(final User user) {
-        User currUser = this.userRepo.findByName(user.getName());
+        User usr = this.users.findByName(user.getName());
         final String password = user.getPassword();
         final String email = user.getEmail();
 
-        if (this.emailIsValid(currUser, email)) {
+        if (this.emailIsValid(usr, email)) {
             if (password.isEmpty()) {
-                user.setPassword(currUser.getPassword());
-                this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
+                user.setPassword(usr.getPassword());
+                this.users.updateByName(user.getName(), user.getPassword(), user.getEmail());
             } else {
                 if (this.passwordIsValid(password)) {
-                    user.setPassword(bCryptPasswordEncoder.encode(password));
-                    this.userRepo.updateByName(user.getName(), user.getPassword(), user.getEmail());
+                    user.setPassword(encoder.encode(password));
+                    this.users.updateByName(user.getName(), user.getPassword(), user.getEmail());
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_VALID.getMessage());
                 }
             }
-            currUser = this.userRepo.findByName(user.getName());
-            return currUser;
+            usr = this.users.findByName(user.getName());
+            return usr;
         }
         throw new BookNetException(ErrorType.USR_EMAIL_NOT_VALID.getMessage());
     }
@@ -93,51 +95,51 @@ public class UserService {
     public User createAdmin(final User admin) {
         if (this.notExistsInBase(admin)) {
             admin.setVerified(true);
-            this.userRepo.save(admin);
-            return this.userRepo.findByName(admin.getName());
+            this.users.save(admin);
+            return this.users.findByName(admin.getName());
         }
         throw new BookNetException(ErrorType.USR_ALREADY_EXISTS.getMessage());
     }
 
     public User activateAccount(final String email, final String code) {
-        if (this.recoverCodeRepo.findByCode(code) != null) {
-            this.userRepo.activateAccount(email);
-            return userRepo.findByEmail(email);
+        if (this.recover.findByCode(code) != null) {
+            this.users.activateAccount(email);
+            return users.findByEmail(email);
         }
         throw new BookNetException(ErrorType.NO_SUCH_RECOVER_CODE.getMessage());
     }
 
     public boolean deactivateAccount(final long id) {
-        if (userRepo.findById(id) != null) {
-            userRepo.deactivateAccount(id);
+        if (this.users.findById(id) != null) {
+            this.users.deactivateAccount(id);
             return true;
         }
         throw new BookNetException(ErrorType.USR_NOT_FOUND.getMessage());
     }
 
     public List<User> searchUsersByUsername(final String search) {
-        return this.userRepo.findAllByName(search.toLowerCase(Locale.ENGLISH));
+        return this.users.findAllByName(search.toLowerCase(Locale.ENGLISH));
     }
 
     public List<User> getAllAdmins() {
-        return this.userRepo.findAllByRoleEquals(UserRole.ADMIN);
+        return this.users.findAllByRoleEquals(UserRole.ADMIN);
     }
 
     public List<User> getAllModerators() {
-        return this.userRepo.findAllByRoleEquals(UserRole.MODERATOR);
+        return this.users.findAllByRoleEquals(UserRole.MODERATOR);
     }
 
     private boolean notExistsInBase(final User admin) {
-        return this.userRepo.findByName(admin.getName()) == null
-            && this.userRepo.findByEmail(admin.getEmail()) == null;
+        return this.users.findByName(admin.getName()) == null
+            && this.users.findByEmail(admin.getEmail()) == null;
     }
 
     private boolean passwordIsValid(final String password) {
         return password.matches(UserService.PASSWORD_REGEX);
     }
 
-    private boolean emailIsValid(final User currUser, final String email) {
+    private boolean emailIsValid(final User cusr, final String email) {
         return !email.isEmpty() && email.matches(UserService.EMAIL_REGEX)
-            && (this.userRepo.findByEmail(email) == null || currUser.getEmail().equals(email));
+            && (this.users.findByEmail(email) == null || cusr.getEmail().equals(email));
     }
 }
