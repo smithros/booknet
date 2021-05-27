@@ -56,7 +56,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/book")
 @AllArgsConstructor
 public final class BookController {
+
     private final BookService service;
+
     private final BookFilesService files;
 
     @RequestMapping(method = RequestMethod.POST)
@@ -156,9 +158,9 @@ public final class BookController {
     public ResponseEntity<BookFile> updateBookFile(@RequestBody final Book book,
                                                    @RequestParam(name = "file")
                                                    final MultipartFile file) throws IOException {
-        final BookFile fl = this.files.getBookFile(book);
-        fl.setFile(file.getBytes());
-        return Optional.ofNullable(this.files.updateFile(fl))
+        final BookFile bookfile = this.files.getBookFile(book);
+        bookfile.setFile(file.getBytes());
+        return Optional.ofNullable(this.files.updateFile(bookfile))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -193,14 +195,14 @@ public final class BookController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<List<Book>> filterBook(
-        @RequestBody final BookFilter bookFilter
+        @RequestBody final BookFilter filter
     ) {
         List<Book> books = new ArrayList<>();
-        if (!(bookFilter.getHeader().trim().isEmpty()
-            && bookFilter.getAuthors().size() == 0
-            && bookFilter.getGenres().size() == 0)
+        if (!(filter.getHeader().trim().isEmpty()
+            && filter.getAuthors().size() == 0
+            && filter.getGenres().size() == 0)
         ) {
-            books = this.service.filterBooks(bookFilter);
+            books = this.service.filterBooks(filter);
             return ResponseEntity.ok(books);
         }
         return ResponseEntity.ok(books);

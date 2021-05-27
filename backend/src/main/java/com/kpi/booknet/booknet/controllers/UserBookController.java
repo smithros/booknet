@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userBook")
 @AllArgsConstructor
 public final class UserBookController {
+
     private final UserBookService service;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -66,8 +67,8 @@ public final class UserBookController {
         @RequestParam(name = "userId") final long id
     ) {
         final List<Book> response = this.service.getAllUsersBooks(id);
-        return response.isEmpty() ?
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
+        return response.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/all/favourite", method = RequestMethod.GET)
@@ -75,8 +76,8 @@ public final class UserBookController {
         @RequestParam(name = "userId") final long id
     ) {
         final List<Book> response = this.service.getAllFavouriteBooks(id);
-        return response.isEmpty() ?
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
+        return response.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/all/read", method = RequestMethod.GET)
@@ -84,8 +85,8 @@ public final class UserBookController {
         @RequestParam(name = "userId") final long id
     ) {
         final List<Book> response = this.service.getAllReadBooks(id);
-        return response.isEmpty() ?
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
+        return response.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/mark_read", method = RequestMethod.POST)
@@ -103,8 +104,8 @@ public final class UserBookController {
     }
 
     @RequestMapping(value = "/remove_read", method = RequestMethod.POST)
-    public ResponseEntity<UserBookDto> removeFromRead(@RequestBody final UserBookDto userBook) {
-        return Optional.ofNullable(this.service.removeFromRead(userBook))
+    public ResponseEntity<UserBookDto> removeFromRead(@RequestBody final UserBookDto dto) {
+        return Optional.ofNullable(this.service.removeFromRead(dto))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -128,9 +129,7 @@ public final class UserBookController {
         @RequestParam(name = "userId") final long id
     ) {
         final List<UserBook> response = this.service.getAllUserBooksByUserId(id);
-        return response.isEmpty() ?
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
+        return response.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 }
-
-

@@ -33,6 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class AuthorDto implements Serializable {
+
     private long id;
+
     private String name;
 }

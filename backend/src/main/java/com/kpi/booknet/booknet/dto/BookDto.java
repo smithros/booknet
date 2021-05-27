@@ -38,12 +38,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class BookDto implements Serializable {
+
     private long id;
+
     private String title;
     private String text;
+
     private Long photoId;
+
     private Long fileId;
+
     private boolean status;
+
     private Set<Genre> genres;
+
     private Set<Author> authors;
 }

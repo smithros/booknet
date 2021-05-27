@@ -38,8 +38,8 @@ public interface GenreRepository extends CrudRepository<Genre, Long> {
     Genre findById(long id);
 
     @Query(
-        value = "select g.* from book_genre bg, genre g " +
-            "where bg.genre_id = g.genre_id and bg.book_id = ?1",
+        value = "select g.* from book_genre bg, genre g "
+            + "where bg.genre_id = g.genre_id and bg.book_id = ?1",
         nativeQuery = true
     )
     List<Genre> findByBookId(long id);

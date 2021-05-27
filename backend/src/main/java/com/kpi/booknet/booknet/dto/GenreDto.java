@@ -33,6 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class GenreDto implements Serializable {
+
     private long id;
+
     private String desc;
 }
