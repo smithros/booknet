@@ -35,11 +35,15 @@ import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class AnnouncementService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AnnouncementService.class);
 
     private final AnnouncementRepository announ;
 
@@ -50,6 +54,7 @@ public class AnnouncementService {
     private final ModelMapper mapper;
 
     public Announcement getById(final long id) {
+        LOG.info("Get announcement with id: {}", id);
         return this.announ.findById(id);
     }
 
@@ -68,6 +73,7 @@ public class AnnouncementService {
 
     public Announcement delete(final long id) {
         if (this.getById(id) != null) {
+            LOG.info("Deleted announcement with id: {}", id);
             return this.announ.deleteById(id);
         }
         throw new BookNetException(ErrorType.NO_SUCH_ANNOUNCEMENT.getMessage());
@@ -78,6 +84,7 @@ public class AnnouncementService {
         ann.setOwnerId(this.users.findById(ann.getOwnerId()).get().getId());
         ann.setAdminId(this.users.findById(ann.getAdminId()).get().getId());
         final Announcement ent = this.convertToEntity(ann);
+        LOG.info("Created announcement: {}", ent);
         this.announ.save(ent);
         return ann;
     }
@@ -86,10 +93,12 @@ public class AnnouncementService {
         this.announ.updateById(ann.getDescription(), ann.getDate(), ann.isStatus(),
             ann.getBookId().getId(), ann.getAdminId().getId(),
             ann.getOwnerId().getId(), ann.getId());
+        LOG.info("Updated announcement: {}", ann.getId());
         return ann;
     }
 
     public Announcement publish(final Announcement ann) {
+        LOG.info("Published announcement: {}", ann);
         this.announ.publish(ann.getId());
         return ann;
     }

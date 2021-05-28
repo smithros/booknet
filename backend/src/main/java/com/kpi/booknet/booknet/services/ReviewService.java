@@ -37,11 +37,15 @@ import com.kpi.booknet.booknet.repos.ReviewRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ReviewService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ReviewService.class);
 
     private final ReviewRepository reviews;
 
@@ -62,6 +66,7 @@ public class ReviewService {
         review.setAdminId(this.users.findById(review.getAdminId()).get().getId());
         final Review ent = this.convertToEntity(review);
         this.reviews.save(ent);
+        LOG.info("Created review: {}", review);
         return review;
     }
 
@@ -74,6 +79,7 @@ public class ReviewService {
         if (this.getReviewById(ent.getId()) != null) {
             ent.setStatus(true);
             this.reviews.acceptReview(ent.getId(), ent.getAdminId());
+            LOG.info("Accepted review with id: {}", review.getId());
         }
     }
 
@@ -93,6 +99,7 @@ public class ReviewService {
     public void deleteReviewById(final long id) {
         if (this.getReviewById(id) != null) {
             this.reviews.deleteById(id);
+            LOG.info("Deleted review with id: {}", id);
         } else {
             throw new BookNetException(ErrorType.NO_REVIEW_WITH_SUCH_ID.getMessage());
         }

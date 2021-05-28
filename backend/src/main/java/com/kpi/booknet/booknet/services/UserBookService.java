@@ -35,11 +35,15 @@ import com.kpi.booknet.booknet.repos.UserBookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserBookService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserBookService.class);
 
     private final BookRepository books;
 
@@ -52,6 +56,7 @@ public class UserBookService {
     public UserBookDto addBookToUser(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         if (this.userAlreadyHasBook(dto, ent)) {
+            LOG.info("Added book id: {} to user id: {}", ent.getBookId(), ent.getUserId());
             this.usrbooks.save(ent);
         }
         return dto;
@@ -77,30 +82,35 @@ public class UserBookService {
     public UserBookDto deleteFromAdded(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         this.usrbooks.deleteByUserIdAndBookId(ent.getUserId(), ent.getBookId());
+        LOG.info("Deleted book id: {} from user id: {}", ent.getBookId(), ent.getUserId());
         return dto;
     }
 
     public UserBookDto markBookAsRead(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         this.usrbooks.markBookAsRead(ent.getUserId(), ent.getBookId());
+        LOG.info("Mark as read book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
         return dto;
     }
 
     public UserBookDto markBookAsFavourite(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         this.usrbooks.markBookAsFavourite(ent.getUserId(), ent.getBookId());
+        LOG.info("Mark as favourite book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
         return dto;
     }
 
     public UserBookDto removeFromRead(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         this.usrbooks.removeFromRead(ent.getUserId(), ent.getBookId());
+        LOG.info("Remove from read book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
         return dto;
     }
 
     public UserBookDto removeFromFavourite(final UserBookDto dto) {
         final UserBook ent = this.convertUbToEntity(dto);
         this.usrbooks.removeFromFavourite(ent.getUserId(), ent.getBookId());
+        LOG.info("Remove from fav book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
         return dto;
     }
 

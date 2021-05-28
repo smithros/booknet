@@ -33,6 +33,8 @@ import com.kpi.booknet.booknet.repos.RecoverCodeRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,8 @@ public class UserService {
     public static final String PASSWORD_REGEX
         = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$_!%*#?&])[A-Za-z\\d@$!%*_#?&]{8,}$";
 
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository users;
 
     private final RecoverCodeRepository recover;
@@ -66,6 +70,7 @@ public class UserService {
         if (!user.isActivated()) {
             throw new BookNetException(ErrorType.USR_NOT_ACTIVATED.getMessage());
         }
+        LOG.info("Got user with id: {}", id);
         return user;
     }
 
@@ -82,6 +87,7 @@ public class UserService {
                 if (this.passwordIsValid(password)) {
                     user.setPassword(encoder.encode(password));
                     this.users.updateByName(user.getName(), user.getPassword(), user.getEmail());
+                    LOG.info("Updated user with id: {}", user.getId());
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_VALID.getMessage());
                 }
@@ -95,6 +101,7 @@ public class UserService {
     public User createAdmin(final User admin) {
         if (this.notExistsInBase(admin)) {
             admin.setVerified(true);
+            LOG.info("Created admin with id: {}", admin.getId());
             this.users.save(admin);
             return this.users.findByName(admin.getName());
         }
@@ -104,6 +111,7 @@ public class UserService {
     public User activateAccount(final String email, final String code) {
         if (this.recover.findByCode(code) != null) {
             this.users.activateAccount(email);
+            LOG.info("Activated account with email: {}", email);
             return users.findByEmail(email);
         }
         throw new BookNetException(ErrorType.NO_SUCH_RECOVER_CODE.getMessage());
@@ -112,6 +120,7 @@ public class UserService {
     public boolean deactivateAccount(final long id) {
         if (this.users.findById(id) != null) {
             this.users.deactivateAccount(id);
+            LOG.info("Deactivated account with email: {}", id);
             return true;
         }
         throw new BookNetException(ErrorType.USR_NOT_FOUND.getMessage());

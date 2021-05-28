@@ -30,15 +30,11 @@ import com.kpi.booknet.booknet.model.BookPhoto;
 import com.kpi.booknet.booknet.repos.BookFileRepository;
 import com.kpi.booknet.booknet.repos.BookPhotoRepository;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class BookFilesService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
 
     private final BookFileRepository files;
 

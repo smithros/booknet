@@ -66,6 +66,7 @@ public class BookService {
     }
 
     public Book getBookById(final long id) {
+        LOG.info("Getting book with id: {}", id);
         return this.books.findById(id);
     }
 
@@ -133,6 +134,7 @@ public class BookService {
 
     //TODO dynamic query generation
     public List<Book> filterBooks(final BookFilter filter) {
+        LOG.info("Got book filter: {}", filter);
         List<Book> res = new ArrayList<>();
         final String header = filter.getHeader();
         final List<String> genres = filter.getGenres();
