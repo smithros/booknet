@@ -33,9 +33,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class UserBookDto implements Serializable {
+
     private long id;
+
     private Long userId;
+
     private Long bookId;
+
     private boolean read;
+
     private boolean favourite;
 }

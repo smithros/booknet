@@ -44,61 +44,62 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 @AllArgsConstructor
 public final class UserController {
+
     private final UserService service;
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ResponseEntity<User> update(@RequestParam(name = "login") final String login,
-                                       @RequestParam(name = "newPassword") final String newPassword,
-                                       @RequestParam(name = "newEmail") final String newEmail) {
-        final User updatedUser = User.builder()
+    public ResponseEntity<User> update(
+        @RequestParam(name = "login") final String login,
+        @RequestParam(name = "newPassword") final String pass,
+        @RequestParam(name = "newEmail") final String email
+    ) {
+        final User usr = User.builder()
             .name(login)
-            .password(newPassword)
-            .email(newEmail)
+            .password(pass)
+            .email(email)
             .build();
-        final User response = this.service.updateByName(updatedUser);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.updateByName(usr))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<User> get(@PathVariable(value = "id") final long id) {
-        final User response = this.service.getById(id);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.getById(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/admin")
     public ResponseEntity<User> createAdmin(@RequestBody final User admin) {
-        final User response = this.service.createAdmin(admin);
-        return Optional.ofNullable(response)
+        return Optional.ofNullable(this.service.createAdmin(admin))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/activate")
-    public ResponseEntity<User> activate(@RequestParam(name = "email") final String email,
-                                         @RequestParam(name = "code") final String code) {
-        final User response = this.service.activateAccount(email, code);
-        return Optional.ofNullable(response)
+    public ResponseEntity<User> activate(
+        @RequestParam(name = "email") final String email,
+        @RequestParam(name = "code") final String code
+    ) {
+        return Optional.ofNullable(this.service.activateAccount(email, code))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/deactivate")
     public ResponseEntity<?> deactivateAccount(@PathVariable(value = "id") final long id) {
-        return this.service.deactivateAccount(id) ?
-            new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return this.service.deactivateAccount(id)
+            ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{searchName}")
     public ResponseEntity<List<User>> searchUsers(
-        @PathVariable(value = "searchName") final String searchName
+        @PathVariable(value = "searchName") final String search
     ) {
-        final List<User> response = this.service.searchUsersByUsername(searchName);
-        return response.isEmpty() ?
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
+        final List<User> response = this.service.searchUsersByUsername(search);
+        return response.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : ResponseEntity.ok(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/all")

@@ -34,12 +34,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class ReviewDto implements Serializable {
+
     private long id;
+
     private String text;
+
     private Date date;
+
     private Long userId;
+
     private Long bookId;
+
     private Long adminId;
+
     private long grade;
+
     private boolean status;
 }

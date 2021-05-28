@@ -50,6 +50,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Review r set r.status = true, r.adminId = :adminId where r.id = :reviewId")
-    void acceptReview(@Param("reviewId") long reviewId, @Param("adminId") User adminId);
+    @Query("update Review r set r.status = true, r.adminId = :uid where r.id = :rid")
+    void acceptReview(@Param("rid") long rid, @Param("uid") User uid);
 }

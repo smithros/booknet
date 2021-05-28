@@ -41,11 +41,10 @@ public interface BookFileRepository extends CrudRepository<BookFile, Long> {
     @Transactional
     @Modifying
     @Query(value = "insert into book_file (book_id, file) values (?1, ?2)", nativeQuery = true)
-    void addFile(long bookId, byte[] file);
+    void addFile(long bid, byte[] file);
 
     @Transactional
     @Modifying
-    @Query(value = "update book_file set file = :file where book_id = :bookId", nativeQuery = true)
-    void updateFile(long bookId, byte[] file);
-
+    @Query(value = "update book_file set file = :file where book_id = :bid", nativeQuery = true)
+    void updateFile(long bid, byte[] file);
 }

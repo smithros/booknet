@@ -25,7 +25,6 @@
 package com.kpi.booknet.booknet.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,12 +35,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class UserDto implements Serializable {
+
     private long id;
+
     private String name;
+
     private String password;
+
     private String email;
+
     private String role;
-    private String recoverCode;
+
+    private String code;
+
     private boolean verified;
+
     private boolean activated;
 }

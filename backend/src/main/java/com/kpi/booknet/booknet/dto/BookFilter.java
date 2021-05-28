@@ -35,7 +35,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookFilter {
+
     private String header;
+
     private List<String> genres;
+
     private List<String> authors;
 }

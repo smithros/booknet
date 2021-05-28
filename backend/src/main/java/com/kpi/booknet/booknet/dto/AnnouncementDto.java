@@ -35,10 +35,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public final class AnnouncementDto implements Serializable {
     private long id;
+
     private String description;
+
     private Date date;
+
     private boolean status;
+
     private Long bookId;
+
     private Long ownerId;
+
     private Long adminId;
 }

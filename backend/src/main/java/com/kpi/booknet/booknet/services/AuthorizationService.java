@@ -30,20 +30,27 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class AuthorizationService {
-    private final UserRepository userRepo;
-    private final BCryptPasswordEncoder pswdEncoder;
+
+    private static final Logger LOG = LoggerFactory.getLogger(AuthorizationService.class);
+
+    private final UserRepository repo;
+
+    private final BCryptPasswordEncoder encoder;
 
     public User authorize(final String login, final String password) {
         if (!login.isEmpty() && !password.isEmpty()) {
-            final User user = this.userRepo.findByName(login);
+            final User user = this.repo.findByName(login);
             if (user != null && user.isActivated()) {
-                if (this.pswdEncoder.matches(password, user.getPassword())) {
+                if (this.encoder.matches(password, user.getPassword())) {
+                    LOG.info("Authorized user: id = {}, name = {}", user.getId(), user.getName());
                     return user;
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_CORRECT.getMessage());
@@ -55,21 +62,20 @@ public class AuthorizationService {
     }
 
     public User register(final String login, final String password, final String email) {
-        if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
-            if (this.userRepo.findByName(login) == null
-                && this.userRepo.findByEmail(email) == null
-            ) {
-                final User user = User.builder()
-                    .name(login)
-                    .password(pswdEncoder.encode(password))
-                    .activated(true)
-                    .verified(true)
-                    .email(email)
-                    .role(UserRole.USER)
-                    .build();
-                this.userRepo.save(user);
-                return this.userRepo.findByName(login);
-            }
+        if (!login.isEmpty() && !password.isEmpty() && !email.isEmpty()
+            && this.repo.findByName(login) == null && this.repo.findByEmail(email) == null
+        ) {
+            final User user = User.builder()
+                .name(login)
+                .password(encoder.encode(password))
+                .activated(true)
+                .verified(true)
+                .email(email)
+                .role(UserRole.USER)
+                .build();
+            this.repo.save(user);
+            LOG.info("Registered user: name = {}", user.getName());
+            return this.repo.findByName(login);
         }
         throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());
     }

@@ -30,52 +30,51 @@ import com.kpi.booknet.booknet.model.BookPhoto;
 import com.kpi.booknet.booknet.repos.BookFileRepository;
 import com.kpi.booknet.booknet.repos.BookPhotoRepository;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class BookFilesService {
-    private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
-    private final BookFileRepository fileRepo;
-    private final BookPhotoRepository photoRepo;
+
+    private final BookFileRepository files;
+
+    private final BookPhotoRepository photos;
 
     public BookPhoto getBookPhoto(final Book book) {
-        return this.photoRepo.findByBookId(book.getId());
+        return this.photos.findByBookId(book.getId());
     }
 
-    public BookPhoto deleteImage(final BookPhoto bookPhoto) {
-        this.photoRepo.deleteByBookId(bookPhoto.getBookId());
-        return bookPhoto;
+    public BookPhoto deleteImage(final BookPhoto photo) {
+        this.photos.deleteByBookId(photo.getBookId());
+        return photo;
     }
 
-    public BookPhoto addImage(final BookPhoto bookPhoto) {
-        this.photoRepo.addFile(bookPhoto.getBookId(), bookPhoto.getPhoto());
-        return bookPhoto;
+    public BookPhoto addImage(final BookPhoto photo) {
+        this.photos.addFile(photo.getBookId(), photo.getPhoto());
+        return photo;
     }
 
-    public BookPhoto updateImage(final BookPhoto bookPhoto) {
-        this.photoRepo.updateFile(bookPhoto.getBookId(), bookPhoto.getPhoto());
-        return bookPhoto;
+    public BookPhoto updateImage(final BookPhoto photo) {
+        this.photos.updateFile(photo.getBookId(), photo.getPhoto());
+        return photo;
     }
 
     public BookFile getBookFile(final Book book) {
-        return this.fileRepo.findByBookId(book.getId());
+        return this.files.findByBookId(book.getId());
     }
 
-    public BookFile deleteFile(final BookFile bookFile) {
-        this.fileRepo.deleteByBookId(bookFile.getBookId());
-        return bookFile;
+    public BookFile deleteFile(final BookFile file) {
+        this.files.deleteByBookId(file.getBookId());
+        return file;
     }
 
-    public BookFile addFile(final BookFile bookFile) {
-        this.fileRepo.addFile(bookFile.getBookId(), bookFile.getFile());
-        return bookFile;
+    public BookFile addFile(final BookFile file) {
+        this.files.addFile(file.getBookId(), file.getFile());
+        return file;
     }
 
-    public BookFile updateFile(final BookFile bookFile) {
-        this.fileRepo.updateFile(bookFile.getBookId(), bookFile.getFile());
-        return bookFile;
+    public BookFile updateFile(final BookFile file) {
+        this.files.updateFile(file.getBookId(), file.getFile());
+        return file;
     }
 }

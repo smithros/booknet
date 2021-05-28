@@ -25,7 +25,6 @@
 package com.kpi.booknet.booknet.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import com.kpi.booknet.booknet.dto.BookDto;
 import com.kpi.booknet.booknet.dto.BookFilter;
@@ -46,28 +45,34 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class BookService {
+
     private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
-    private final BookRepository bookRepo;
-    private final GenreRepository genreRepo;
-    private final AuthorRepository authorRepo;
+
+    private final BookRepository books;
+
+    private final GenreRepository genres;
+
+    private final AuthorRepository authors;
+
     private final ModelMapper mapper;
 
     public BookDto createBook(final BookDto book) {
         final Book entity = this.convertBookToEntity(book);
         if (this.getBookById(entity.getId()) == null) {
-            this.bookRepo.save(entity);
+            this.books.save(entity);
             LOG.info("Saved book: {}", entity);
         }
         return book;
     }
 
-    public Book getBookById(final long bookId) {
-        return this.bookRepo.findById(bookId);
+    public Book getBookById(final long id) {
+        LOG.info("Getting book with id: {}", id);
+        return this.books.findById(id);
     }
 
     public Book updateBook(final Book book) {
         if (this.getBookById(book.getId()) != null) {
-            this.bookRepo.updateBookById(
+            this.books.updateBookById(
                 book.getTitle(), book.getText(), book.getPhotoId(),
                 book.getFileId(), book.isStatus(), book.getId());
             LOG.info("Updated book: {}", book);
@@ -78,31 +83,31 @@ public class BookService {
     }
 
     public List<Book> getAllBooks() {
-        return (List<Book>) this.bookRepo.findAll();
+        return (List<Book>) this.books.findAll();
     }
 
     public List<Author> getAllAuthors() {
-        return (List<Author>) this.authorRepo.findAll();
+        return (List<Author>) this.authors.findAll();
     }
 
-    public List<Author> getAuthorsByBookId(final long bookId) {
-        return this.authorRepo.findByBookId(bookId);
+    public List<Author> getAuthorsByBookId(final long id) {
+        return this.authors.findByBookId(id);
     }
 
     public List<Genre> getAllGenres() {
-        return this.genreRepo.findAll();
+        return this.genres.findAll();
     }
 
-    public List<Genre> getGenreByBookId(final long bookId) {
-        return this.genreRepo.findByBookId(bookId);
+    public List<Genre> getGenreByBookId(final long id) {
+        return this.genres.findByBookId(id);
     }
 
     public List<String> getAllGenresName() {
-        return this.genreRepo.findAllGenresNames();
+        return this.genres.findAllGenresNames();
     }
 
     private BookDto convertBookToDto(final Book book) {
-        BookDto dto = this.mapper.map(book, BookDto.class);
+        final BookDto dto = this.mapper.map(book, BookDto.class);
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
         dto.setText(book.getText());
@@ -115,7 +120,7 @@ public class BookService {
     }
 
     private Book convertBookToEntity(final BookDto book) {
-        Book ent = this.mapper.map(book, Book.class);
+        final Book ent = this.mapper.map(book, Book.class);
         ent.setId(book.getId());
         ent.setTitle(book.getTitle());
         ent.setText(book.getText());
@@ -128,35 +133,36 @@ public class BookService {
     }
 
     //TODO dynamic query generation
-    public List<Book> filterBooks(final BookFilter bookFilter) {
+    public List<Book> filterBooks(final BookFilter filter) {
+        LOG.info("Got book filter: {}", filter);
         List<Book> res = new ArrayList<>();
-        final String header = bookFilter.getHeader();
-        final List<String> genres = bookFilter.getGenres();
-        final List<String> authors = bookFilter.getAuthors();
+        final String header = filter.getHeader();
+        final List<String> genres = filter.getGenres();
+        final List<String> authors = filter.getAuthors();
         final boolean bHeader = header == null || header.isEmpty();
         final boolean bGenre = genres == null || genres.isEmpty();
         final boolean bAuthor = authors == null || authors.isEmpty();
 
         if (!bHeader && !bGenre && !bAuthor) {
-            res = this.bookRepo.filterBooks(header, genres, authors);
+            res = this.books.filterBooks(header, genres, authors);
         }
         if (!bHeader && bGenre && bAuthor) {
-            res = this.bookRepo.filterBooksByHeader(header);
+            res = this.books.filterBooksByHeader(header);
         }
         if (!bGenre && bAuthor && bHeader) {
-            res = this.bookRepo.filterBooksByGenres(genres);
+            res = this.books.filterBooksByGenres(genres);
         }
         if (!bAuthor && bGenre && bHeader) {
-            res = this.bookRepo.filterBooksByAuthors(authors);
+            res = this.books.filterBooksByAuthors(authors);
         }
         if (!bGenre && !bHeader && bAuthor) {
-            res = this.bookRepo.filterBooksByHeaderAndGenres(header, genres);
+            res = this.books.filterBooksByHeaderAndGenres(header, genres);
         }
         if (!bAuthor && !bHeader && bGenre) {
-            res = this.bookRepo.filterBooksByHeaderAndAuthors(header, authors);
+            res = this.books.filterBooksByHeaderAndAuthors(header, authors);
         }
         if (!bGenre && !bAuthor && bHeader) {
-            res = this.bookRepo.filterBooksByGenreAndAuthor(genres, authors);
+            res = this.books.filterBooksByGenreAndAuthor(genres, authors);
         }
         return res;
     }

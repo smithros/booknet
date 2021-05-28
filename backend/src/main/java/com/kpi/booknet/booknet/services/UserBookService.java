@@ -35,110 +35,123 @@ import com.kpi.booknet.booknet.repos.UserBookRepository;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserBookService {
-    private final BookRepository bookRepo;
-    private final UserBookRepository userBookRepo;
-    private final UserRepository userRepo;
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserBookService.class);
+
+    private final BookRepository books;
+
+    private final UserBookRepository usrbooks;
+
+    private final UserRepository users;
+
     private final ModelMapper mapper;
 
-    public UserBookDto addBookToUser(final UserBookDto userBook) {
-        final UserBook ent = this.convertUbToEntity(userBook);
-        if (this.userAlreadyHasBook(userBook, ent)) {
-            this.userBookRepo.save(ent);
+    public UserBookDto addBookToUser(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        if (this.userAlreadyHasBook(dto, ent)) {
+            LOG.info("Added book id: {} to user id: {}", ent.getBookId(), ent.getUserId());
+            this.usrbooks.save(ent);
         }
-        return userBook;
+        return dto;
     }
 
-    public List<Book> getAllUsersBooks(final long userId) {
-        return this.constructListOfBooks(this.userBookRepo.findAllBookIdsByUserId(userId));
+    public List<Book> getAllUsersBooks(final long uid) {
+        return this.constructListOfBooks(this.usrbooks.findAllBookIdsByUserId(uid));
     }
 
-    public List<Book> getAllFavouriteBooks(final long userId) {
+    public List<Book> getAllFavouriteBooks(final long uid) {
         return this.constructListOfBooks(
-            this.userBookRepo.findAllByFavouriteIsTrueAndUserId(userId));
+            this.usrbooks.findAllByFavouriteIsTrueAndUserId(uid));
     }
 
-    public List<Book> getAllReadBooks(long userId) {
-        return this.constructListOfBooks(
-            this.userBookRepo.findAllByReadIsTrueAndUserId(userId));
+    public List<Book> getAllReadBooks(final long uid) {
+        return this.constructListOfBooks(this.usrbooks.findAllByReadIsTrueAndUserId(uid));
     }
 
-    public List<UserBook> getAllUserBooksByUserId(final long userId) {
-        return this.userBookRepo.findAllByUserId(this.userRepo.findById(userId));
+    public List<UserBook> getAllUserBooksByUserId(final long uid) {
+        return this.usrbooks.findAllByUserId(this.users.findById(uid));
     }
 
-    public UserBookDto deleteFromAdded(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
-        this.userBookRepo.deleteByUserIdAndBookId(ent.getUserId(), ent.getBookId());
-        return ub;
+    public UserBookDto deleteFromAdded(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        this.usrbooks.deleteByUserIdAndBookId(ent.getUserId(), ent.getBookId());
+        LOG.info("Deleted book id: {} from user id: {}", ent.getBookId(), ent.getUserId());
+        return dto;
     }
 
-    public UserBookDto markBookAsRead(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
-        this.userBookRepo.markBookAsRead(ent.getUserId(), ent.getBookId());
-        return ub;
+    public UserBookDto markBookAsRead(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        this.usrbooks.markBookAsRead(ent.getUserId(), ent.getBookId());
+        LOG.info("Mark as read book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
+        return dto;
     }
 
-    public UserBookDto markBookAsFavourite(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
-        this.userBookRepo.markBookAsFavourite(ent.getUserId(), ent.getBookId());
-        return ub;
+    public UserBookDto markBookAsFavourite(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        this.usrbooks.markBookAsFavourite(ent.getUserId(), ent.getBookId());
+        LOG.info("Mark as favourite book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
+        return dto;
     }
 
-    public UserBookDto removeFromRead(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
-        this.userBookRepo.removeFromRead(ent.getUserId(), ent.getBookId());
-        return ub;
+    public UserBookDto removeFromRead(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        this.usrbooks.removeFromRead(ent.getUserId(), ent.getBookId());
+        LOG.info("Remove from read book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
+        return dto;
     }
 
-    public UserBookDto removeFromFavourite(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
-        this.userBookRepo.removeFromFavourite(ent.getUserId(), ent.getBookId());
-        return ub;
+    public UserBookDto removeFromFavourite(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
+        this.usrbooks.removeFromFavourite(ent.getUserId(), ent.getBookId());
+        LOG.info("Remove from fav book id: {} and user id: {}", ent.getBookId(), ent.getUserId());
+        return dto;
     }
 
-    public UserBookDto getUserBookByBookUserId(final UserBookDto ub) {
-        final UserBook ent = this.convertUbToEntity(ub);
+    public UserBookDto getUserBookByBookUserId(final UserBookDto dto) {
+        final UserBook ent = this.convertUbToEntity(dto);
         return this.convertUbToDto(
-            this.userBookRepo.findByUserIdAndBookId(ent.getUserId(), ent.getBookId()));
+            this.usrbooks.findByUserIdAndBookId(ent.getUserId(), ent.getBookId()));
     }
 
     private List<Book> constructListOfBooks(final List<Long> ids) {
         return ids.stream()
-            .map(this.bookRepo::findById)
+            .map(this.books::findById)
             .map(Optional::get)
             .collect(Collectors.toList());
     }
 
-    private boolean userAlreadyHasBook(final UserBookDto userBook, final UserBook ent) {
-        return this.getAllUsersBooks(userBook.getUserId())
+    private boolean userAlreadyHasBook(final UserBookDto dto, final UserBook ent) {
+        return this.getAllUsersBooks(dto.getUserId())
             .stream()
             .filter(book -> book.getId() == ent.getBookId().getId())
             .findFirst()
             .orElse(null) == null;
     }
 
-    private UserBookDto convertUbToDto(final UserBook ub) {
-        UserBookDto dto = this.mapper.map(ub, UserBookDto.class);
-        dto.setId(ub.getId());
-        dto.setBookId(ub.getBookId().getId());
-        dto.setUserId(ub.getUserId().getId());
-        dto.setFavourite(ub.isFavourite());
-        dto.setRead(ub.isRead());
+    private UserBookDto convertUbToDto(final UserBook ent) {
+        final UserBookDto dto = this.mapper.map(ent, UserBookDto.class);
+        dto.setId(dto.getId());
+        dto.setBookId(ent.getBookId().getId());
+        dto.setUserId(ent.getUserId().getId());
+        dto.setFavourite(dto.isFavourite());
+        dto.setRead(dto.isRead());
         return dto;
     }
 
-    private UserBook convertUbToEntity(final UserBookDto ub) {
-        UserBook ent = this.mapper.map(ub, UserBook.class);
-        ent.setId(ub.getId());
-        ent.setBookId(this.bookRepo.findById(ub.getBookId()).get());
-        ent.setUserId(this.userRepo.findById(ub.getUserId()).get());
-        ent.setFavourite(ub.isFavourite());
-        ent.setRead(ub.isRead());
+    private UserBook convertUbToEntity(final UserBookDto dto) {
+        final UserBook ent = this.mapper.map(dto, UserBook.class);
+        ent.setId(dto.getId());
+        ent.setBookId(this.books.findById(dto.getBookId()).get());
+        ent.setUserId(this.users.findById(dto.getUserId()).get());
+        ent.setFavourite(dto.isFavourite());
+        ent.setRead(dto.isRead());
         return ent;
     }
 }

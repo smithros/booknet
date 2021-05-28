@@ -52,10 +52,10 @@ public interface AnnouncementRepository extends CrudRepository<Announcement, Lon
 
     @Transactional
     @Modifying
-    @Query(value = "update announcement set description = :desc, date = :date, status = :status, " +
-        "book_id = :bookId, admin_id = :adminId, owner_id =:ownerId " +
-        "where announcement_id = :announcementId", nativeQuery = true)
-    void updateById(String desc, Date date, boolean status, long bookId,
-                    long adminId, long ownerId, long announcementId);
+    @Query(value = "update announcement set description = :desc, date = :date, status = :status, "
+        + "book_id = :bid, admin_id = :aid, owner_id =:oid "
+        + "where announcement_id = :entid", nativeQuery = true)
+    void updateById(String desc, Date date, boolean status, long bid,
+                    long aid, long oid, long entid);
 
 }

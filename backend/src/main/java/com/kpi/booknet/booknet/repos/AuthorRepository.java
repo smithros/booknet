@@ -36,9 +36,9 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     List<Author> findAuthorsByName(String name);
 
     @Query(
-        value = "select a.* from book_author ba, author a where ba.author_id = a.author_id and ba.book_id = ?1",
+        value = "select a.* from book_author ba, author a "
+            + "where ba.author_id = a.author_id and ba.book_id = ?1",
         nativeQuery = true
     )
-    List<Author> findByBookId(long bookId);
-
+    List<Author> findByBookId(long bid);
 }

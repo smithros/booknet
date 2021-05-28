@@ -56,27 +56,28 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/book")
 @AllArgsConstructor
 public final class BookController {
+
     private final BookService service;
+
     private final BookFilesService files;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<BookDto> addBook(@RequestBody final BookDto book) {
-        final BookDto response = this.service.createBook(book);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+        return Optional.ofNullable(this.service.createBook(book))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Book> updateBook(@RequestBody final Book book) {
-        final Book response = this.service.updateBook(book);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+        return Optional.ofNullable(this.service.updateBook(book))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Book> getBookById(@PathVariable(name = "id") final long bookId) {
-        final Book response = this.service.getBookById(bookId);
-        return Optional.ofNullable(response)
+    public ResponseEntity<Book> getBookById(@PathVariable(name = "id") final long id) {
+        return Optional.ofNullable(this.service.getBookById(id))
             .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -102,84 +103,90 @@ public final class BookController {
     }
 
     @RequestMapping(value = "/authors/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAuthorsByBookId(@PathVariable(name = "id") final long bookId) {
-        return ResponseEntity.ok(this.service.getAuthorsByBookId(bookId));
+    public ResponseEntity<?> getAuthorsByBookId(@PathVariable(name = "id") final long id) {
+        return ResponseEntity.ok(this.service.getAuthorsByBookId(id));
     }
 
     @RequestMapping(value = "/genres/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getGenresByBookId(@PathVariable(name = "id") final long bookId) {
-        return ResponseEntity.ok(this.service.getGenreByBookId(bookId));
+    public ResponseEntity<?> getGenresByBookId(@PathVariable(name = "id") final long id) {
+        return ResponseEntity.ok(this.service.getGenreByBookId(id));
     }
 
     @RequestMapping(value = "/addFile", method = RequestMethod.POST)
-    public ResponseEntity<BookFile> addBookFile(@RequestParam(name = "bookId") final long bookId,
-                                                @RequestParam(name = "file") final MultipartFile file) throws IOException {
-        BookFile bookFile = new BookFile(bookId, file.getBytes());
-        BookFile response = this.files.addFile(bookFile);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+    public ResponseEntity<BookFile> addBookFile(@RequestParam(name = "bookId") final long id,
+                                                @RequestParam(name = "file")
+                                                final MultipartFile file) throws IOException {
+        return Optional.ofNullable(this.files.addFile(new BookFile(id, file.getBytes())))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/addImage", method = RequestMethod.POST)
-    public ResponseEntity<BookPhoto> addBookImage(@RequestParam(name = "bookId") final long bookId,
-                                                  @RequestParam(name = "img") final MultipartFile file) throws IOException {
-        BookPhoto bookImage = new BookPhoto(bookId, file.getBytes());
-        BookPhoto response = this.files.addImage(bookImage);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+    public ResponseEntity<BookPhoto> addBookImage(@RequestParam(name = "bookId") final long id,
+                                                  @RequestParam(name = "img")
+                                                  final MultipartFile file) throws IOException {
+        return Optional.ofNullable(this.files.addImage(new BookPhoto(id, file.getBytes())))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @RequestMapping(produces = MediaType.APPLICATION_PDF_VALUE, value = "/bookFile", method = RequestMethod.POST)
+    @RequestMapping(
+        produces = MediaType.APPLICATION_PDF_VALUE,
+        value = "/bookFile",
+        method = RequestMethod.POST
+    )
     public ResponseEntity<?> getBookFile(@RequestBody final Book book) {
         if (this.files.getBookFile(book) == null) {
-            return ResponseEntity.ok(null);
+            return ResponseEntity.of(Optional.of(book));
         }
-        ByteArrayInputStream stream = new ByteArrayInputStream(files.getBookFile(book).getFile());
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)
+        final ByteArrayInputStream stream =
+            new ByteArrayInputStream(this.files.getBookFile(book).getFile());
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_PDF)
             .body(new InputStreamResource(stream));
     }
 
     @RequestMapping(produces = MediaType.IMAGE_PNG_VALUE, value = "/bookImage")
     @ResponseBody
     public ResponseEntity<byte[]> getBookImage(@RequestBody final Book book) {
-        BookPhoto bookImage = this.files.getBookPhoto(book);
-        return Optional.ofNullable(bookImage.getPhoto())
+        final BookPhoto img = this.files.getBookPhoto(book);
+        return Optional.ofNullable(img.getPhoto())
             .map(ResponseEntity::ok).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/updateFile", method = RequestMethod.POST)
     public ResponseEntity<BookFile> updateBookFile(@RequestBody final Book book,
-                                                   @RequestParam(name = "file") final MultipartFile file) throws IOException {
-        BookFile bookFile = this.files.getBookFile(book);
-        bookFile.setFile(file.getBytes());
-        BookFile response = this.files.updateFile(bookFile);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+                                                   @RequestParam(name = "file")
+                                                   final MultipartFile file) throws IOException {
+        final BookFile bookfile = this.files.getBookFile(book);
+        bookfile.setFile(file.getBytes());
+        return Optional.ofNullable(this.files.updateFile(bookfile))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/updateImage", method = RequestMethod.POST)
     public ResponseEntity<BookPhoto> updateBookImage(@RequestBody final Book book,
-                                                     @RequestParam(name = "img") final MultipartFile file) throws IOException {
-        BookPhoto bookImage = this.files.getBookPhoto(book);
-        bookImage.setPhoto(file.getBytes());
-        BookPhoto response = this.files.updateImage(bookImage);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+                                                     @RequestParam(name = "img")
+                                                     final MultipartFile file) throws IOException {
+        final BookPhoto img = this.files.getBookPhoto(book);
+        img.setPhoto(file.getBytes());
+        return Optional.ofNullable(this.files.updateImage(img))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/deleteImage", method = RequestMethod.POST)
     public ResponseEntity<BookPhoto> deleteBookImage(@RequestBody final Book book) {
-        BookPhoto bookImage = this.files.getBookPhoto(book);
-        BookPhoto response = this.files.deleteImage(bookImage);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+        return Optional.ofNullable(this.files.deleteImage(this.files.getBookPhoto(book)))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
     public ResponseEntity<BookFile> deleteBookFile(@RequestBody final Book book) {
-        BookFile bookFile = this.files.getBookFile(book);
-        BookFile response = this.files.deleteFile(bookFile);
-        return Optional.ofNullable(response).map(ResponseEntity::ok)
+        return Optional.ofNullable(this.files.deleteFile(this.files.getBookFile(book)))
+            .map(ResponseEntity::ok)
             .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
@@ -188,14 +195,14 @@ public final class BookController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<List<Book>> filterBook(
-        @RequestBody final BookFilter bookFilter
+        @RequestBody final BookFilter filter
     ) {
         List<Book> books = new ArrayList<>();
-        if (!(bookFilter.getHeader().trim().isEmpty()
-            && bookFilter.getAuthors().size() == 0
-            && bookFilter.getGenres().size() == 0)
+        if (!(filter.getHeader().trim().isEmpty()
+            && filter.getAuthors().size() == 0
+            && filter.getGenres().size() == 0)
         ) {
-            books = this.service.filterBooks(bookFilter);
+            books = this.service.filterBooks(filter);
             return ResponseEntity.ok(books);
         }
         return ResponseEntity.ok(books);

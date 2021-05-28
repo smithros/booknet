@@ -33,6 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class BookFileDto implements Serializable {
+
     private long bookId;
+
     private byte[] file;
 }

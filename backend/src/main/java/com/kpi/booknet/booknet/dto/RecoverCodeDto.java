@@ -34,8 +34,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class RecoverCodeDto implements Serializable {
+
     private long id;
+
     private String code;
+
     private String email;
+
     private Date date;
 }
