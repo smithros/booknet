@@ -6,7 +6,6 @@
 This project supposed to be my bachelor course work. <br>
 It's a free online library of books that will allow users to read books, write review on them, rate them, search books, create own books collections with favourite, read and so on.
 It also proposes different announcements, notifications, achievements about books.<br>
-Also it provides a simple social network system with ability to add friends.
 
 Link: [booknet](https://booknet-diploma.herokuapp.com/#/).
 
@@ -26,6 +25,7 @@ For building and running the application you need:
 - [Maven 4](https://maven.apache.org)
 - [NodeJS](https://nodejs.org)
 - [NPM](https://www.npmjs.com/)
+- [Docker](https://www.docker.com/)
 
 To build the project simply run this command in the root directory: 
 ```shell
@@ -55,6 +55,12 @@ you can go to the Angular root directory and run:
 ng serve --open
 ```
 This will automatically open `http://localhost:4200` in your browser.
+
+## Docker
+To run the app in container in detached mode use next command:
+```shell
+docker compose up -d
+```
 
 ## Deploy
 

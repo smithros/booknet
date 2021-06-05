@@ -6,17 +6,8 @@
     <li class="list-group-item" (click)="open('Edit')"
         [class.selected]="isOpen=='Edit'">Edit profile
     </li>
-    <li class="list-group-item" [class.selected]="isOpen=='Friends'"
-        *ngIf="user.role == 'USER'" (click)="open('Friends')">Friends
-    </li>
-    <li class="list-group-item" [class.selected]="isOpen=='Achievement'"
-        *ngIf="user.role == 'USER'" (click)="open('Achievement')">Achievement
-    </li>
     <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Add agent'"
         (click)="open('Add agent')">Add agent
-    </li>
-    <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Add achievement'"
-        (click)="open('Add achievement')">Add achievement
     </li>
     <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Admin rights'"
         (click)="open('Admin rights')">Admin rights
