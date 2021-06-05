@@ -6,7 +6,6 @@
 This project supposed to be my bachelor course work. <br>
 It's a free online library of books that will allow users to read books, write review on them, rate them, search books, create own books collections with favourite, read and so on.
 It also proposes different announcements, notifications, achievements about books.<br>
-Also it provides a simple social network system with ability to add friends.
 
 Link: [booknet](https://booknet-diploma.herokuapp.com/#/).
 
