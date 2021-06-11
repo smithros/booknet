@@ -6,7 +6,7 @@
     <li class="list-group-item" (click)="open('Edit')"
         [class.selected]="isOpen=='Edit'">Edit profile
     </li>
-    <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Add agent'"
+   <!-- <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Add agent'"
         (click)="open('Add agent')">Add agent
     </li>
     <li class="list-group-item" *ngIf="isAllowedToAdd" [class.selected]="isOpen=='Admin rights'"
@@ -17,6 +17,6 @@
     </li>
     <li class="list-group-item" [class.selected]="isOpen=='Publish announcements'"
         *ngIf="isAllowedToPublish" (click)="open('Publish announcements')">Publish announcements
-    </li>
+    </li>-->
   </ul>
 </div>
