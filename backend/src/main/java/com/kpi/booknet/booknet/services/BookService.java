@@ -37,16 +37,14 @@ import com.kpi.booknet.booknet.repos.AuthorRepository;
 import com.kpi.booknet.booknet.repos.BookRepository;
 import com.kpi.booknet.booknet.repos.GenreRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class BookService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
 
     private final BookRepository books;
 
@@ -60,13 +58,13 @@ public class BookService {
         final Book entity = this.convertBookToEntity(book);
         if (this.getBookById(entity.getId()) == null) {
             this.books.save(entity);
-            LOG.info("Saved book: {}", entity);
+            log.info("Saved book: {}", entity);
         }
         return book;
     }
 
     public Book getBookById(final long id) {
-        LOG.info("Getting book with id: {}", id);
+        log.info("Getting book with id: {}", id);
         return this.books.findById(id);
     }
 
@@ -75,7 +73,7 @@ public class BookService {
             this.books.updateBookById(
                 book.getTitle(), book.getText(), book.getPhotoId(),
                 book.getFileId(), book.isStatus(), book.getId());
-            LOG.info("Updated book: {}", book);
+            log.info("Updated book: {}", book);
             return book;
         } else {
             throw new BookNetException(ErrorType.NO_BOOK_WITH_SUCH_ID.getMessage());
@@ -134,7 +132,7 @@ public class BookService {
 
     //TODO dynamic query generation
     public List<Book> filterBooks(final BookFilter filter) {
-        LOG.info("Got book filter: {}", filter);
+        log.info("Got book filter: {}", filter);
         List<Book> res = new ArrayList<>();
         final String header = filter.getHeader();
         final List<String> genres = filter.getGenres();
