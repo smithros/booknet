@@ -30,16 +30,14 @@ import com.kpi.booknet.booknet.model.User;
 import com.kpi.booknet.booknet.repos.UserRepository;
 import com.kpi.booknet.booknet.security.UserRole;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthorizationService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AuthorizationService.class);
 
     private final UserRepository repo;
 
@@ -50,7 +48,7 @@ public class AuthorizationService {
             final User user = this.repo.findByName(login);
             if (user != null && user.isActivated()) {
                 if (this.encoder.matches(password, user.getPassword())) {
-                    LOG.info("Authorized user: id = {}, name = {}", user.getId(), user.getName());
+                    log.info("Authorized user: id = {}, name = {}", user.getId(), user.getName());
                     return user;
                 } else {
                     throw new BookNetException(ErrorType.USR_PWD_NOT_CORRECT.getMessage());
@@ -74,7 +72,7 @@ public class AuthorizationService {
                 .role(UserRole.USER)
                 .build();
             this.repo.save(user);
-            LOG.info("Registered user: name = {}", user.getName());
+            log.info("Registered user: name = {}", user.getName());
             return this.repo.findByName(login);
         }
         throw new BookNetException(ErrorType.EMPTY_CREDENTIALS.getMessage());
