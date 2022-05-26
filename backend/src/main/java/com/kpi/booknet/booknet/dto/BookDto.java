@@ -41,6 +41,8 @@ public final class BookDto implements Serializable {
 
     private long id;
 
+    private int price;
+
     private String title;
     private String text;
 

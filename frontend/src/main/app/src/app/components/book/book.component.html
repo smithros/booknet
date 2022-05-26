@@ -36,6 +36,13 @@
                         <td>Overview:</td>
                         <td colspan="3">{{book.text}}</td>
                     </tr>
+                  <tr>
+                    <td>Price</td>
+                    <td colspan="3">{{book.price}}</td>
+                    <button class="btn btn-primary">
+                      <a [routerLink]="['/books',book.id,'announcement']" class="ann">Buy</a>
+                    </button>
+                  </tr>
                 </table>
                 <div>
                     <app-book-file [book]="book"></app-book-file>

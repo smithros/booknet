@@ -85,4 +85,7 @@ public final class Book implements Serializable {
         joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "author_id"))
     private Set<Author> authors;
+
+    @Column(name = "price")
+    private Integer price;
 }

@@ -3,6 +3,7 @@ import {Author} from './author';
 
 export class Book {
   id: number;
+  price: number;
   title: string;
   text: string;
   status: boolean;
