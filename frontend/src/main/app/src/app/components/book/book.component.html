@@ -37,11 +37,8 @@
                         <td colspan="3">{{book.text}}</td>
                     </tr>
                   <tr>
-                    <td>Price</td>
-                    <td colspan="3">{{book.price}}</td>
-                    <button class="btn btn-primary">
-                      <a [routerLink]="['/books',book.id,'announcement']" class="ann">Buy</a>
-                    </button>
+                    <td>Price:</td>
+                    <td colspan="3">{{book.price}} ETH</td>
                   </tr>
                 </table>
                 <div>
@@ -53,6 +50,10 @@
             </div>
         </div>
         <div *ngIf="userBookButtonVisible">
+
+
+          <button onclick="connect()" class="btn btn-primary" id="buy">Buy
+          </button>
             <button (click)="addBookToUser(book.id)" *ngIf="!userAddedBook"
                     class="btn btn-primary" id="addBook">Add to my books
             </button>

@@ -5,12 +5,14 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types","react"
     ],
     "lib": [
       "es2016",

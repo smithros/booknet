@@ -40,6 +40,7 @@ import {CalendarModule, DateAdapter} from "angular-calendar";
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+import { MetamaskComponent } from './components/metamask/metamask.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
     ViewProfileComponent,
     AboutComponent,
     CalendarComponent,
+    MetamaskComponent,
   ],
   imports: [
     BrowserModule,
