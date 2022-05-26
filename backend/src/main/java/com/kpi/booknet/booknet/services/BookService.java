@@ -127,7 +127,6 @@ public class BookService {
         ent.setFileId(book.getFileId());
         ent.setAuthors(book.getAuthors());
         ent.setGenres(book.getGenres());
-        ent.setPrice((int) (Math.random() * (100 - 20)) + 20);
         return ent;
     }
 

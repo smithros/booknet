@@ -87,5 +87,5 @@ public final class Book implements Serializable {
     private Set<Author> authors;
 
     @Column(name = "price")
-    private Integer price;
+    private String price;
 }
