@@ -18,7 +18,6 @@ import {ReviewComponent} from "./components/review/review.component";
 import {AboutComponent} from "./components/about/about.component";
 import {CalendarComponent} from "./components/calendar/calendar.component";
 import {SearchComponent} from "./components/search/search.component";
-import {MetamaskComponent} from "./components/metamask/metamask.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -58,7 +57,6 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'calendar', component: CalendarComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'metamask', component: MetamaskComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent},
 ];

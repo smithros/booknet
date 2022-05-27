@@ -7,11 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {StorageService} from "../../services/storage/storage.service";
 import {UserBook} from "../../models/userBook";
 import {Genre} from "../../models/genre";
-import Web3 from 'web3';
-//import {ContractService} from "../../services/contract-service/contract.service";
-//import './eth.js';
 
-//let ethEnabled: any;
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -39,16 +35,8 @@ export class BookComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private storage: StorageService,
-              // private web3: ContractService
   ) {
   }
-
-  //connect() {
-    //let web3 = new Web3(window.ethereum);
-
-    // await window.ethereum.request({method: 'eth_requestAccounts'});
-    // window.web3 = new Web3(window.ethereum);
-  //}
 
   ngOnInit() {
     this.bookId = parseInt(this.route.snapshot.paramMap.get('bookId'));
